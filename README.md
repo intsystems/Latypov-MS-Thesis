@@ -62,14 +62,51 @@ MPLCONFIGDIR=/private/tmp/mplconfig-codex uv run python -m experiments.experimen
 Run smoke experiments:
 
 ```bash
-MPLCONFIGDIR=/private/tmp/mplconfig-codex uv run python -m experiments.experiment_bandits --smoke --output_path /private/tmp/bandit_smoke_uv.pdf
-MPLCONFIGDIR=/private/tmp/mplconfig-codex uv run python -m experiments.experiment_glm --T 20 --dim 3 --K 4 --num_optimize 1 --num_repeats 1 --n_jobs 1 --output_dir /private/tmp/glm_smoke_uv
+MPLCONFIGDIR=/private/tmp/mplconfig-codex uv run python -m experiments.experiment_bandits --preset smoke --output_path /private/tmp/bandit_smoke_uv.pdf --output_dir /private/tmp/bandit_smoke_uv_artifacts
+MPLCONFIGDIR=/private/tmp/mplconfig-codex uv run python -m experiments.experiment_glm --preset smoke --output_dir /private/tmp/glm_smoke_uv
 ```
 
 Featured GLM smoke run:
 
 ```bash
-MPLCONFIGDIR=/private/tmp/mplconfig-codex uv run python -m experiments.experiment_glm --T 20 --dim 3 --K 4 --num_optimize 1 --num_repeats 1 --n_jobs 1 --output_dir /private/tmp/glm_smoke_uv_featured --is_featured --context_d 2
+MPLCONFIGDIR=/private/tmp/mplconfig-codex uv run python -m experiments.experiment_glm --preset smoke --output_dir /private/tmp/glm_smoke_uv_featured --is_featured --context_d 2
 ```
 
 `MPLCONFIGDIR` is set because some local environments cannot write to the default Matplotlib cache directory.
+
+
+Phase 2 artifact layout for smoke/full runs:
+
+```text
+<output_dir>/
+  metadata.json
+  config.json
+  runs.csv
+  timeseries.npz
+```
+
+GLM still renders `experiment_results_<best_arm_number>.pdf`; classical bandits render the plot path passed via `--output_path`. Debug pickle output is disabled by default and only available for GLM through `--save_debug_pickle`.
+
+Regenerate a GLM cumulative-loss plot from saved primitive artifacts:
+
+```bash
+MPLCONFIGDIR=/private/tmp/mplconfig-codex uv run python -m experiments.experiment_glm --regenerate_plot_from /private/tmp/glm_smoke_uv
+```
+
+Regenerate a classical-bandit summary plot from saved primitive artifacts:
+
+```bash
+MPLCONFIGDIR=/private/tmp/mplconfig-codex uv run python -m experiments.experiment_bandits --regenerate_plot_from /private/tmp/bandit_smoke_uv_artifacts
+```
+
+Run lightweight artifact tests:
+
+```bash
+MPLCONFIGDIR=/private/tmp/mplconfig-codex uv run pytest tests/test_storage_artifacts.py
+```
+
+Run Phase 3 shared-runner tests:
+
+```bash
+MPLCONFIGDIR=/private/tmp/mplconfig-codex uv run pytest tests/test_runner.py tests/test_storage_artifacts.py
+```

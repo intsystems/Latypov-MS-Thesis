@@ -13,7 +13,6 @@ Key Features:
 - Results visualization and saving capabilities
 """
 
-import pickle
 import numpy as np
 import matplotlib.pyplot as plt
 from dataclasses import dataclass
@@ -41,6 +40,10 @@ from stat_online.lin_bandits.ucb_algorithm import (
     ContextualArm,
     dummyContextualArm
 )
+from stat_online.core.records import RunRecord
+from stat_online.experiments.plotting import save_glm_artifact_plot
+from stat_online.experiments.runner import run_repeats
+from stat_online.experiments.storage import write_experiment_artifacts
 from stat_online.utils.visualization import AlgRes, plot_experiment_results, save_plots
 
 
@@ -226,6 +229,8 @@ def run_experiment_batch(
         n_jobs: int = 12,
         output_dir: str = "./exp_results",
         best_arm_number: int = 0,
+        save_debug_pickle: bool = False,
+        config: Optional[dict[str, Any]] = None,
         ) -> Dict[str, List[AlgRes]]:
     """
     Run a batch of experiments with different strategies and parameters.
@@ -311,21 +316,66 @@ def run_experiment_batch(
     print(f"Running {num_repeats} experiment repetitions...")
     import os
     os.makedirs(output_dir, exist_ok=True)
-    res_list = [run_single_experiment() for _ in range(num_repeats)]
+    res_list = run_repeats(num_repeats, lambda _repeat: run_single_experiment(), n_jobs=1)
 
     # Combine results across repetitions
     res_dict = {}
     for key in res_list[0].keys():
         res_dict[key] = [r[key] for r in res_list]
 
+    run_id = f"glm_best_{best_arm_number}"
+    run_records: list[RunRecord] = []
+    arrays: dict[str, Any] = {}
+    for alg_name, runs in res_dict.items():
+        for repeat_idx, run in enumerate(runs):
+            losses = np.asarray(run.alg_loss_hist, dtype=float)
+            selections = np.asarray(run.arm_selection_hist, dtype=int)
+            key_prefix = f"{alg_name}/repeat_{repeat_idx}"
+            arrays[f"loss/{key_prefix}"] = losses
+            arrays[f"cum_loss/{key_prefix}"] = np.cumsum(losses)
+            arrays[f"selected_arm/{key_prefix}"] = selections
+            run_records.append(RunRecord(
+                run_id=run_id,
+                experiment_name="glm_bandits",
+                repeat=repeat_idx,
+                algorithm=alg_name,
+                M=run.num_optimized_arms,
+                K=run.n_arms,
+                T=run.max_steps,
+                runtime_sec=run.runtime,
+                final_loss=float(np.sum(losses)) if losses.size else 0.0,
+                extra={"strategy_class": run.strategy_class.__name__},
+            ))
+
+    artifact_config = config or {
+        "T": T,
+        "K": K,
+        "dim": dim,
+        "num_optimize": num_optimize,
+        "num_repeats": num_repeats,
+        "is_featured": is_featured,
+        "d_base": d_base,
+        "context_d": context_d,
+        "best_arm_number": best_arm_number,
+    }
+    write_experiment_artifacts(
+        output_dir,
+        "glm_bandits",
+        artifact_config,
+        run_records,
+        arrays,
+        run_id=run_id,
+    )
+
     # Generate and save plots
     print("Generating plots...")
     fig = plot_experiment_results(res_dict, strategies)
     save_plots(fig, f"{output_dir}/experiment_results_{best_arm_number}.pdf")
 
-    # Save results
-    with open(f"{output_dir}/experiment_results_{best_arm_number}.pkl", 'wb') as f:
-        pickle.dump(res_dict, f)
+    if save_debug_pickle:
+        import pickle
+        with open(f"{output_dir}/debug.pkl", 'wb') as f:
+            pickle.dump(res_dict, f)
 
     print(f"Experiment completed. Results saved to {output_dir}/")
     return res_dict
@@ -341,7 +391,11 @@ def main(T: int = 2500,
         context_d=None,
         num_repeats: int = 5,
         n_jobs: int = 12,
-        output_dir: str = "./exp_results"):
+        output_dir: str = "./exp_results",
+        smoke: bool = False,
+        preset: str = "",
+        save_debug_pickle: bool = False,
+        regenerate_plot_from: str = ""):
     """
     Main function to run the bandit algorithms comparison experiment.
 
@@ -355,6 +409,21 @@ def main(T: int = 2500,
         n_jobs: Number of parallel jobs (default: 12)
         output_dir: Directory to save results (default: "./exp_results")
     """
+    if regenerate_plot_from:
+        path = save_glm_artifact_plot(regenerate_plot_from)
+        print(f"Regenerated plot saved to {path}")
+        return str(path)
+
+    if preset and preset != "smoke":
+        raise ValueError(f"Unknown preset: {preset}")
+    if smoke or preset == "smoke":
+        T = 20
+        dim = 3
+        K = 4
+        num_optimize = 1
+        num_repeats = 1
+        n_jobs = 1
+
     print("Starting Experiment 1: Bandit Algorithms Comparison")
     print(f"Parameters: T={T}, d={dim}, K={K}, num_optimize={num_optimize}")
     print(f"best_arm_number={best_arm_number}, num_repeats={num_repeats}")
@@ -382,6 +451,21 @@ def main(T: int = 2500,
                 n_jobs=n_jobs,
                 output_dir=output_dir,
                 best_arm_number=best_arm_number,
+                save_debug_pickle=save_debug_pickle,
+                config={
+                    "T": T,
+                    "dim": dim,
+                    "K": K,
+                    "num_optimize": num_optimize,
+                    "best_arm_number": best_arm_number,
+                    "is_featured": is_featured,
+                    "d_base": d_base,
+                    "context_d": context_d,
+                    "num_repeats": num_repeats,
+                    "n_jobs": n_jobs,
+                    "preset": preset,
+                    "smoke": smoke,
+                },
         )
         print("Experiment completed successfully!")
         return results
@@ -406,6 +490,10 @@ if __name__ == "__main__":
         parser.add_argument("--num_repeats", type=int, default=5)
         parser.add_argument("--n_jobs", type=int, default=12)
         parser.add_argument("--output_dir", default="./exp_results")
+        parser.add_argument("--smoke", action="store_true")
+        parser.add_argument("--preset", default="")
+        parser.add_argument("--save_debug_pickle", action="store_true")
+        parser.add_argument("--regenerate_plot_from", default="")
         main(**vars(parser.parse_args()))
     else:
         fire.Fire(main)

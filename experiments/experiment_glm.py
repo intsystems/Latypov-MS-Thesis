@@ -28,7 +28,7 @@ from stat_online.lin_bandits.contextual_mab import (
     GeneralizedLinearFunction
     )
 from stat_online.lin_bandits.loss_functions import square_loss
-from stat_online.ucb_algorithm import (
+from stat_online.lin_bandits.ucb_algorithm import (
     Strategy,
     UCBAlgorithm,
     EpsilonGreedyAlgorithm,
@@ -44,11 +44,11 @@ from stat_online.utils.visualization import AlgRes, plot_experiment_results, sav
 def generate_data(T: int,
                   d: int,
                   context_d: int,
-                  nonlinearity: Callable, 
+                  nonlinearity: Callable,
                   random_state: Optional[int] = None) -> tuple:
     """
     Generate synthetic data for bandit experiments.
-    
+
     Args:
         T: Number of samples
         d: Dimension of feature vectors
@@ -62,10 +62,10 @@ def generate_data(T: int,
             - linears: Linear transformations before nonlinearity
     """
     rng = np.random.default_rng(random_state)
-    
+
     # Generate X uniformly from a d-dimensional ball of radius 1
-    X = rng.normal(size=(T, d)) 
-    X /= np.linalg.norm(X, ord=2, axis=1, keepdims=True) 
+    X = rng.normal(size=(T, d))
+    X /= np.linalg.norm(X, ord=2, axis=1, keepdims=True)
     X = X * 2  # Scale to radius 2
 
     # Linear transformation with random weights
@@ -76,11 +76,11 @@ def generate_data(T: int,
 
     # Apply nonlinearity with noise
     y = nonlinearity(linear) + rng.normal(loc=0, scale=0.02, size=linear.shape)
-    
+
     return X, y, linear
 
 
-def get_arms_instance(K: int, d: int, nonlinearities: List[callable], 
+def get_arms_instance(K: int, d: int, nonlinearities: List[callable],
                      lr_scaler: float = 1.0, D: float = 0.1, G: float = 0.1,
                      is_context: str = "no") -> List[Arm]:
     """
@@ -160,7 +160,7 @@ def run_experiment(
         ) -> tuple:
     """
     Run a single experiment instance.
-    
+
     Args:
         X: Feature matrix
         y: Target values
@@ -170,12 +170,12 @@ def run_experiment(
         strategy_class: Bandit strategy class
         nonlinearities: List of nonlinear functions
         is_context: Context type
-        
+
     Returns:
         tuple: (algorithm_instance, runtime)
     """
     if featured:
-        arms = get_arms_instance_featured(K, 
+        arms = get_arms_instance_featured(K,
                                           X.shape[1],
                                           d_base=d_base,
                                           nonlinearities=nonlinearities,
@@ -188,7 +188,7 @@ def run_experiment(
                                  is_context=is_context,
                                  **optimizer_params
                                  )
-    
+
     # Initialize algorithm with appropriate parameters
     algo_params = {
         'arms': arms,
@@ -196,16 +196,16 @@ def run_experiment(
         'T': T,
         'delta': 0.01
     }
-    
+
     # Add strategy-specific parameters
-    
+
     algo: Strategy = strategy_class(**algo_params)
-    
+
     # Run algorithm
     start_time = time()
     algo.run(X[:T], y[:T])
     runtime = time() - start_time
-    
+
     return algo, runtime
 
 
@@ -225,7 +225,7 @@ def run_experiment_batch(
         ) -> Dict[str, List[AlgRes]]:
     """
     Run a batch of experiments with different strategies and parameters.
-    
+
     Args:
         T: Maximum number of steps
         K: Number of arms
@@ -239,7 +239,7 @@ def run_experiment_batch(
         context_d:  Ground truth dimension of context vector
         n_jobs: Number of parallel jobs
         output_dir: Directory to save results
-        
+
     Returns:
         Dict[str, List[AlgRes]]: Dictionary of algorithm results
     """
@@ -257,7 +257,7 @@ def run_experiment_batch(
                                   context_d=context_d,
                                   nonlinearity=generation_nonlinearity,
                                   random_state=42)
-    
+
     # Define strategies to test
     strategies = [UCBAlgorithm, GroupedUCB, EpsilonGreedyAlgorithm, Exp3Algorithm]
     strategy_parameters = [{"delta": 0.1}, {"delta": 0.1}, {"delta": 0.1}, {"delta": 0.1},]  # additional parameters of strategies
@@ -266,10 +266,10 @@ def run_experiment_batch(
         """Run a single experiment with all strategy combinations."""
         n_optims = range(1, num_optimize + 1)
         context_types = ["no"]  # Can add "context", "dummy_context" for more experiments
-        
+
         # Generate all parameter combinations
         strategy_n_opt_pairs = list(product((strategies, strategy_parameters), n_optims, context_types))
-        
+
         # Run experiments in parallel
 
         run_experiment_del = delayed(run_experiment)
@@ -282,12 +282,12 @@ def run_experiment_batch(
                                featured=False, d_base=2)
             for (strategy, strategy_params), n_optim, is_context in strategy_n_opt_pairs
         )
-        
+
         # Organize results
         alg_results = {}
         for (alg_res, runtime), (strategy, n_optim, is_context) in zip(alg_results_list, strategy_n_opt_pairs):
             alg_name = f"{strategy.__name__}_{n_optim}_{is_context}"
-            
+
             res = AlgRes(
                 algname=alg_name,
                 strategy_class=strategy,
@@ -300,32 +300,32 @@ def run_experiment_batch(
                 learned_algorithm=alg_res
             )
             alg_results[alg_name] = res
-            
+
         return alg_results
-    
+
     # Run multiple repetitions
     print(f"Running {num_repeats} experiment repetitions...")
     res_list = [run_single_experiment() for _ in range(num_repeats)]
-    
+
     # Combine results across repetitions
     res_dict = {}
     for key in res_list[0].keys():
         res_dict[key] = [r[key] for r in res_list]
-    
+
     # Generate and save plots
     print("Generating plots...")
     fig = plot_experiment_results(res_dict, strategies)
     save_plots(fig, f"{output_dir}/experiment_results_{best_arm_number}.pdf")
-    
+
     # Save results
     with open(f"{output_dir}/experiment_results_{best_arm_number}.pkl", 'wb') as f:
         pickle.dump(res_dict, f)
-    
+
     print(f"Experiment completed. Results saved to {output_dir}/")
     return res_dict
 
 
-def main(T: int = 2500, 
+def main(T: int = 2500,
         dim: int = 5,
         K: int = 10,
         num_optimize: int = 3,
@@ -338,7 +338,7 @@ def main(T: int = 2500,
         output_dir: str = "./exp_results"):
     """
     Main function to run the bandit algorithms comparison experiment.
-    
+
     Args:
         T: Maximum number of steps (default: 2500)
         d: Dimension of feature vectors (default: 5)
@@ -352,7 +352,7 @@ def main(T: int = 2500,
     print("Starting Experiment 1: Bandit Algorithms Comparison")
     print(f"Parameters: T={T}, d={dim}, K={K}, num_optimize={num_optimize}")
     print(f"best_arm_number={best_arm_number}, num_repeats={num_repeats}")
-    
+
     try:
         nonlinearities = get_functions(x_scale=2)
         indices = [1, 4, 7, 9]

@@ -1,138 +1,38 @@
-import numpy as np
+"""Classical bandit experiment runner.
 
+This module is intentionally import-safe: experiments run only through ``main``.
+The implementation is still close to the original notebook-style script; deeper
+storage/runner refactoring is planned in later phases.
+"""
 
-from stat_online.classical_bandits.experiment import (
-    Experiment, ListExperiment
-)
-
-from stat_online.classical_bandits.environment import BernoulliBanditEnvironment
-
-from stat_online.classical_bandits.algorithm import (
-        BaseModelSelection,
-        EpsilonGreedy,
-        UCB,
-        MLCB,
-        LimitedAdvice,
-        DDRB,
-        SmoothCORRAL
-    )
-
-
-from typing import Type
-
-
-def make_orcestra_algorithm(epsilon_list: list[float],
-                        M: int,
-                        K: int,
-                        c_scaler: float,
-                        alg_class: Type[BaseModelSelection],
-                        **kwargs
-                        ) -> BaseModelSelection:
-    n_exerts = len(epsilon_list)
-    n_greedies = n_exerts//2
-
-    base_algorithms = [EpsilonGreedy(epsion=epsilon, K = K, c=c_scaler) for epsilon in epsilon_list[:n_greedies]] + [UCB(K =2, c = c_scaler) for _ in epsilon_list[n_greedies:]]
-
-    return alg_class(
-                bandit_algorithms= base_algorithms,
-                M = M,
-                **kwargs
-            )
-
-from tqdm import tqdm
-from joblib import Parallel, delayed
-n_repeats = 101
-
-T = 25_000
-K = 10
-M = 4
-
-
-st = 1
-K_env = 2
-
-deltas = [np.linspace(1/k**2, 1/k, K_env) for k in range(st, K + st)]
-
-delta = 1/10
-base_rew = 2 * delta
-deltas = [ np.linspace(base_rew - 2 * delta * k/K, base_rew + delta - delta * k/K, K_env) for k in range(0, K)]
-
-
-env_list = [BernoulliBanditEnvironment(K = K_env, probs=p) for p in deltas]
-# env = BernoulliBanditEnvironment(K = K_env, probs=[0.45, 0.5] )
-epsilon_list = np.full((K,), 1) # np.logspace(-3, 0, K)
-
-c_scaler = 0.5
-def get_algorithms_list():
-    algorithms = [
-        [make_orcestra_algorithm(epsilon_list, m_i, K_env,
-                                 c_scaler = c_scaler,
-                                 alg_class=MLCB,
-                                 c = 0.5, delta = 0.1) for m_i in [1,2,3, 4]
-         ],
-        [make_orcestra_algorithm(epsilon_list, m_i, K_env,
-                                 c_scaler = c_scaler,
-                                 alg_class=LimitedAdvice,
-                                 eta_scaler=1) for m_i in [1,2,3, 4]
-         ],
-        # [make_orcestra_algorithm(epsilon_list, m_i, K,
-        #                          c_scaler = 0.5,
-        #                          alg_class=DDRB,
-        #                          d_min = 1.0, delta = 0.05,) for m_i in [1,2,3]
-        #  ],
-        [make_orcestra_algorithm(epsilon_list, 1, K_env,
-                                 c_scaler = c_scaler,
-                                 alg_class=SmoothCORRAL,
-                                 eta = (len(epsilon_list)/ T) ** 0.5, T=T,) for m_i in [1]
-         ]
-        ]
-    return algorithms
-
+from __future__ import annotations
 
 from collections import defaultdict
+from copy import deepcopy
+from pathlib import Path
+from typing import Type
+
+try:
+    import fire
+except ImportError:  # pragma: no cover - argparse fallback is for minimal environments.
+    fire = None
+import matplotlib.pyplot as plt
+import matplotlib.ticker as mtick
+import numpy as np
+import seaborn as sns
 from joblib import Parallel, delayed
 from tqdm import tqdm
-from copy import deepcopy
-def run_single_exp(alg, env, T, indices):
-    exp = ListExperiment(env, algorithm=alg)
-    exp.run(n_steps=T)
-    return indices, exp  # Возвращаем индексы вместе с результатом
 
-# 2. Формируем плоский список задач с индексами (i_group, j_alg)
-algos_list = get_algorithms_list()
-tasks = [
-    (deepcopy(alg), i_group, j_alg)
-    for i_group, group in enumerate(algos_list)
-    for j_alg, alg in enumerate(group)
-    for _ in range(n_repeats)
-]
-
-def getname(it):
-    if hasattr(it, "name"):
-        return it.name
-    return type(it).__name__
-# 3. Выполняем параллельно
-raw_results = Parallel(n_jobs=-1)(
-    delayed(run_single_exp)(alg, env_list, T, (getname(alg), ja + 1))
-    for alg, ig, ja in tqdm(tasks, desc="Parallel Run")
+from stat_online.classical_bandits.algorithm import (
+    BaseModelSelection,
+    EpsilonGreedy,
+    LimitedAdvice,
+    MLCB,
+    SmoothCORRAL,
+    UCB,
 )
-
-# 4. Собираем в словарь (ig, ja) -> [exp, exp, ...]
-results_dict = defaultdict(list)
-for (indices, exp) in raw_results:
-    results_dict[indices].append(exp)
-
-temp_map = dict(results_dict)
-
-
-import itertools
-import os
-from pathlib import Path
-
-import matplotlib.pyplot as plt
-import seaborn as sns
-
-import warnings
+from stat_online.classical_bandits.environment import BernoulliBanditEnvironment
+from stat_online.classical_bandits.experiment import ListExperiment
 
 
 COLORMAP_NAME = "tab20"
@@ -140,10 +40,137 @@ DPI = 400
 FIGSIZE = (17, 8)
 FONTSIZE = 20
 
-def get_fig_set_style(lines_count, shape=(1, 1), figsize=None, params = None):
-    # colors_list = [ "indigo", "blue", "grey", "red", "#0b5509", "pink", "coral", "black", "y", "c", "g"]
-    # colors_list = [ "#a0a0a0","#303000","#406080", "#500010","#606030", "#800080", "goldenrod", "goldenrod", "goldenrod"]
 
+def make_orcestra_algorithm(
+    epsilon_list: list[float],
+    M: int,
+    K: int,
+    c_scaler: float,
+    alg_class: Type[BaseModelSelection],
+    **kwargs,
+) -> BaseModelSelection:
+    n_exerts = len(epsilon_list)
+    n_greedies = n_exerts // 2
+    base_algorithms = [
+        EpsilonGreedy(epsion=epsilon, K=K, c=c_scaler)
+        for epsilon in epsilon_list[:n_greedies]
+    ] + [UCB(K=K, c=c_scaler) for _ in epsilon_list[n_greedies:]]
+
+    return alg_class(bandit_algorithms=base_algorithms, M=M, **kwargs)
+
+
+def build_environments(K: int, K_env: int, delta: float) -> list[BernoulliBanditEnvironment]:
+    base_rew = 2 * delta
+    deltas = [
+        np.linspace(
+            base_rew - 2 * delta * k / K,
+            base_rew + delta - delta * k / K,
+            K_env,
+        )
+        for k in range(K)
+    ]
+    return [BernoulliBanditEnvironment(K=K_env, probs=p) for p in deltas]
+
+
+def get_algorithms_list(
+    epsilon_list: np.ndarray,
+    K_env: int,
+    T: int,
+    c_scaler: float,
+    m_values: tuple[int, ...],
+    include_smooth_corral: bool = True,
+) -> list[list[BaseModelSelection]]:
+    algorithms = [
+        [
+            make_orcestra_algorithm(
+                epsilon_list,
+                m_i,
+                K_env,
+                c_scaler=c_scaler,
+                alg_class=MLCB,
+                c=0.5,
+                delta=0.1,
+            )
+            for m_i in m_values
+        ],
+        [
+            make_orcestra_algorithm(
+                epsilon_list,
+                m_i,
+                K_env,
+                c_scaler=c_scaler,
+                alg_class=LimitedAdvice,
+                eta_scaler=1,
+            )
+            for m_i in m_values
+        ],
+    ]
+    if include_smooth_corral:
+        algorithms.append([
+            make_orcestra_algorithm(
+                epsilon_list,
+                1,
+                K_env,
+                c_scaler=c_scaler,
+                alg_class=SmoothCORRAL,
+                eta=(len(epsilon_list) / T) ** 0.5,
+                T=T,
+            )
+        ])
+    return algorithms
+
+
+def getname(it) -> str:
+    if hasattr(it, "name"):
+        return it.name
+    return type(it).__name__
+
+
+def run_single_exp(alg: BaseModelSelection, env, T: int, indices):
+    exp = ListExperiment(env, algorithm=alg)
+    exp.run(n_steps=T)
+    return indices, exp
+
+
+def run_batch(
+    T: int,
+    K: int,
+    K_env: int,
+    num_repeats: int,
+    n_jobs: int,
+    c_scaler: float,
+    m_values: tuple[int, ...],
+    include_smooth_corral: bool = True,
+):
+    env_list = build_environments(K=K, K_env=K_env, delta=1 / 10)
+    epsilon_list = np.full((K,), 1)
+    algos_list = get_algorithms_list(
+        epsilon_list=epsilon_list,
+        K_env=K_env,
+        T=T,
+        c_scaler=c_scaler,
+        m_values=m_values,
+        include_smooth_corral=include_smooth_corral,
+    )
+    tasks = [
+        (deepcopy(alg), i_group, j_alg)
+        for i_group, group in enumerate(algos_list)
+        for j_alg, alg in enumerate(group)
+        for _ in range(num_repeats)
+    ]
+
+    raw_results = Parallel(n_jobs=n_jobs)(
+        delayed(run_single_exp)(alg, env_list, T, (getname(alg), ja + 1))
+        for alg, _ig, ja in tqdm(tasks, desc="Parallel Run")
+    )
+
+    results_dict = defaultdict(list)
+    for indices, exp in raw_results:
+        results_dict[indices].append(exp)
+    return dict(results_dict)
+
+
+def get_fig_set_style(lines_count, shape=(1, 1), figsize=None, params=None):
     if params is None:
         params = {
             "legend.fontsize": 17,
@@ -153,209 +180,185 @@ def get_fig_set_style(lines_count, shape=(1, 1), figsize=None, params = None):
             "xtick.labelsize": 12,
             "ytick.labelsize": 12,
             "font.size": 10,
-            #  "text.usetex": True
         }
     sns.set_context("paper", rc=params)
-    # sns.set_context("paper", font_scale=2.5, rc={"lines.linewidth": 2.5})
     if figsize is None:
         fig, ax = plt.subplots(*shape, dpi=DPI)
     else:
-        fig, ax = plt.subplots(*shape, dpi=DPI, figsize=figsize,)
-    # plt.rcParams['text.usetex'] = True
-    # plt.rcParams['text.latex.unicode'] = True
+        fig, ax = plt.subplots(*shape, dpi=DPI, figsize=figsize)
     plt.grid(which="both")
     return fig, ax
 
-import matplotlib.pyplot as plt
-import numpy as np
 
-
-# Настройка цветов и прозрачности
-std_multiplier = 1
-colors = ['blue', 'red', 'black', 'r', 'black', 'blue', 'green','y', 'm', 'y', 'k']
-markers = ['o', 's', '^', 'v', 'D', 'p', '*', 'h']
-linestyles = [ ':', '--', '-.','-']
-# Определяем макс. количество алгоритмов в самой большой группе для шкалы прозрачности
-max_algs = max(k[1] for k in temp_map.keys()) + 1
-coeffs = np.logspace(0, -0.7, max_algs)
-
-# Внутри цикла:
-
-
-def plot_bar(ax, field_name, unique_groups):
+def plot_bar(ax, temp_map, field_name, unique_groups, K):
+    colors = ["blue", "red", "black", "r", "black", "blue", "green", "y", "m", "y", "k"]
+    max_algs = max(k[1] for k in temp_map.keys()) + 1
+    coeffs = np.logspace(0, -0.7, max_algs)
 
     pos = 0
     width = 0.8 / len(temp_map)
     for g_idx, g_name in enumerate(unique_groups):
-        # Находим все алгоритмы j, принадлежащие данной группе i
         group_keys = sorted([k for k in temp_map.keys() if k[0] == g_name])
-        group_size = len(group_keys)
-        print(group_size)
         for alg_idx, key in enumerate(group_keys):
-
-            # Получаем список значений по t для конкретного алгоритма
-            values_t = temp_map[key] # list(experiment)
-
-            # a: list[dict[arm: n_selections] ]
+            values_t = temp_map[key]
             if g_name == "SmoothCORRAL":
                 a = [getattr(exp.algorithm, "selection_for_decisions") for exp in values_t]
             else:
                 a = [getattr(exp.algorithm, field_name) for exp in values_t]
-            a = np.array(a)
-            data = np.mean(a, axis = 0)
-
-            print(f'{key[0]}, M={key[1]}', sum(data))
+            data = np.mean(np.array(a), axis=0)
             x = np.arange(K) + pos * width
             pos += 1
-            # Переводим в numpy для расчетов
-
-            color = colors[g_idx % len(colors)]
-            coeff = coeffs[alg_idx % len(coeffs)]
-
-            # Основная линия (среднее)
             ax.bar(
                 x,
                 data,
                 width=width,
-                color=color,
-                alpha=coeff,
-                label=f'{key[0]}, M={key[1]}'
+                color=colors[g_idx % len(colors)],
+                alpha=coeffs[alg_idx % len(coeffs)],
+                label=f"{key[0]}, M={key[1]}",
             )
-
     return ax
 
 
+def plot_regret(ax, temp_map, unique_groups, std_multiplier=1):
+    colors = ["blue", "red", "black", "r", "black", "blue", "green", "y", "m", "y", "k"]
+    markers = ["o", "s", "^", "v", "D", "p", "*", "h"]
+    linestyles = [":", "--", "-.", "-"]
+    max_algs = max(k[1] for k in temp_map.keys()) + 1
+    coeffs = np.logspace(0, -0.7, max_algs)
 
-def plot_regret(ax, unique_groups):
     for g_idx, g_name in enumerate(unique_groups):
-        # Находим все алгоритмы j, принадлежащие данной группе i
         group_keys = sorted([k for k in temp_map.keys() if k[0] == g_name])
-        group_size = len(group_keys)
-        print(group_size)
         for alg_idx, key in enumerate(group_keys):
-            # Получаем список значений по t для конкретного алгоритма
-            values_t = temp_map[key] # list(experiment)
-            a = [exp.get_expected_regret() for exp in values_t]
-            print(len(a), len(values_t), key)
-            values_t = np.stack(a)
-
-            # Переводим в numpy для расчетов
-            data = np.array(values_t)
-
-            # Если данных несколько, считаем среднее и стандартное отклонение
-            # (Confidence Interval ~ mean ± std)
-            mean_vals = np.mean(data, axis=0) if data.ndim > 1 else data
-            std_vals = np.std(data, axis=0) if data.ndim > 1 else np.zeros_like(data)
-            std_vals *=std_multiplier
-
+            regrets = np.stack([exp.get_expected_regret() for exp in temp_map[key]])
+            mean_vals = np.mean(regrets, axis=0)
+            std_vals = np.std(regrets, axis=0) * std_multiplier
             x = np.arange(len(mean_vals))
-            color = colors[g_idx % len(colors)]
             coeff = coeffs[alg_idx % len(coeffs)]
-            marker = markers[g_idx % len(colors)]
-            linestyle = linestyles[alg_idx % len(coeffs)]
-            # Основная линия (среднее)
-            ax.plot(x, mean_vals, color=color, alpha=coeff, lw=2,
-                    label=f'{key[0]}, M={key[1]}',
-                    linestyle=linestyle,
-                    marker=marker,        # Сами значки (круг, квадрат и т.д.)
-                    markevery=1200,        # Ставим маркер только на каждую 10-ю точку
-                    markersize=5,        # Размер значка
-                    )
+            ax.plot(
+                x,
+                mean_vals,
+                color=colors[g_idx % len(colors)],
+                alpha=coeff,
+                lw=2,
+                label=f"{key[0]}, M={key[1]}",
+                linestyle=linestyles[alg_idx % len(linestyles)],
+                marker=markers[g_idx % len(markers)],
+                markevery=max(1, len(mean_vals) // 20),
+                markersize=5,
+            )
+            ax.fill_between(
+                x,
+                mean_vals - std_vals,
+                mean_vals + std_vals,
+                color=colors[g_idx % len(colors)],
+                alpha=0.2 * coeff,
+            )
 
 
+def plot_results(temp_map, K):
+    import matplotlib.patches as mpatches
 
-            # Доверительный интервал (заливка области std)
-            # alpha=0.2 * coeff делает тень светлее основной линии
-            ax.fill_between(x, mean_vals - std_vals, mean_vals + std_vals,
-                            color=color, alpha=0.2 * coeff)
+    formatter = mtick.ScalarFormatter(useMathText=True)
+    formatter.set_scientific(True)
+    formatter.set_powerlimits((-1, 1))
 
+    fig, (ax1, ax2, ax3) = get_fig_set_style(1, (3, 1), (10, 19))
+    unique_groups = [name for name in ["M-LCB", "LimitedAdvice", "SmoothCORRAL"] if any(k[0] == name for k in temp_map)]
+    plot_regret(ax1, temp_map, unique_groups)
+    plot_bar(ax2, temp_map, "selection_for_decisions", unique_groups, K)
+    plot_bar(ax3, temp_map, "counts", unique_groups, K)
 
+    ax1.set_title("(a) Cumulative Loss vs Steps")
+    ax1.set_xlabel(r"$\#$ steps")
+    ax1.set_ylabel("Cumulative Loss")
+    ax1.grid(True)
+    ax1.xaxis.set_major_formatter(formatter)
 
-import matplotlib.ticker as mtick
+    ax2.set_title("(b) Arm Selection Distribution")
+    ax2.set_xlabel("Arm Index")
+    ax2.set_ylabel("Selection Count")
+    ax2.grid(True)
+    ax2.yaxis.set_major_formatter(formatter)
 
-formatter = mtick.ScalarFormatter(useMathText=True)
-formatter.set_scientific(True)
-formatter.set_powerlimits((-1, 1))
-# ax3.yaxis.set_major_formatter(formatter)
+    ax3.set_title("(c) Arm Optimization Distribution")
+    ax3.set_xlabel("Arm Index")
+    ax3.set_ylabel("Optimization Count")
+    ax3.grid(True)
+    ax3.yaxis.set_major_formatter(formatter)
 
-# fig, (ax1, ax2, ax3) = plt.subplots(3, 1, figsize=(10, 18))
-fig, (ax1, ax2, ax3) = get_fig_set_style(1, (3,1), (10,19))
+    handles, labels = ax1.get_legend_handles_labels()
+    rows = 4
+    cols = 3
+    total_slots = rows * cols
+    empty_handle = mpatches.Rectangle((0, 0), 1, 1, fill=False, edgecolor="none", visible=False)
+    handles = list(handles)
+    labels = list(labels)
+    while len(handles) < total_slots:
+        handles.append(empty_handle)
+        labels.append("")
 
-unique_groups = ['M-LCB','LimitedAdvice', 'SmoothCORRAL']
-plot_regret(ax1, unique_groups)
-plot_bar(ax2, "selection_for_decisions", unique_groups)
-plot_bar(ax3, "counts", unique_groups)
-
-
-ax1.set_title("(a) Cumulative Loss vs Steps")
-ax1.set_xlabel(r"$\#$ steps")
-ax1.set_ylabel("Cumulative Loss")
-ax1.grid(True)
-
-# Для оси X: 10000 станет 10k
-ax1.xaxis.set_major_formatter(formatter)
-
-
-ax2.set_title("(b) Arm Selection Distribution")
-ax2.set_xlabel("Arm Index")
-ax2.set_ylabel("Selection Count")
-ax2.grid(True)
-ax2.yaxis.set_major_formatter(formatter)
-
-ax3.set_title("(c) Arm Optimization Distribution")
-ax3.set_xlabel("Arm Index")
-ax3.set_ylabel("Optimization Count")
-ax3.grid(True)
-ax3.yaxis.set_major_formatter(formatter)
-
-# ax.legend(bbox_to_anchor=(1.05, 1), loc='upper left')
-# plt.tight_layout()
-# plt.show()
-
-
-h, legend_ = ax1.get_legend_handles_labels()
-ncol = 3
-
-
-
-# 1. Определяем целевую сетку
-rows = 4
-cols = 3
-total_slots = rows * cols # 12
-
-import matplotlib.patches as mpatches
-# 2. Создаем "невидимый" элемент
-empty_handle = mpatches.Rectangle((0, 0), 1, 1, fill=False, edgecolor='none', visible=False)
-
-# 3. Добиваем списки до 12 элементов
-h_padded = list(h)
-l_padded = list(legend_)
-
-while len(h_padded) < total_slots:
-    h_padded.append(empty_handle)
-    l_padded.append("") # Пустая строка для текста
-
-# 4. Выводим легенду (теперь 3 колонки по 4 строки)
-leg = fig.legend(
-    h_padded,
-    l_padded,
-    ncol=cols,
-    bbox_to_anchor=(0.0, -0.02, 1, 0.1),
-    loc="outside upper left",
-    mode="expand",
-    borderaxespad=0.0,
-)
+    fig.legend(
+        handles,
+        labels,
+        ncol=cols,
+        bbox_to_anchor=(0.0, -0.02, 1, 0.1),
+        loc="outside upper left",
+        mode="expand",
+        borderaxespad=0.0,
+    )
+    return fig
 
 
-def save_plots(fig, filename="experiment_results.png"):
-    """Save plots to file.
-
-    Args:
-
-        fig: matplotlib figure object
-        filename: output filename
-    """
-    fig.savefig(filename,  format='pdf', dpi=300, bbox_inches='tight')
+def save_plots(fig, filename="experiment_results.pdf"):
+    Path(filename).parent.mkdir(parents=True, exist_ok=True)
+    fig.savefig(filename, format="pdf", dpi=300, bbox_inches="tight")
     plt.close(fig)
 
-save_plots(fig, "bandit_experiment.pdf")
+
+def main(
+    T: int = 25_000,
+    K: int = 10,
+    K_env: int = 2,
+    num_repeats: int = 101,
+    n_jobs: int = -1,
+    c_scaler: float = 0.5,
+    output_path: str = "bandit_experiment.pdf",
+    smoke: bool = False,
+):
+    if smoke:
+        T = 50
+        num_repeats = 1
+        n_jobs = 1
+        K = min(K, 4)
+
+    temp_map = run_batch(
+        T=T,
+        K=K,
+        K_env=K_env,
+        num_repeats=num_repeats,
+        n_jobs=n_jobs,
+        c_scaler=c_scaler,
+        m_values=tuple(range(1, min(4, K) + 1)),
+        include_smooth_corral=not smoke,
+    )
+    fig = plot_results(temp_map, K=K)
+    save_plots(fig, output_path)
+    return output_path
+
+
+if __name__ == "__main__":
+    if fire is None:
+        import argparse
+
+        parser = argparse.ArgumentParser(description=__doc__)
+        parser.add_argument("--T", type=int, default=25_000)
+        parser.add_argument("--K", type=int, default=10)
+        parser.add_argument("--K_env", type=int, default=2)
+        parser.add_argument("--num_repeats", type=int, default=101)
+        parser.add_argument("--n_jobs", type=int, default=-1)
+        parser.add_argument("--c_scaler", type=float, default=0.5)
+        parser.add_argument("--output_path", default="bandit_experiment.pdf")
+        parser.add_argument("--smoke", action="store_true")
+        main(**vars(parser.parse_args()))
+    else:
+        fire.Fire(main)

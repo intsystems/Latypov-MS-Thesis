@@ -31,6 +31,45 @@ To our knowledge, this is the first result establishing regret guarantees when m
 ========================================================================================
 
 Как использовать:
-1) установить при помощи uv
-2) смотреть `notebooks/algorithm_testing.py`
-3) запустить `experiments/experiment1.py`
+1) установить зависимости через `uv sync`
+2) смотреть `notebooks/algorithm_testing.ipynb` для исходных экспериментов
+3) запускать smoke/full эксперименты командами ниже
+========================================================================================
+
+## Development and Smoke Runs
+
+This repository uses `uv` for dependency management and command execution.
+
+Install or update the local environment:
+
+```bash
+uv sync
+```
+
+Run the basic import/syntax check:
+
+```bash
+MPLCONFIGDIR=/private/tmp/mplconfig-codex uv run python -m compileall stat_online experiments
+```
+
+Check experiment CLIs:
+
+```bash
+MPLCONFIGDIR=/private/tmp/mplconfig-codex uv run python -m experiments.experiment_bandits --help
+MPLCONFIGDIR=/private/tmp/mplconfig-codex uv run python -m experiments.experiment_glm --help
+```
+
+Run smoke experiments:
+
+```bash
+MPLCONFIGDIR=/private/tmp/mplconfig-codex uv run python -m experiments.experiment_bandits --smoke --output_path /private/tmp/bandit_smoke_uv.pdf
+MPLCONFIGDIR=/private/tmp/mplconfig-codex uv run python -m experiments.experiment_glm --T 20 --dim 3 --K 4 --num_optimize 1 --num_repeats 1 --n_jobs 1 --output_dir /private/tmp/glm_smoke_uv
+```
+
+Featured GLM smoke run:
+
+```bash
+MPLCONFIGDIR=/private/tmp/mplconfig-codex uv run python -m experiments.experiment_glm --T 20 --dim 3 --K 4 --num_optimize 1 --num_repeats 1 --n_jobs 1 --output_dir /private/tmp/glm_smoke_uv_featured --is_featured --context_d 2
+```
+
+`MPLCONFIGDIR` is set because some local environments cannot write to the default Matplotlib cache directory.

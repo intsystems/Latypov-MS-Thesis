@@ -19,7 +19,10 @@ import matplotlib.pyplot as plt
 from dataclasses import dataclass
 from time import time
 from itertools import chain, product
-import fire
+try:
+    import fire
+except ImportError:  # pragma: no cover - argparse fallback is for minimal environments.
+    fire = None
 from typing import Callable, List, Dict, Any, Optional, Union
 
 from stat_online.lin_bandits.convex_functions_jax import get_functions
@@ -72,7 +75,7 @@ def generate_data(T: int,
     W = rng.standard_cauchy(size=(context_d,))
     W /= np.linalg.norm(W)  # Normalize W to unit norm
     W = W * rng.uniform(0.7, 0.95)  # Scale W to have random magnitude
-    linear = X[:context_d, :] @ W
+    linear = X[:, :context_d] @ W
 
     # Apply nonlinearity with noise
     y = nonlinearity(linear) + rng.normal(loc=0, scale=0.02, size=linear.shape)
@@ -221,7 +224,8 @@ def run_experiment_batch(
         d_base: int = 2,      # Base for feature selection dimensions
         context_d: Union[int, None] = None,  # Ground truth dimension of context vector
         n_jobs: int = 12,
-        output_dir: str = "./exp_results"
+        output_dir: str = "./exp_results",
+        best_arm_number: int = 0,
         ) -> Dict[str, List[AlgRes]]:
     """
     Run a batch of experiments with different strategies and parameters.
@@ -268,7 +272,7 @@ def run_experiment_batch(
         context_types = ["no"]  # Can add "context", "dummy_context" for more experiments
 
         # Generate all parameter combinations
-        strategy_n_opt_pairs = list(product((strategies, strategy_parameters), n_optims, context_types))
+        strategy_n_opt_pairs = list(product(zip(strategies, strategy_parameters), n_optims, context_types))
 
         # Run experiments in parallel
 
@@ -276,16 +280,16 @@ def run_experiment_batch(
         alg_results_list = Parallel(n_jobs=n_jobs)(
             run_experiment_del(X, y, T, K, n_optim,
                                strategy,
-                               strategy_params,
                                nonlinearities,
-                               is_context,
-                               featured=False, d_base=2)
+                               strategy_params,
+                               is_context=is_context,
+                               featured=is_featured, d_base=d_base)
             for (strategy, strategy_params), n_optim, is_context in strategy_n_opt_pairs
         )
 
         # Organize results
         alg_results = {}
-        for (alg_res, runtime), (strategy, n_optim, is_context) in zip(alg_results_list, strategy_n_opt_pairs):
+        for (alg_res, runtime), ((strategy, _strategy_params), n_optim, is_context) in zip(alg_results_list, strategy_n_opt_pairs):
             alg_name = f"{strategy.__name__}_{n_optim}_{is_context}"
 
             res = AlgRes(
@@ -295,7 +299,7 @@ def run_experiment_batch(
                 arm_selection_hist=alg_res.selection_history,
                 alg_loss_hist=alg_res.loss_history,
                 max_steps=T,
-                n_arms=K,
+                n_arms=len(alg_res.selection_history) and (max(alg_res.selection_history) + 1) or K,
                 runtime=runtime,
                 learned_algorithm=alg_res
             )
@@ -305,6 +309,8 @@ def run_experiment_batch(
 
     # Run multiple repetitions
     print(f"Running {num_repeats} experiment repetitions...")
+    import os
+    os.makedirs(output_dir, exist_ok=True)
     res_list = [run_single_experiment() for _ in range(num_repeats)]
 
     # Combine results across repetitions
@@ -330,7 +336,7 @@ def main(T: int = 2500,
         K: int = 10,
         num_optimize: int = 3,
         best_arm_number: int = 9,
-        is_featured=True,
+        is_featured: bool = False,
         d_base=2,
         context_d=None,
         num_repeats: int = 5,
@@ -352,6 +358,9 @@ def main(T: int = 2500,
     print("Starting Experiment 1: Bandit Algorithms Comparison")
     print(f"Parameters: T={T}, d={dim}, K={K}, num_optimize={num_optimize}")
     print(f"best_arm_number={best_arm_number}, num_repeats={num_repeats}")
+    if is_featured and context_d is None:
+        context_d = max(1, dim // 2)
+        print(f"context_d was not provided; using context_d={context_d} for featured run")
 
     try:
         nonlinearities = get_functions(x_scale=2)
@@ -368,10 +377,11 @@ def main(T: int = 2500,
                 num_optimize=num_optimize,
                 num_repeats=num_repeats,
                 is_featured=is_featured,
-                d_base=d_base
+                d_base=d_base,
                 context_d=context_d,
                 n_jobs=n_jobs,
-                output_dir=output_dir
+                output_dir=output_dir,
+                best_arm_number=best_arm_number,
         )
         print("Experiment completed successfully!")
         return results
@@ -381,4 +391,21 @@ def main(T: int = 2500,
 
 
 if __name__ == "__main__":
-    fire.Fire(main)
+    if fire is None:
+        import argparse
+
+        parser = argparse.ArgumentParser(description=__doc__)
+        parser.add_argument("--T", type=int, default=2500)
+        parser.add_argument("--dim", type=int, default=5)
+        parser.add_argument("--K", type=int, default=10)
+        parser.add_argument("--num_optimize", type=int, default=3)
+        parser.add_argument("--best_arm_number", type=int, default=9)
+        parser.add_argument("--is_featured", action="store_true")
+        parser.add_argument("--d_base", type=int, default=2)
+        parser.add_argument("--context_d", type=int, default=None)
+        parser.add_argument("--num_repeats", type=int, default=5)
+        parser.add_argument("--n_jobs", type=int, default=12)
+        parser.add_argument("--output_dir", default="./exp_results")
+        main(**vars(parser.parse_args()))
+    else:
+        fire.Fire(main)

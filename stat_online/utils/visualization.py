@@ -9,7 +9,7 @@ import numpy as np
 from dataclasses import dataclass
 import scipy.stats as st
 
-from stat_online.ucb_algorithm import Strategy
+from stat_online.lin_bandits.ucb_algorithm import Strategy
 
 
 
@@ -62,7 +62,11 @@ def calculate_run_statistics(
     # loss_ci_cum = st.t.interval(0.1, len(runs)-1, loc=mean_cum_loss, scale=st.sem(cum_loss, axis=0))
     
     # Calculate arm selection stats
-    arm_selections = np.array([np.bincount(run.arm_selection_hist, minlength=runs[0].n_arms) for run in runs])
+    max_selected_arm = max((max(run.arm_selection_hist) for run in runs if run.arm_selection_hist), default=-1)
+    n_arms = max(runs[0].n_arms, max_selected_arm + 1)
+    if hasattr(runs[0].learned_algorithm, 'arms'):
+        n_arms = max(n_arms, len(runs[0].learned_algorithm.arms))
+    arm_selections = np.array([np.bincount(run.arm_selection_hist, minlength=n_arms)[:n_arms] for run in runs])
     mean_arm_selection = np.mean(arm_selections, axis=0)
     
     # Calculate mean runtime
@@ -139,7 +143,7 @@ def plot_experiment_results(
     for algname, stats in alg_stats.items():
         color = get_color(strategy_colors, alg_results, algname,)
 
-        alpha = 0.2 + 0.8 * ((alg_results[algname][0].num_optimized_arms + 1)/ alg_results[algname][0].n_arms)
+        alpha = min(1.0, 0.2 + 0.8 * ((alg_results[algname][0].num_optimized_arms + 1) / alg_results[algname][0].n_arms))
         
         ax1.plot(
             range(len(stats['mean_cum_loss'])),
@@ -173,10 +177,10 @@ def plot_experiment_results(
         color = get_color(strategy_colors, alg_results, algname,)
 
 
-        alpha = 0.2 + 0.8 * (
-        (alg_results[algname][0].num_optimized_arms + 1) / 
-        alg_results[algname][0].n_arms
-    )
+        alpha = min(
+            1.0,
+            0.2 + 0.8 * ((alg_results[algname][0].num_optimized_arms + 1) / alg_results[algname][0].n_arms),
+        )
 
 
         
@@ -212,13 +216,13 @@ def plot_experiment_results(
     ax2.grid(True)
     
     # Plot 3: Arm selection histogram
-    n_arms = alg_results[next(iter(alg_results))][0].n_arms
+    n_arms = max(run.n_arms for runs in alg_results.values() for run in runs)
     width = 0.8 / len(alg_results)
     
     for i, (algname, stats) in enumerate(alg_stats.items()):
         color = get_color(strategy_colors, alg_results, algname,)
 
-        alpha = 0.2 + 0.8 * ((alg_results[algname][0].num_optimized_arms + 1)/ alg_results[algname][0].n_arms)
+        alpha = min(1.0, 0.2 + 0.8 * ((alg_results[algname][0].num_optimized_arms + 1) / alg_results[algname][0].n_arms))
         
         x = np.arange(n_arms) + i * width
         
@@ -241,10 +245,10 @@ def plot_experiment_results(
     for i, (algname, runs) in enumerate(alg_results.items()):
         color = get_color(strategy_colors, alg_results, algname,)
 
-        alpha = 0.2 + 0.9 * (
-                (runs[0].num_optimized_arms + 1) /
-                runs[0].n_arms
-            )
+        alpha = min(
+            1.0,
+            0.2 + 0.9 * ((runs[0].num_optimized_arms + 1) / runs[0].n_arms),
+        )
 
 
 
@@ -252,7 +256,10 @@ def plot_experiment_results(
         opt_counts = []
         for run in runs:
             counts = [arm.optimized_count for arm in run.learned_algorithm.arms]
-            assert len(counts) == n_arms
+            if len(counts) < n_arms:
+                counts = counts + [0] * (n_arms - len(counts))
+            else:
+                counts = counts[:n_arms]
             opt_counts.append(counts)
         
         # print(opt_counts)
@@ -261,7 +268,6 @@ def plot_experiment_results(
         else:
             mean_counts = opt_counts[0]
         x = np.arange(n_arms) + i * width
-        assert len(x) == len(mean_counts)
         # print(x, mean_counts)
         ax4.bar(
             x,

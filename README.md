@@ -62,17 +62,25 @@ MPLCONFIGDIR=/private/tmp/mplconfig-codex uv run python -m experiments.experimen
 Run smoke experiments:
 
 ```bash
-MPLCONFIGDIR=/private/tmp/mplconfig-codex uv run python -m experiments.experiment_bandits --preset smoke --output_path /private/tmp/bandit_smoke_uv.pdf --output_dir /private/tmp/bandit_smoke_uv_artifacts
-MPLCONFIGDIR=/private/tmp/mplconfig-codex uv run python -m experiments.experiment_glm --preset smoke --output_dir /private/tmp/glm_smoke_uv
+MPLCONFIGDIR=/private/tmp/mplconfig-codex uv run python -m experiments.experiment_bandits --preset smoke --seed 42 --output_path /private/tmp/bandit_smoke_uv.pdf --output_dir /private/tmp/bandit_smoke_uv_artifacts
+MPLCONFIGDIR=/private/tmp/mplconfig-codex uv run python -m experiments.experiment_glm --preset smoke --seed 42 --output_dir /private/tmp/glm_smoke_uv
 ```
 
 Featured GLM smoke run:
 
 ```bash
-MPLCONFIGDIR=/private/tmp/mplconfig-codex uv run python -m experiments.experiment_glm --preset smoke --output_dir /private/tmp/glm_smoke_uv_featured --is_featured --context_d 2
+MPLCONFIGDIR=/private/tmp/mplconfig-codex uv run python -m experiments.experiment_glm --preset smoke --seed 42 --output_dir /private/tmp/glm_smoke_uv_featured --is_featured --context_d 2
 ```
 
 `MPLCONFIGDIR` is set because some local environments cannot write to the default Matplotlib cache directory.
+
+Phase 3 uses shared runner/lifecycle helpers for both experiment families:
+
+- `stat_online/experiments/runner.py` owns timing, task/repeat execution, and deterministic repeat seed allocation.
+- `stat_online/experiments/lifecycle.py` owns output directory creation and artifact bundle writing.
+- `stat_online/classical_bandits/runners.py` and `stat_online/lin_bandits/runners.py` convert domain outputs into shared `RunRecord` rows and primitive arrays.
+
+The top-level `--seed` controls deterministic data/environment setup and per-repeat seeds where the current algorithm implementations still use NumPy's legacy global RNG.
 
 
 Phase 2 artifact layout for smoke/full runs:

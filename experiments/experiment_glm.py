@@ -40,10 +40,10 @@ from stat_online.lin_bandits.ucb_algorithm import (
     ContextualArm,
     dummyContextualArm
 )
-from stat_online.core.records import RunRecord
 from stat_online.experiments.plotting import save_glm_artifact_plot
-from stat_online.experiments.runner import run_repeats
-from stat_online.experiments.storage import write_experiment_artifacts
+from stat_online.experiments.lifecycle import save_experiment_bundle
+from stat_online.experiments.runner import repeat_seeds, run_repeats, seed_numpy
+from stat_online.lin_bandits.runners import glm_results_to_artifacts
 from stat_online.utils.visualization import AlgRes, plot_experiment_results, save_plots
 
 
@@ -231,6 +231,8 @@ def run_experiment_batch(
         best_arm_number: int = 0,
         save_debug_pickle: bool = False,
         config: Optional[dict[str, Any]] = None,
+        repeat_seed_values: Optional[list[int]] = None,
+        data_seed: int = 42,
         ) -> Dict[str, List[AlgRes]]:
     """
     Run a batch of experiments with different strategies and parameters.
@@ -265,14 +267,16 @@ def run_experiment_batch(
                                   d=dim,
                                   context_d=context_d,
                                   nonlinearity=generation_nonlinearity,
-                                  random_state=42)
+                                  random_state=data_seed)
 
     # Define strategies to test
     strategies = [UCBAlgorithm, GroupedUCB, EpsilonGreedyAlgorithm, Exp3Algorithm]
     strategy_parameters = [{"delta": 0.1}, {"delta": 0.1}, {"delta": 0.1}, {"delta": 0.1},]  # additional parameters of strategies
 
-    def run_single_experiment():
+    def run_single_experiment(repeat_seed: int | None = None):
         """Run a single experiment with all strategy combinations."""
+        if repeat_seed is not None:
+            seed_numpy(repeat_seed)
         n_optims = range(1, num_optimize + 1)
         context_types = ["no"]  # Can add "context", "dummy_context" for more experiments
 
@@ -316,7 +320,12 @@ def run_experiment_batch(
     print(f"Running {num_repeats} experiment repetitions...")
     import os
     os.makedirs(output_dir, exist_ok=True)
-    res_list = run_repeats(num_repeats, lambda _repeat: run_single_experiment(), n_jobs=1)
+    seeds_for_repeats = repeat_seed_values or [None] * num_repeats
+    res_list = run_repeats(
+        num_repeats,
+        lambda repeat: run_single_experiment(seeds_for_repeats[repeat]),
+        n_jobs=1,
+    )
 
     # Combine results across repetitions
     res_dict = {}
@@ -324,29 +333,6 @@ def run_experiment_batch(
         res_dict[key] = [r[key] for r in res_list]
 
     run_id = f"glm_best_{best_arm_number}"
-    run_records: list[RunRecord] = []
-    arrays: dict[str, Any] = {}
-    for alg_name, runs in res_dict.items():
-        for repeat_idx, run in enumerate(runs):
-            losses = np.asarray(run.alg_loss_hist, dtype=float)
-            selections = np.asarray(run.arm_selection_hist, dtype=int)
-            key_prefix = f"{alg_name}/repeat_{repeat_idx}"
-            arrays[f"loss/{key_prefix}"] = losses
-            arrays[f"cum_loss/{key_prefix}"] = np.cumsum(losses)
-            arrays[f"selected_arm/{key_prefix}"] = selections
-            run_records.append(RunRecord(
-                run_id=run_id,
-                experiment_name="glm_bandits",
-                repeat=repeat_idx,
-                algorithm=alg_name,
-                M=run.num_optimized_arms,
-                K=run.n_arms,
-                T=run.max_steps,
-                runtime_sec=run.runtime,
-                final_loss=float(np.sum(losses)) if losses.size else 0.0,
-                extra={"strategy_class": run.strategy_class.__name__},
-            ))
-
     artifact_config = config or {
         "T": T,
         "K": K,
@@ -357,8 +343,15 @@ def run_experiment_batch(
         "d_base": d_base,
         "context_d": context_d,
         "best_arm_number": best_arm_number,
+        "data_seed": data_seed,
+        "repeat_seeds": repeat_seed_values or [],
     }
-    write_experiment_artifacts(
+    run_records, arrays = glm_results_to_artifacts(
+        res_dict,
+        run_id=run_id,
+        config=artifact_config,
+    )
+    save_experiment_bundle(
         output_dir,
         "glm_bandits",
         artifact_config,
@@ -395,7 +388,8 @@ def main(T: int = 2500,
         smoke: bool = False,
         preset: str = "",
         save_debug_pickle: bool = False,
-        regenerate_plot_from: str = ""):
+        regenerate_plot_from: str = "",
+        seed: int = 42):
     """
     Main function to run the bandit algorithms comparison experiment.
 
@@ -431,6 +425,8 @@ def main(T: int = 2500,
         context_d = max(1, dim // 2)
         print(f"context_d was not provided; using context_d={context_d} for featured run")
 
+    repeat_seed_values = repeat_seeds(seed, num_repeats)
+
     try:
         nonlinearities = get_functions(x_scale=2)
         indices = [1, 4, 7, 9]
@@ -465,7 +461,12 @@ def main(T: int = 2500,
                     "n_jobs": n_jobs,
                     "preset": preset,
                     "smoke": smoke,
+                    "seed": seed,
+                    "data_seed": seed,
+                    "repeat_seeds": repeat_seed_values,
                 },
+                repeat_seed_values=repeat_seed_values,
+                data_seed=seed,
         )
         print("Experiment completed successfully!")
         return results
@@ -494,6 +495,7 @@ if __name__ == "__main__":
         parser.add_argument("--preset", default="")
         parser.add_argument("--save_debug_pickle", action="store_true")
         parser.add_argument("--regenerate_plot_from", default="")
+        parser.add_argument("--seed", type=int, default=42)
         main(**vars(parser.parse_args()))
     else:
         fire.Fire(main)

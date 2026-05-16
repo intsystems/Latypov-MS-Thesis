@@ -60,3 +60,18 @@ def run_repeats(
 ) -> list[R]:
     """Run a repeat-indexed worker and return results in repeat order."""
     return run_tasks(range(num_repeats), worker, n_jobs=n_jobs, prefer=prefer)
+
+
+def repeat_seeds(seed: int, num_repeats: int) -> list[int]:
+    """Deterministically derive one uint32 seed per repeat."""
+    import numpy as np
+
+    seed_sequence = np.random.SeedSequence(seed)
+    return [int(child.generate_state(1, dtype=np.uint32)[0]) for child in seed_sequence.spawn(num_repeats)]
+
+
+def seed_numpy(seed: int) -> None:
+    """Seed legacy global NumPy RNG used by current algorithm implementations."""
+    import numpy as np
+
+    np.random.seed(int(seed) % (2**32))

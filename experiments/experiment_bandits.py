@@ -10,7 +10,7 @@ from __future__ import annotations
 from collections import defaultdict
 from copy import deepcopy
 from pathlib import Path
-from typing import Any, Type
+from typing import Type
 
 try:
     import fire
@@ -32,10 +32,10 @@ from stat_online.classical_bandits.algorithm import (
 )
 from stat_online.classical_bandits.environment import BernoulliBanditEnvironment
 from stat_online.classical_bandits.experiment import ListExperiment
-from stat_online.core.records import RunRecord
+from stat_online.classical_bandits.runners import classical_results_to_artifacts
+from stat_online.experiments.lifecycle import save_experiment_bundle
 from stat_online.experiments.plotting import save_classical_bandit_artifact_plot
-from stat_online.experiments.runner import run_tasks
-from stat_online.experiments.storage import write_experiment_artifacts
+from stat_online.experiments.runner import repeat_seeds, run_tasks, seed_numpy
 
 
 COLORMAP_NAME = "tab20"
@@ -129,7 +129,9 @@ def getname(it) -> str:
     return type(it).__name__
 
 
-def run_single_exp(alg: BaseModelSelection, env, T: int, indices):
+def run_single_exp(alg: BaseModelSelection, env, T: int, indices, seed: int | None = None):
+    if seed is not None:
+        seed_numpy(seed)
     exp = ListExperiment(env, algorithm=alg)
     exp.run(n_steps=T)
     return indices, exp
@@ -144,7 +146,9 @@ def run_batch(
     c_scaler: float,
     m_values: tuple[int, ...],
     include_smooth_corral: bool = True,
+    seed: int = 42,
 ):
+    seed_numpy(seed)
     env_list = build_environments(K=K, K_env=K_env, delta=1 / 10)
     epsilon_list = np.full((K,), 1)
     algos_list = get_algorithms_list(
@@ -155,23 +159,24 @@ def run_batch(
         m_values=m_values,
         include_smooth_corral=include_smooth_corral,
     )
+    repeat_seed_values = repeat_seeds(seed, num_repeats)
     tasks = [
-        (deepcopy(alg), i_group, j_alg)
+        (deepcopy(alg), i_group, j_alg, repeat_idx, repeat_seed_values[repeat_idx])
         for i_group, group in enumerate(algos_list)
         for j_alg, alg in enumerate(group)
-        for _ in range(num_repeats)
+        for repeat_idx in range(num_repeats)
     ]
 
     def worker(task):
-        alg, _ig, ja = task
-        return run_single_exp(alg, env_list, T, (getname(alg), ja + 1))
+        alg, _ig, ja, _repeat_idx, repeat_seed = task
+        return run_single_exp(alg, env_list, T, (getname(alg), ja + 1), seed=repeat_seed)
 
     raw_results = run_tasks(tqdm(tasks, desc="Parallel Run"), worker, n_jobs=n_jobs)
 
     results_dict = defaultdict(list)
     for indices, exp in raw_results:
         results_dict[indices].append(exp)
-    return dict(results_dict)
+    return dict(results_dict), repeat_seed_values
 
 
 def get_fig_set_style(lines_count, shape=(1, 1), figsize=None, params=None):
@@ -319,53 +324,6 @@ def save_plots(fig, filename="experiment_results.pdf"):
     plt.close(fig)
 
 
-def write_bandit_artifacts(output_dir: str | Path, temp_map, config: dict[str, Any]) -> Path:
-    run_id = "classical_bandits"
-    run_records: list[RunRecord] = []
-    arrays: dict[str, Any] = {}
-    T = int(config["T"])
-    K = int(config["K"])
-    for (group_name, m_value), runs in temp_map.items():
-        algorithm = f"{group_name}_M{m_value}"
-        for repeat_idx, exp in enumerate(runs):
-            rewards = np.asarray(exp.reward_history, dtype=float)
-            regret = np.asarray(exp.get_expected_regret(), dtype=float)
-            selected_expert = []
-            selected_arm = []
-            for item in exp.arm_selection_history:
-                if isinstance(item, tuple):
-                    selected_expert.append(item[0])
-                    selected_arm.append(item[1])
-                else:
-                    selected_expert.append(-1)
-                    selected_arm.append(item)
-            key_prefix = f"{algorithm}/repeat_{repeat_idx}"
-            arrays[f"reward/{key_prefix}"] = rewards
-            arrays[f"regret/{key_prefix}"] = regret
-            arrays[f"selected_expert/{key_prefix}"] = np.asarray(selected_expert, dtype=int)
-            arrays[f"selected_arm/{key_prefix}"] = np.asarray(selected_arm, dtype=int)
-            run_records.append(RunRecord(
-                run_id=run_id,
-                experiment_name="classical_bandits",
-                repeat=repeat_idx,
-                algorithm=algorithm,
-                group=group_name,
-                M=int(m_value),
-                K=K,
-                T=T,
-                final_regret=float(regret[-1]) if regret.size else 0.0,
-                total_reward=float(np.sum(rewards)) if rewards.size else 0.0,
-            ))
-    return write_experiment_artifacts(
-        output_dir,
-        "classical_bandits",
-        config,
-        run_records,
-        arrays,
-        run_id=run_id,
-    )
-
-
 def main(
     T: int = 25_000,
     K: int = 10,
@@ -378,6 +336,7 @@ def main(
     smoke: bool = False,
     preset: str = "",
     regenerate_plot_from: str = "",
+    seed: int = 42,
 ):
     if regenerate_plot_from:
         path = save_classical_bandit_artifact_plot(regenerate_plot_from)
@@ -393,7 +352,7 @@ def main(
         n_jobs = 1
         K = min(K, 4)
 
-    temp_map = run_batch(
+    temp_map, repeat_seed_values = run_batch(
         T=T,
         K=K,
         K_env=K_env,
@@ -402,6 +361,7 @@ def main(
         c_scaler=c_scaler,
         m_values=tuple(range(1, min(4, K) + 1)),
         include_smooth_corral=not smoke_mode,
+        seed=seed,
     )
     config = {
         "T": T,
@@ -415,8 +375,22 @@ def main(
         "smoke": smoke,
         "preset": preset,
         "include_smooth_corral": not smoke_mode,
+        "seed": seed,
+        "repeat_seeds": repeat_seed_values,
     }
-    write_bandit_artifacts(output_dir, temp_map, config)
+    run_records, arrays = classical_results_to_artifacts(
+        temp_map,
+        run_id="classical_bandits",
+        config=config,
+    )
+    save_experiment_bundle(
+        output_dir,
+        "classical_bandits",
+        config,
+        run_records,
+        arrays,
+        run_id="classical_bandits",
+    )
     fig = plot_results(temp_map, K=K)
     save_plots(fig, output_path)
     return output_path
@@ -438,6 +412,7 @@ if __name__ == "__main__":
         parser.add_argument("--smoke", action="store_true")
         parser.add_argument("--preset", default="")
         parser.add_argument("--regenerate_plot_from", default="")
+        parser.add_argument("--seed", type=int, default=42)
         main(**vars(parser.parse_args()))
     else:
         fire.Fire(main)

@@ -16,10 +16,7 @@ try:
     import fire
 except ImportError:  # pragma: no cover - argparse fallback is for minimal environments.
     fire = None
-import matplotlib.pyplot as plt
-import matplotlib.ticker as mtick
 import numpy as np
-import seaborn as sns
 from tqdm import tqdm
 
 from stat_online.classical_bandits.algorithm import (
@@ -34,7 +31,11 @@ from stat_online.classical_bandits.environment import BernoulliBanditEnvironment
 from stat_online.classical_bandits.experiment import ListExperiment
 from stat_online.classical_bandits.runners import classical_results_to_artifacts
 from stat_online.experiments.lifecycle import save_experiment_bundle
-from stat_online.experiments.plotting import save_classical_bandit_artifact_plot
+from stat_online.experiments.plotting import (
+    plot_classical_bandit_results,
+    save_classical_bandit_artifact_plot,
+    save_figure,
+)
 from stat_online.experiments.runner import repeat_seeds, run_tasks, seed_numpy
 
 
@@ -180,6 +181,9 @@ def run_batch(
 
 
 def get_fig_set_style(lines_count, shape=(1, 1), figsize=None, params=None):
+    import matplotlib.pyplot as plt
+    import seaborn as sns
+
     if params is None:
         params = {
             "legend.fontsize": 17,
@@ -199,131 +203,6 @@ def get_fig_set_style(lines_count, shape=(1, 1), figsize=None, params=None):
     return fig, ax
 
 
-def plot_bar(ax, temp_map, field_name, unique_groups, K):
-    colors = ["blue", "red", "black", "r", "black", "blue", "green", "y", "m", "y", "k"]
-    max_algs = max(k[1] for k in temp_map.keys()) + 1
-    coeffs = np.logspace(0, -0.7, max_algs)
-
-    pos = 0
-    width = 0.8 / len(temp_map)
-    for g_idx, g_name in enumerate(unique_groups):
-        group_keys = sorted([k for k in temp_map.keys() if k[0] == g_name])
-        for alg_idx, key in enumerate(group_keys):
-            values_t = temp_map[key]
-            if g_name == "SmoothCORRAL":
-                a = [getattr(exp.algorithm, "selection_for_decisions") for exp in values_t]
-            else:
-                a = [getattr(exp.algorithm, field_name) for exp in values_t]
-            data = np.mean(np.array(a), axis=0)
-            x = np.arange(K) + pos * width
-            pos += 1
-            ax.bar(
-                x,
-                data,
-                width=width,
-                color=colors[g_idx % len(colors)],
-                alpha=coeffs[alg_idx % len(coeffs)],
-                label=f"{key[0]}, M={key[1]}",
-            )
-    return ax
-
-
-def plot_regret(ax, temp_map, unique_groups, std_multiplier=1):
-    colors = ["blue", "red", "black", "r", "black", "blue", "green", "y", "m", "y", "k"]
-    markers = ["o", "s", "^", "v", "D", "p", "*", "h"]
-    linestyles = [":", "--", "-.", "-"]
-    max_algs = max(k[1] for k in temp_map.keys()) + 1
-    coeffs = np.logspace(0, -0.7, max_algs)
-
-    for g_idx, g_name in enumerate(unique_groups):
-        group_keys = sorted([k for k in temp_map.keys() if k[0] == g_name])
-        for alg_idx, key in enumerate(group_keys):
-            regrets = np.stack([exp.get_expected_regret() for exp in temp_map[key]])
-            mean_vals = np.mean(regrets, axis=0)
-            std_vals = np.std(regrets, axis=0) * std_multiplier
-            x = np.arange(len(mean_vals))
-            coeff = coeffs[alg_idx % len(coeffs)]
-            ax.plot(
-                x,
-                mean_vals,
-                color=colors[g_idx % len(colors)],
-                alpha=coeff,
-                lw=2,
-                label=f"{key[0]}, M={key[1]}",
-                linestyle=linestyles[alg_idx % len(linestyles)],
-                marker=markers[g_idx % len(markers)],
-                markevery=max(1, len(mean_vals) // 20),
-                markersize=5,
-            )
-            ax.fill_between(
-                x,
-                mean_vals - std_vals,
-                mean_vals + std_vals,
-                color=colors[g_idx % len(colors)],
-                alpha=0.2 * coeff,
-            )
-
-
-def plot_results(temp_map, K):
-    import matplotlib.patches as mpatches
-
-    formatter = mtick.ScalarFormatter(useMathText=True)
-    formatter.set_scientific(True)
-    formatter.set_powerlimits((-1, 1))
-
-    fig, (ax1, ax2, ax3) = get_fig_set_style(1, (3, 1), (10, 19))
-    unique_groups = [name for name in ["M-LCB", "LimitedAdvice", "SmoothCORRAL"] if any(k[0] == name for k in temp_map)]
-    plot_regret(ax1, temp_map, unique_groups)
-    plot_bar(ax2, temp_map, "selection_for_decisions", unique_groups, K)
-    plot_bar(ax3, temp_map, "counts", unique_groups, K)
-
-    ax1.set_title("(a) Cumulative Loss vs Steps")
-    ax1.set_xlabel(r"$\#$ steps")
-    ax1.set_ylabel("Cumulative Loss")
-    ax1.grid(True)
-    ax1.xaxis.set_major_formatter(formatter)
-
-    ax2.set_title("(b) Arm Selection Distribution")
-    ax2.set_xlabel("Arm Index")
-    ax2.set_ylabel("Selection Count")
-    ax2.grid(True)
-    ax2.yaxis.set_major_formatter(formatter)
-
-    ax3.set_title("(c) Arm Optimization Distribution")
-    ax3.set_xlabel("Arm Index")
-    ax3.set_ylabel("Optimization Count")
-    ax3.grid(True)
-    ax3.yaxis.set_major_formatter(formatter)
-
-    handles, labels = ax1.get_legend_handles_labels()
-    rows = 4
-    cols = 3
-    total_slots = rows * cols
-    empty_handle = mpatches.Rectangle((0, 0), 1, 1, fill=False, edgecolor="none", visible=False)
-    handles = list(handles)
-    labels = list(labels)
-    while len(handles) < total_slots:
-        handles.append(empty_handle)
-        labels.append("")
-
-    fig.legend(
-        handles,
-        labels,
-        ncol=cols,
-        bbox_to_anchor=(0.0, -0.02, 1, 0.1),
-        loc="outside upper left",
-        mode="expand",
-        borderaxespad=0.0,
-    )
-    return fig
-
-
-def save_plots(fig, filename="experiment_results.pdf"):
-    Path(filename).parent.mkdir(parents=True, exist_ok=True)
-    fig.savefig(filename, format="pdf", dpi=300, bbox_inches="tight")
-    plt.close(fig)
-
-
 def main(
     T: int = 25_000,
     K: int = 10,
@@ -331,26 +210,33 @@ def main(
     num_repeats: int = 101,
     n_jobs: int = -1,
     c_scaler: float = 0.5,
-    output_path: str = "bandit_experiment.pdf",
+    output_path: str = "",
     output_dir: str = "./exp_results/classical_bandits",
     smoke: bool = False,
     preset: str = "",
     regenerate_plot_from: str = "",
+    plot_config: str = "",
+    include_smooth_corral: bool = False,
+    skip_smooth_corral: bool = False,
     seed: int = 42,
 ):
     if regenerate_plot_from:
-        path = save_classical_bandit_artifact_plot(regenerate_plot_from)
+        path = save_classical_bandit_artifact_plot(regenerate_plot_from, plot_config_path=plot_config or None)
         print(f"Regenerated plot saved to {path}")
         return str(path)
 
     if preset and preset != "smoke":
         raise ValueError(f"Unknown preset: {preset}")
     smoke_mode = smoke or preset == "smoke"
+    requested_include_smooth_corral = include_smooth_corral
+    include_smooth_corral = (not smoke_mode) and requested_include_smooth_corral and not skip_smooth_corral
     if smoke_mode:
         T = 50
         num_repeats = 1
         n_jobs = 1
         K = min(K, 4)
+    if not output_path:
+        output_path = str(Path(output_dir) / "bandit_experiment.pdf")
 
     temp_map, repeat_seed_values = run_batch(
         T=T,
@@ -360,7 +246,7 @@ def main(
         n_jobs=n_jobs,
         c_scaler=c_scaler,
         m_values=tuple(range(1, min(4, K) + 1)),
-        include_smooth_corral=not smoke_mode,
+        include_smooth_corral=include_smooth_corral,
         seed=seed,
     )
     config = {
@@ -374,7 +260,10 @@ def main(
         "output_dir": output_dir,
         "smoke": smoke,
         "preset": preset,
-        "include_smooth_corral": not smoke_mode,
+        "include_smooth_corral": include_smooth_corral,
+        "requested_include_smooth_corral": requested_include_smooth_corral,
+        "skip_smooth_corral": skip_smooth_corral,
+        "plot_config": plot_config,
         "seed": seed,
         "repeat_seeds": repeat_seed_values,
     }
@@ -391,8 +280,14 @@ def main(
         arrays,
         run_id="classical_bandits",
     )
-    fig = plot_results(temp_map, K=K)
-    save_plots(fig, output_path)
+    fig = plot_classical_bandit_results(
+        temp_map,
+        output_dir=output_dir,
+        k=K_env,
+        plot_config_path=plot_config or None,
+    )
+    save_figure(fig, output_path, output_dir)
+    save_classical_bandit_artifact_plot(output_dir, plot_config_path=plot_config or None)
     return output_path
 
 
@@ -407,11 +302,14 @@ if __name__ == "__main__":
         parser.add_argument("--num_repeats", type=int, default=101)
         parser.add_argument("--n_jobs", type=int, default=-1)
         parser.add_argument("--c_scaler", type=float, default=0.5)
-        parser.add_argument("--output_path", default="bandit_experiment.pdf")
+        parser.add_argument("--output_path", default="")
         parser.add_argument("--output_dir", default="./exp_results/classical_bandits")
         parser.add_argument("--smoke", action="store_true")
         parser.add_argument("--preset", default="")
         parser.add_argument("--regenerate_plot_from", default="")
+        parser.add_argument("--plot_config", default="")
+        parser.add_argument("--include_smooth_corral", action="store_true")
+        parser.add_argument("--skip_smooth_corral", action="store_true")
         parser.add_argument("--seed", type=int, default=42)
         main(**vars(parser.parse_args()))
     else:

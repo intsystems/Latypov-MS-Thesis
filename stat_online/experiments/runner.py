@@ -48,7 +48,8 @@ def run_tasks(
     kwargs = {"n_jobs": n_jobs}
     if prefer is not None:
         kwargs["prefer"] = prefer
-    return Parallel(**kwargs)(delayed(worker)(task) for task in task_list)
+    with Parallel(**kwargs) as parallel:
+        return parallel(delayed(worker)(task) for task in task_list)
 
 
 def run_repeats(

@@ -1,15 +1,15 @@
 """Module for visualizing bandit algorithm experiment results."""
-from typing import Dict, List, Type
+from typing import TYPE_CHECKING, Dict, List, Type
 
 
-import matplotlib.pyplot as plt
-from matplotlib.figure import Figure
-import matplotlib.colors as mcolors
 import numpy as np
 from dataclasses import dataclass
 import scipy.stats as st
 
 from stat_online.lin_bandits.ucb_algorithm import Strategy
+
+if TYPE_CHECKING:
+    from matplotlib.figure import Figure
 
 
 
@@ -84,6 +84,8 @@ def calculate_run_statistics(
 
 
 def get_color(strategy_colors, alg_results, algname,):
+    import matplotlib.colors as mcolors
+
     color = strategy_colors.get(alg_results[algname][0].strategy_class.__name__)
     context_type = "_".join(algname.split("_")[2:])
     context_types = ["no", "context", "dummy_context"]
@@ -108,7 +110,8 @@ def get_color(strategy_colors, alg_results, algname,):
 def plot_experiment_results(
         alg_results: Dict[str, List[AlgRes]],
         alg_classes: list[type[Strategy]]
-    ) -> Figure:
+    ) -> "Figure":
+    import matplotlib.pyplot as plt
 
 
     """Plot experiment results in three different views for multiple runs.
@@ -295,5 +298,10 @@ def save_plots(fig, filename="experiment_results.png"):
         fig: matplotlib figure object
         filename: output filename
     """
+    from pathlib import Path
+
+    import matplotlib.pyplot as plt
+
+    Path(filename).parent.mkdir(parents=True, exist_ok=True)
     fig.savefig(filename, dpi=300, bbox_inches='tight')
     plt.close(fig)

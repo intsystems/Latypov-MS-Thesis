@@ -27,6 +27,11 @@ def glm_results_to_artifacts(
             arrays[f"loss/{key_prefix}"] = losses
             arrays[f"cum_loss/{key_prefix}"] = np.cumsum(losses)
             arrays[f"selected_arm/{key_prefix}"] = selections
+            arrays[f"selection_count/{key_prefix}"] = np.bincount(selections, minlength=run.n_arms)[:run.n_arms]
+            arrays[f"optimization_count/{key_prefix}"] = np.asarray(
+                [arm.optimized_count for arm in run.learned_algorithm.arms],
+                dtype=float,
+            )
             run_records.append(RunRecord(
                 run_id=run_id,
                 experiment_name="glm_bandits",

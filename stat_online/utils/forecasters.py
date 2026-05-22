@@ -134,22 +134,33 @@ class LogBarrierOMD(normalizerForecaster):
         eta_t = np.asarray(eta_t, dtype=float)
         M = len(pt)
         inv_pt = 1.0 / pt
+        eta_safe = np.maximum(eta_t, 1e-16)
 
         # define function S(lambda) = sum_i 1/(inv_pt[i] + eta_i*(ell_i - lambda)) - 1
         def f(lmbda):
-            denom = inv_pt + eta_t * (ell - lmbda)
+            denom = inv_pt + eta_safe * (ell - lmbda)
             # avoid division by zero or negative denom: if denom <= 0, treat resulting p as large (clamp)
             # but theoretically denom should stay positive for feasible lambda; clamp for safety
             denom = np.maximum(denom, 1e-16)
             p_next = 1.0 / denom
             return p_next.sum() - 1.0
 
-        # search interval for lambda: algorithm suggests lambda in [min ell, max ell]
-        lo, hi = ell.min(), ell.max()
+        # The root always exists below the smallest singularity of the denominators:
+        #   inv_pt[i] + eta_i * (ell[i] - lambda) = 0
+        # so lambda < ell[i] + inv_pt[i] / eta_i for every i.
+        # A very low lower bound makes all denominators large and positive, which
+        # guarantees f(lo) < 0, while the upper bound approaches the singularity
+        # where f(hi) > 0.
+        singularity = ell + inv_pt / eta_safe
+        hi = float(np.min(singularity) - 1e-12)
+        lo = float(np.min(ell) - np.max(inv_pt / eta_safe) - 1.0)
+        if not np.isfinite(lo) or not np.isfinite(hi) or lo >= hi:
+            lo = float(np.min(ell) - 1.0)
+            hi = float(np.max(ell) + 1.0)
         lmbda = LogBarrierOMD.bin_search(f, lo, hi, tol=1e-9, max_iter=200)
 
         # build distribution
-        denom = inv_pt + eta_t * (ell - lmbda)
+        denom = inv_pt + eta_safe * (ell - lmbda)
         denom = np.maximum(denom, 1e-16)
         p_next = 1.0 / denom
 

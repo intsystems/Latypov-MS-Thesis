@@ -14,7 +14,6 @@ Key Features:
 """
 
 import numpy as np
-import matplotlib.pyplot as plt
 from dataclasses import dataclass
 from time import time
 from itertools import chain, product
@@ -36,15 +35,15 @@ from stat_online.lin_bandits.ucb_algorithm import (
     EpsilonGreedyAlgorithm,
     Exp3Algorithm,
     GroupedUCB,
+    LimitedAdvice,
     Arm,
-    ContextualArm,
-    dummyContextualArm
+    DDRB
 )
-from stat_online.experiments.plotting import save_glm_artifact_plot
+from stat_online.experiments.plotting import plot_glm_results, save_figure, save_glm_artifact_plot
 from stat_online.experiments.lifecycle import save_experiment_bundle
 from stat_online.experiments.runner import repeat_seeds, run_repeats, seed_numpy
 from stat_online.lin_bandits.runners import glm_results_to_artifacts
-from stat_online.utils.visualization import AlgRes, plot_experiment_results, save_plots
+from stat_online.utils.visualization import AlgRes
 
 
 def generate_data(T: int,
@@ -86,7 +85,7 @@ def generate_data(T: int,
     return X, y, linear
 
 
-def get_arms_instance(K: int, d: int, nonlinearities: List[callable],
+def get_arms_instance(K: int, d: int, nonlinearities: List[Callable],
                      lr_scaler: float = 1.0, D: float = 0.1, G: float = 0.1,
                      is_context: str = "no") -> List[Arm]:
     """
@@ -233,6 +232,7 @@ def run_experiment_batch(
         config: Optional[dict[str, Any]] = None,
         repeat_seed_values: Optional[list[int]] = None,
         data_seed: int = 42,
+        plot_config: str = "",
         ) -> Dict[str, List[AlgRes]]:
     """
     Run a batch of experiments with different strategies and parameters.
@@ -270,8 +270,9 @@ def run_experiment_batch(
                                   random_state=data_seed)
 
     # Define strategies to test
-    strategies = [UCBAlgorithm, GroupedUCB, EpsilonGreedyAlgorithm, Exp3Algorithm]
-    strategy_parameters = [{"delta": 0.1}, {"delta": 0.1}, {"delta": 0.1}, {"delta": 0.1},]  # additional parameters of strategies
+    strategies_multi_update = [UCBAlgorithm, LimitedAdvice]
+    strategies_single_update = [DDRB]
+    strategy_parameters = [{"delta": 0.1}, {"delta": 0.1}, {"delta": 0.1}]  # additional parameters of strategies
 
     def run_single_experiment(repeat_seed: int | None = None):
         """Run a single experiment with all strategy combinations."""
@@ -281,8 +282,10 @@ def run_experiment_batch(
         context_types = ["no"]  # Can add "context", "dummy_context" for more experiments
 
         # Generate all parameter combinations
-        strategy_n_opt_pairs = list(product(zip(strategies, strategy_parameters), n_optims, context_types))
+        strategy_n_opt_pairs = list(product(zip(strategies_multi_update, strategy_parameters), n_optims, context_types))
 
+        strategy_n_opt_pairs.append(((DDRB,{"delta": 0.1} ), 1, 'no'))
+        #
         # Run experiments in parallel
 
         run_experiment_del = delayed(run_experiment)
@@ -345,6 +348,7 @@ def run_experiment_batch(
         "best_arm_number": best_arm_number,
         "data_seed": data_seed,
         "repeat_seeds": repeat_seed_values or [],
+        "plot_config": plot_config,
     }
     run_records, arrays = glm_results_to_artifacts(
         res_dict,
@@ -362,8 +366,14 @@ def run_experiment_batch(
 
     # Generate and save plots
     print("Generating plots...")
-    fig = plot_experiment_results(res_dict, strategies)
-    save_plots(fig, f"{output_dir}/experiment_results_{best_arm_number}.pdf")
+    fig = plot_glm_results(
+        res_dict,
+        output_dir=output_dir,
+        k=K,
+        plot_config_path=plot_config or None,
+    )
+    save_figure(fig, f"{output_dir}/experiment_results_{best_arm_number}.pdf", output_dir)
+    save_glm_artifact_plot(output_dir, plot_config_path=plot_config or None)
 
     if save_debug_pickle:
         import pickle
@@ -389,6 +399,7 @@ def main(T: int = 2500,
         preset: str = "",
         save_debug_pickle: bool = False,
         regenerate_plot_from: str = "",
+        plot_config: str = "",
         seed: int = 42):
     """
     Main function to run the bandit algorithms comparison experiment.
@@ -404,7 +415,7 @@ def main(T: int = 2500,
         output_dir: Directory to save results (default: "./exp_results")
     """
     if regenerate_plot_from:
-        path = save_glm_artifact_plot(regenerate_plot_from)
+        path = save_glm_artifact_plot(regenerate_plot_from, plot_config_path=plot_config or None)
         print(f"Regenerated plot saved to {path}")
         return str(path)
 
@@ -429,9 +440,9 @@ def main(T: int = 2500,
 
     try:
         nonlinearities = get_functions(x_scale=2)
-        indices = [1, 4, 7, 9]
-        nonlinearities = [nonlinearities[i] for i in indices]
-        generation_nonlinearity = nonlinearities[0]
+        # indices = [1, 4, 7, 9]
+        # nonlinearities = [nonlinearities[i] for i in indices]
+        generation_nonlinearity = nonlinearities[best_arm_number]
 
         results = run_experiment_batch(
                 T=T,
@@ -461,12 +472,14 @@ def main(T: int = 2500,
                     "n_jobs": n_jobs,
                     "preset": preset,
                     "smoke": smoke,
+                    "plot_config": plot_config,
                     "seed": seed,
                     "data_seed": seed,
                     "repeat_seeds": repeat_seed_values,
                 },
                 repeat_seed_values=repeat_seed_values,
                 data_seed=seed,
+                plot_config=plot_config,
         )
         print("Experiment completed successfully!")
         return results
@@ -495,6 +508,7 @@ if __name__ == "__main__":
         parser.add_argument("--preset", default="")
         parser.add_argument("--save_debug_pickle", action="store_true")
         parser.add_argument("--regenerate_plot_from", default="")
+        parser.add_argument("--plot_config", default="")
         parser.add_argument("--seed", type=int, default=42)
         main(**vars(parser.parse_args()))
     else:

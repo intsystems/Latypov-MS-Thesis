@@ -17,7 +17,6 @@
     </tr>
 </table>
 
-
 ========================================================================================
 
 Abstract
@@ -27,63 +26,63 @@ We address this problem in the \emph{stochastic setting} and introduce \algname{
 
 To our knowledge, this is the first result establishing regret guarantees when multiple adaptive experts are trained simultaneously under per-round budget constraints. We illustrate the framework with two representative cases: (i) parametric models trained online with stochastic losses, and (ii) experts that are themselves multi-armed bandit algorithms. These examples highlight how \algname{M-LCB} extends the classical bandit paradigm to the more realistic scenario of coordinating stateful, self-learning experts under limited resources.
 
-
 ========================================================================================
 
-Как использовать:
-1) установить зависимости через `uv sync`
-2) смотреть `notebooks/algorithm_testing.ipynb` для исходных экспериментов
-3) запускать smoke/full эксперименты командами ниже
-========================================================================================
+# Latypov-MS-Thesis
 
-## Development and Smoke Runs
+## Setup
 
-This repository uses `uv` for dependency management and command execution.
-
-Install or update the local environment:
+Install dependencies:
 
 ```bash
 uv sync
 ```
 
-Run the basic import/syntax check:
+Basic validation:
 
 ```bash
-MPLCONFIGDIR=/private/tmp/mplconfig-codex uv run python -m compileall stat_online experiments
+uv run python -m compileall stat_online experiments tests
+uv run pytest tests/test_runner.py tests/test_storage_artifacts.py
 ```
 
-Check experiment CLIs:
+## Run Experiments
+
+Paper-scale synthetic experiments:
 
 ```bash
-MPLCONFIGDIR=/private/tmp/mplconfig-codex uv run python -m experiments.experiment_bandits --help
-MPLCONFIGDIR=/private/tmp/mplconfig-codex uv run python -m experiments.experiment_glm --help
+scripts/experiments.sh exp_results/article
 ```
 
-Run smoke experiments:
+GLM / linear-bandit experiment:
 
 ```bash
-MPLCONFIGDIR=/private/tmp/mplconfig-codex uv run python -m experiments.experiment_bandits --preset smoke --seed 42 --output_path /private/tmp/bandit_smoke_uv.pdf --output_dir /private/tmp/bandit_smoke_uv_artifacts
-MPLCONFIGDIR=/private/tmp/mplconfig-codex uv run python -m experiments.experiment_glm --preset smoke --seed 42 --output_dir /private/tmp/glm_smoke_uv
+uv run python -m experiments.experiment_glm --preset smoke --seed 42 --output_dir /private/tmp/glm_smoke_uv
 ```
+
+Classical-bandit experiment:
+
+```bash
+uv run python -m experiments.experiment_bandits --preset smoke --seed 42 --output_dir /private/tmp/bandit_smoke_uv
+```
+
+For the full classical-bandit comparison, add `--include_smooth_corral` explicitly; it is kept opt-in because that branch is much heavier than the M-LCB and LimitedAdvice runs.
 
 Featured GLM smoke run:
 
 ```bash
-MPLCONFIGDIR=/private/tmp/mplconfig-codex uv run python -m experiments.experiment_glm --preset smoke --seed 42 --output_dir /private/tmp/glm_smoke_uv_featured --is_featured --context_d 2
+uv run python -m experiments.experiment_glm --preset smoke --seed 42 --is_featured --context_d 2 --output_dir /private/tmp/glm_smoke_featured_uv
 ```
 
-`MPLCONFIGDIR` is set because some local environments cannot write to the default Matplotlib cache directory.
+Help:
 
-Phase 3 uses shared runner/lifecycle helpers for both experiment families:
+```bash
+uv run python -m experiments.experiment_glm --help
+uv run python -m experiments.experiment_bandits --help
+```
 
-- `stat_online/experiments/runner.py` owns timing, task/repeat execution, and deterministic repeat seed allocation.
-- `stat_online/experiments/lifecycle.py` owns output directory creation and artifact bundle writing.
-- `stat_online/classical_bandits/runners.py` and `stat_online/lin_bandits/runners.py` convert domain outputs into shared `RunRecord` rows and primitive arrays.
+## Experiment Artifacts
 
-The top-level `--seed` controls deterministic data/environment setup and per-repeat seeds where the current algorithm implementations still use NumPy's legacy global RNG.
-
-
-Phase 2 artifact layout for smoke/full runs:
+Each run stores primitive artifacts in `--output_dir`:
 
 ```text
 <output_dir>/
@@ -91,30 +90,33 @@ Phase 2 artifact layout for smoke/full runs:
   config.json
   runs.csv
   timeseries.npz
+  .matplotlib/
 ```
 
-GLM still renders `experiment_results_<best_arm_number>.pdf`; classical bandits render the plot path passed via `--output_path`. Debug pickle output is disabled by default and only available for GLM through `--save_debug_pickle`.
+Both experiment entry points save two plots:
 
-Regenerate a GLM cumulative-loss plot from saved primitive artifacts:
+- a live plot from the current run;
+- a regenerated plot from saved artifacts.
+
+GLM outputs:
+
+- `experiment_results_<best_arm_number>.pdf`
+- `regenerated_glm_summary.pdf`
+
+Classical bandit outputs:
+
+- `bandit_experiment.pdf`
+- `regenerated_bandit_summary.pdf`
+
+Regenerate plots from artifacts:
 
 ```bash
-MPLCONFIGDIR=/private/tmp/mplconfig-codex uv run python -m experiments.experiment_glm --regenerate_plot_from /private/tmp/glm_smoke_uv
+uv run python -m experiments.experiment_glm --regenerate_plot_from /private/tmp/glm_smoke_uv
+uv run python -m experiments.experiment_bandits --regenerate_plot_from /private/tmp/bandit_smoke_uv
 ```
 
-Regenerate a classical-bandit summary plot from saved primitive artifacts:
+## Notes
 
-```bash
-MPLCONFIGDIR=/private/tmp/mplconfig-codex uv run python -m experiments.experiment_bandits --regenerate_plot_from /private/tmp/bandit_smoke_uv_artifacts
-```
-
-Run lightweight artifact tests:
-
-```bash
-MPLCONFIGDIR=/private/tmp/mplconfig-codex uv run pytest tests/test_storage_artifacts.py
-```
-
-Run Phase 3 shared-runner tests:
-
-```bash
-MPLCONFIGDIR=/private/tmp/mplconfig-codex uv run pytest tests/test_runner.py tests/test_storage_artifacts.py
-```
+- Use `--output_dir` for every experiment run.
+- Use `--plot_config` to override the default plotting style.
+- Use `--seed` for reproducible smoke runs.

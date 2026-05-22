@@ -39,6 +39,15 @@ def classical_results_to_artifacts(
             arrays[f"regret/{key_prefix}"] = regret
             arrays[f"selected_expert/{key_prefix}"] = np.asarray(selected_expert, dtype=int)
             arrays[f"selected_arm/{key_prefix}"] = np.asarray(selected_arm, dtype=int)
+            arrays[f"selection_count/{key_prefix}"] = np.asarray(
+                getattr(exp.algorithm, "selection_for_decisions"),
+                dtype=float,
+            )
+            if group_name == "SmoothCORRAL":
+                optimization_counts = getattr(exp.algorithm, "selection_for_decisions")
+            else:
+                optimization_counts = getattr(exp.algorithm, "counts")
+            arrays[f"optimization_count/{key_prefix}"] = np.asarray(optimization_counts, dtype=float)
             run_records.append(RunRecord(
                 run_id=run_id,
                 experiment_name="classical_bandits",

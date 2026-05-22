@@ -56,8 +56,10 @@ def test_glm_artifact_plot_regeneration(tmp_path: Path):
     ]
     arrays = {
         "cum_loss/UCBAlgorithm_1_no/repeat_0": np.array([0.5, 0.9, 1.5]),
+        "selection_count/UCBAlgorithm_1_no/repeat_0": np.array([2, 1, 0, 0]),
+        "optimization_count/UCBAlgorithm_1_no/repeat_0": np.array([1, 1, 1, 0]),
     }
-    write_experiment_artifacts(tmp_path, "glm_bandits", {}, records, arrays, run_id="glm")
+    write_experiment_artifacts(tmp_path, "glm_bandits", {"K": 4}, records, arrays, run_id="glm")
 
     path = save_glm_artifact_plot(tmp_path)
     assert path.exists()
@@ -84,8 +86,10 @@ def test_classical_bandit_artifact_plot_regeneration(tmp_path: Path):
         "reward/M-LCB_M1/repeat_0": np.array([1.0, 0.0, 1.0]),
         "selected_expert/M-LCB_M1/repeat_0": np.array([0, 1, 1]),
         "selected_arm/M-LCB_M1/repeat_0": np.array([0, 0, 1]),
+        "selection_count/M-LCB_M1/repeat_0": np.array([1, 2]),
+        "optimization_count/M-LCB_M1/repeat_0": np.array([2, 1]),
     }
-    write_experiment_artifacts(tmp_path, "classical_bandits", {}, records, arrays, run_id="classical")
+    write_experiment_artifacts(tmp_path, "classical_bandits", {"K_env": 2}, records, arrays, run_id="classical")
 
     path = save_classical_bandit_artifact_plot(tmp_path)
     assert path.exists()

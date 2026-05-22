@@ -1,0 +1,52 @@
+{
+  "dpi": 400,
+  "save_dpi": 300,
+  "figsize": [16, 6],
+  "std_multiplier": 1.0,
+  "bar_width_total": 0.8,
+  "line_width": 2,
+  "marker_size": 5,
+  "markevery_divisor": 20,
+  "constrained_layout": true,
+  "use_math_text": true,
+  "powerlimits": [-1, 1],
+  "group_order": ["M-LCB", "LimitedAdvice", "SmoothCORRAL"],
+  "colors": ["blue", "red", "black", "r", "black", "blue", "green", "y", "m", "y", "k"],
+  "markers": ["o", "s", "^", "v", "D", "p", "*", "h"],
+  "linestyles": [":", "--", "-.", "-"],
+  "alpha_coefficients": {
+    "start": 0.0,
+    "stop": -0.7
+  },
+  "style": {
+    "legend.fontsize": 17,
+    "lines.markersize": 15,
+    "axes.titlesize": 20,
+    "axes.labelsize": 15,
+    "xtick.labelsize": 12,
+    "ytick.labelsize": 12,
+    "font.size": 10
+  },
+  "labels": {
+    "regret_title": "(a) Cumulative Loss vs Steps",
+    "selection_title": "(b) Arm Selection Distribution",
+    "optimization_title": "(c) Arm Optimization Distribution",
+    "steps": "$\\#$ steps",
+    "regret": "Cumulative Loss",
+    "arm_index": "Arm Index",
+    "selection_count": "Selection Count",
+    "optimization_count": "Optimization Count"
+  },
+  "legend": {
+    "rows": 3,
+    "cols": 3,
+    "loc": "lower center",
+    "bbox_to_anchor": [0.025, -0.18, 0.95, 0.08],
+    "mode": "expand",
+    "borderaxespad": 0.5,
+    "columnspacing": 2.0,
+    "handletextpad": 0.5,
+    "frameon": true,
+    "fontsize": 15
+  }
+}

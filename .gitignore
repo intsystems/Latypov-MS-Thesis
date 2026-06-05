@@ -4,7 +4,10 @@
 .graymatter
 exp_results
 .output_files
-
+paper/output
 .pytest_cache
 AGENT.md
 PLAN.md
+
+slides/build_pres.sh
+paper/build_paper.sh

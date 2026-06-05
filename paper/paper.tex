@@ -1,67 +1,31 @@
 \documentclass{article}
 
-% если нужно передать параметры в natbib, используйте, например:
-\PassOptionsToPackage{numbers, compress}{natbib}
-% до загрузки neurips_2026
-
-% Авторам следует использовать один из следующих треков.
-% До принятия на конференцию NeurIPS выберите один из вариантов ниже.
-% 0. "default" для подачи
 \usepackage{arxiv}
-% параметр "default" эквивалентен параметру "main", который используется для Main Track с двойным слепым рецензированием.
-% 1. параметр "main" используется для Main Track
-%  \usepackage[main]{neurips_2026}
-% 2. параметр "position" используется для Position Paper Track
-%  \usepackage[position]{neurips_2026}
-% 3. параметр "eandd" используется для Evaluations & Datasets Track
- % \usepackage[eandd]{neurips_2026}
- % если требуется подать деанонимизированную версию (не рекомендуется, но допустимо):
- %\usepackage[eandd, nonanonymous]{neurips_2026}
-% 4. параметр "creativeai" используется для Creative AI Track
-%  \usepackage[creativeai]{neurips_2026}
-% 5. параметр "sglblindworkshop" используется для воркшопа с одинарным слепым рецензированием
- % \usepackage[sglblindworkshop]{neurips_2026}
-% 6. параметр "dblblindworkshop" используется для воркшопа с двойным слепым рецензированием
-%  \usepackage[dblblindworkshop]{neurips_2026}
 
-% После принятия авторам следует добавить "final" после трека, чтобы скомпилировать camera-ready версию.
-% 1. Main Track
- % \usepackage[main, final]{neurips_2026}
-% 2. Position Paper Track
-%  \usepackage[position, final]{neurips_2026}
-% 3. Evaluations & Datasets Track
- % \usepackage[eandd, final]{neurips_2026}
-% 4. Creative AI Track
-%  \usepackage[creativeai, final]{neurips_2026}
-% 5. Воркшоп с одинарным слепым рецензированием
-%  \usepackage[sglblindworkshop, final]{neurips_2026}
-% 6. Воркшоп с двойным слепым рецензированием
-%  \usepackage[dblblindworkshop, final]{neurips_2026}
-% Примечание. Для шаблона статьи воркшопа требуются и \title{}, и \workshoptitle{}: первая команда задает название статьи, показанное в заголовке, а вторая задает название воркшопа, отображаемое в сноске.
-% Для воркшопов (5., 6.) авторам следует добавить название воркшопа; команда "\workshoptitle" используется для задания названия воркшопа.
-% \workshoptitle{WORKSHOP TITLE}
 
-% параметр "preprint" используется для arXiv или других препринтных подач
- % \usepackage[preprint]{neurips_2026}
+\usepackage[utf8]{inputenc} % allow utf-8 input
+\usepackage[T1,T2A]{fontenc}    % use 8-bit T1 fonts
+\usepackage{hyperref}       % hyperlinks
+\usepackage{url}            % simple URL typesetting
+\usepackage{booktabs}       % professional-quality tables
+\usepackage{amsfonts}       % blackboard math symbols
+\usepackage{nicefrac}       % compact symbols for 1/2, etc.
+\usepackage{microtype}      % microtypography
+\usepackage{xcolor}         % colors
 
-% чтобы избежать загрузки пакета natbib, добавьте параметр nonatbib:
-%    \usepackage[nonatbib]{neurips_2026}
 
-\usepackage[utf8]{inputenc} % разрешить ввод utf-8
-\usepackage[T2A,T1]{fontenc}    % поддержка кириллицы и латиницы
-\usepackage[english,russian]{babel}
-\usepackage{hyperref}       % гиперссылки
-\usepackage{url}            % простая верстка URL
-\usepackage{booktabs}       % таблицы профессионального качества
-\usepackage{amsfonts}       % математические символы blackboard
-\usepackage{nicefrac}       % компактные символы для 1/2 и т. п.
-\usepackage{microtype}      % микротипографика
-\usepackage{xcolor}         % цвета
+% \setdefaultlanguage{english}
+% \setotherlanguage{russian}
+% \usepackage[english,russian]{babel}
+
+% \usepackage[T1,T2A]{fontenc}
+% \usepackage[utf8]{inputenc}
+% % \usepackage[numbers]{natbib}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-%%% Включите сюда любые пользовательские команды авторов.
+%%% Include any author-defined commands here.
 
 \usepackage{algorithm}
 \usepackage{algorithmic}
@@ -92,20 +56,20 @@
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% ТЕОРЕМЫ
+% THEOREMS
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \theoremstyle{plain}
 
-\newtheorem{assumption}{Предположение}
-\newtheorem{definition}{Определение}
-\newtheorem{proposition}{Утверждение}
-\newtheorem{remark}{Замечание}
-\newtheorem{theorem}{Теорема}
-\newtheorem{lemma}{Лемма}
-\newtheorem{statement}{Утверждение}
-\newtheorem{observation}{Наблюдение}
-\newtheorem{example}{Пример}
-\newtheorem{corollary}{Следствие}
+\newtheorem{assumption}{Assumption}
+\newtheorem{definition}{Definition}
+\newtheorem{proposition}{Proposition}
+\newtheorem{remark}{Remark}
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{statement}{Statement}
+\newtheorem{observation}{Observation}
+\newtheorem{example}{Example}
+\newtheorem{corollary}{Corollary}
 
 % Определяем стиль для блока алгоритма
 \newenvironment{algblock}{%
@@ -139,7 +103,7 @@
 \newcommand{\ft}[1]{l^t_{#1}\left(w_{#1}^{t}\right)}
 \newcommand{\EDRB}{\texttt{ED}$^2$\texttt{RB}}
 
-% нумерованные неравенства
+% counted inequalities
 \newcounter{ineqnumber}
 \newcommand{\numleq}{\stepcounter{ineqnumber}\overset{(\arabic{ineqnumber})}{\leq}}
 \newcommand{\numgeq}{\stepcounter{ineqnumber}\overset{(\arabic{ineqnumber})}{\geq}}
@@ -156,143 +120,158 @@
 
 \usepackage{mdframed}
 \newmdenv[
-    nobreak=true,    % предотвращает разрывы страниц внутри рамки
-    % Можно дополнительно настроить внешний вид:
+    nobreak=true,    % Prevents page breaks within the frame
+    % You can customize the appearance further:
     % backgroundcolor=yellow!10,
     skipabove=\topskip,
     skipbelow=\topskip,
     linewidth=1pt
 ]{nframed}
 
+
+% титульник
+%
+\begin{titlepage}
+    \begin{center}
+        \textsc{Московский физико-технический институт}\\
+        (национальный исследовательский университет)\\
+        \textsc{Физтех-школа прикладной математики и информатики}\\
+        \textsc{Кафедра интеллектуального анализа данных ВЦ РАН}
+    \end{center}
+    \vspace{2.5cm}
+    \begin{center}
+        {Латыпов Ильгам Магданович}
+        \par
+        \vspace{2cm}
+        {\Large \textsc{\textbf{Алгоритм типа UCB для обучения экспертов при ограниченном бюджете}}}
+        \par
+        \vspace{2cm}
+        {09.04.01~--- Информатика и вычислительная техника}
+        \par
+        \vspace{2cm}
+        \textsc{Выпускная квалификационная работа магистранта}
+    \end{center}
+    \vspace{2cm}
+    \hfill\parbox{8.4cm}{\textbf{Научный руководитель:}
+    \\к.т.н. Ю.\,В.\,Дорн}
+    \par
+    \vspace{2.5cm}
+    \begin{center}
+        {Москва~--- 2026}
+    \end{center}
+\end{titlepage}
 % \mathtoolsset{showonlyrefs}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+\title{A UCB-Type Algorithm for Learning Experts under a Limited Budget}
 
-% Примечание. Для шаблона статьи воркшопа требуются и \title{}, и \workshoptitle{}: первая команда задает название статьи, показанное в заголовке, а вторая задает название воркшопа, отображаемое в сноске.
-\title{Управление самообучающимися экспертами при ограничениях бюджета на раунд}
-
-
-% Макрос \author работает с любым числом авторов. Для разделения имен и адресов
-% нескольких авторов используются две команды: \And и \AND.
-%
-% При использовании \And между авторами LaTeX сам определяет, где сделать
-% перенос строки. Использование \AND принудительно вставляет перенос строки в этом месте.
-% Поэтому, если LaTeX помещает имена 3 из 4 авторов на первую строку, а последнего —
-% на вторую, попробуйте использовать \AND вместо \And перед именем третьего автора.
-
-
-\author{%
-  Ильгам Латыпов \\
-  Московский Физико Технический Институт
-  \AND
-  Юрий Дорн
-  % примеры дополнительных авторов
-  % \And
-  % Соавтор \\
-  % Аффилиация \\
-  % Адрес \\
-  % \texttt{email} \\
-  % \AND
-  % Соавтор \\
-  % Аффилиация \\
-  % Адрес \\
-  % \texttt{email} \\
-  % \And
-  % Соавтор \\
-  % Аффилиация \\
-  % Адрес \\
-  % \texttt{email} \\
-  % \And
-  % Соавтор \\
-  % Аффилиация \\
-  % Адрес \\
-  % \texttt{email} \\
-}
+% \author{%
+%   Ilgam Latypov
+%   % \thanks{Use footnote for providing further information about author (webpage, alternative address)---\emph{not} for acknowledging funding agencies.} \\
+%   MIPT\\
+%   \texttt{latypov.im@phystech.edu} \\
+%   % examples of more authors
+%   % \And
+%   % Coauthor \\
+%   % Affiliation \\
+%   % Address \\
+%   % \texttt{email} \\
+%   % \AND
+%   % Coauthor \\
+%   % Affiliation \\
+%   % Address \\
+%   % \texttt{email} \\
+%   % \And
+%   % Coauthor \\
+%   % Affiliation \\
+%   % Address \\
+%   % \texttt{email} \\
+%   % \And
+%   % Coauthor \\
+%   % Affiliation \\
+%   % Address \\
+%   % \texttt{email} \\
+% }
 
 
 \begin{document}
 
-
-\maketitle
-
-
+\setcounter{page}{2}
 \begin{abstract}
-        В данной работе рассматривается задача последовательного принятия решений при ограничениях на бюджет обучения. Такие постановки естественно возникают в приложениях, например при управлении портфелем алгоритмов бандитов или обучения с подкреплением (RL). Мы предлагаем новый алгоритм UCB-типа, M-LCB, предназначенный для управления набором из $K$ самообучающихся экспертов в стохастической среде с учетом ограниченного бюджета обучения на раунд $M$. На каждом раунде M-LCB выбирает одного эксперта для принятия решения и не более $M \le K$ экспертов для обучения. Для выбора M-LCB использует доверительные границы, построенные на основе ограниченных априорных знаний об экспертах (т. е. мягких предположений) и наблюдаемых обучающих потерь. Мы выводим anytime-оценки регрета для M-LCB, которые масштабируются с индивидуальными регретами экспертов. В частности, если каждый эксперт имеет регрет $\tilde O(T^\alpha)$ к раунду $T$, то M-LCB гарантирует общий регрет $\tilde O\left(\sqrt{KT/M} + (K/M)^{1-\alpha}T^\alpha\right)$ относительно лучшего эксперта в ретроспективе. Наконец, мы демонстрируем применимость M-LCB, задавая самообучающихся экспертов как (i) параметрические модели и (ii) бандитные алгоритмы.
+        This paper addresses the problem of sequential decision-making under learning budget constraints. Such settings naturally arise in applications like managing a portfolio of bandit or reinforcement learning (RL) algorithms. We propose a novel UCB-type algorithm, M-LCB, designed to manage a pool of $K$ self-learning experts in a stochastic environment while accounting for a limited per-round learning budget $M$. At each round, M-LCB selects one expert to make a decision and at most $M \le K$ experts to learn. For selection, M-LCB uses confidence bounds constructed from limited prior knowledge about the experts (i.e., mild assumptions) and their observed training losses. We derive anytime regret bounds for M-LCB that scale with the individual regrets of the experts. In particular, if each expert has regret $\tilde O(T^\alpha)$ by round $T$, then M-LCB guarantees an overall regret of $\tilde O\left(\sqrt{KT/M} + (K/M)^{1-\alpha}T^\alpha\right)$ relative to the best expert in hindsight. Finally, we demonstrate the applicability of M-LCB using self-learning experts instantiated as (i) parametric models and (ii) bandit algorithms.
 \end{abstract}
 
 
+\section{Introduction}
 
+In many applications, one must dynamically choose between multiple models: recommendation systems may run several predictors in parallel, updating them on incoming user feedback; financial platforms rely on switching between trading strategies as market regimes evolve; large-scale online services manage a portfolio of contextual bandits or reinforcement learning algorithms. These scenarios' objective is to dynamically select the most accurate model at each step, while managing a limited computational budget for training. This setup falls within the framework of sequential decision-making.
 
-\section{Введение}
-
-Во многих приложениях необходимо динамически выбирать между несколькими моделями: рекомендательные системы могут запускать несколько предикторов параллельно, обновляя их по поступающей обратной связи от пользователей; финансовые платформы полагаются на переключение между торговыми стратегиями по мере изменения рыночных режимов; крупномасштабные онлайн-сервисы управляют портфелем контекстных бандитов или алгоритмов обучения с подкреплением. Цель таких сценариев состоит в динамическом выборе наиболее точной модели на каждом шаге при одновременном управлении ограниченным вычислительным бюджетом на обучение. Эта постановка относится к области последовательного принятия решений.
-
-Классические алгоритмы многоруких бандитов (MAB) \cite{auer2002finite,bubeck2012regret,lattimore2020bandit}, применяемые к этой задаче, обычно предполагают статическое или состязательное распределение наград для каждой руки. Экспертные алгоритмы \cite{cesa2006prediction,hazan2016introduction} обычно требуют полной обратной связи и не учитывают скорость обучения экспертов. Ни один из подходов полностью не решает задачу управления несколькими одновременно обучающимися экспертами при бюджете обучения на раунд. Мы устраняем этот разрыв, предлагая процедуру, которая
-объединяет предсказание с выборочным обучением, учитывая фиксированный вычислительный бюджет на раунд. В частности, вклад данной работы состоит в следующем:
+Classical multi-armed bandit (MAB) algorithms \cite{auer2002finite,bubeck2012regret,lattimore2020bandit}, when addressing this problem, usually assume a static or adversarial reward distribution for each arm. Expert algorithms \cite{cesa2006prediction,hazan2016introduction} usually require full feedback  and do not account for how experts' learning rate. Neither approach fully addresses the challenge of managing multiple simultaneously-learning experts within a per-round training budget. We bridge this gap by proposing a procedure that
+unifies prediction with selective training, accounting for a fixed per-round computational budget. Specifically, the contributions of this work are as follows:
 \begin{itemize}
-    \item \textbf{Новый мета-алгоритм UCB-типа (M-LCB)}: мы предлагаем M-LCB, новый мета-алгоритм типа Upper Confidence Bound (UCB). Он управляет пулом из $K$ самообучающихся экспертов в стохастической среде с учетом ограниченного бюджета обучения на раунд $M (M\le K)$.
-    \item \textbf{Вычислительная эффективность}: мы предлагаем метод построения доверительных границ непосредственно по реализованным потерям. Он вычислительно эффективен и позволяет обойти необходимость дорогостоящей вспомогательной оптимизации.
-    \item \textbf{Теоретический анализ}: мы оцениваем качество мета-алгоритма через индивидуальные скорости сходимости экспертов. Например, когда регреты экспертов имеют вид $\tilde O(n^\alpha)$, общий регрет масштабируется как $\tilde O(\sqrt{KT/M} + (K/M)^{1-\alpha}T^\alpha)$.
-    \item \textbf{Расширение на multi-play бандиты:} мы показываем, что M-LCB расширяется на постановку multiple-play bandits и контролирует регрет подмножества top-$M$.
+    \item \textbf{Novel UCB-Type Meta-Algorithm (M-LCB)}: we propose M-LCB, a novel Upper Confidence Bound (UCB)-type meta-algorithm. It manages a pool of $K$ self-learning experts in a stochastic environment while accounting for a limited per-round learning budget $M (M\le K)$.
+    \item \textbf{Computational Efficiency}: we provide a method for constructing confidence bounds directly from realized losses. It is computationally efficient and sidesteps the need for expensive auxiliary optimization.
+    \item \textbf{Theoretical analysis}: we estimate the meta-algorithm's performance in terms of the experts' individual convergence rates. For instance, when the experts' regrets are $\tilde O(n^\alpha)$, the overall regret scales as $\tilde O(\sqrt{KT/M} + (K/M)^{1-\alpha}T^\alpha)$.
+    \item \textbf{Extension to Multi-Play Bandits:} we demonstrate that M-LCB extends to the multiple-play bandit setting and controls the top-$M$ subset regret.
 \end{itemize}
 
 
-\subsection{Связанные работы}
+\subsection{Related works}
 
 
-\textbf{Самообучающиеся эксперты (руки).}
-В работе \cite{dorn2025functional} вводятся самообучающиеся руки в постановке MAB: каждая рука является black-box параметрической функцией, генерирующей награду, а ее параметр обновляется после выбора этой руки. На каждом раунде обучающийся выбирает руку с помощью индекса UCB-типа, наблюдает награду, а затем обновляет соответствующий параметр.
+\textbf{Self-learning experts (arms).}
+The work \cite{dorn2025functional} introduces self-learning arms in the MAB setting: each arm is a black-box parametric function that generates a reward, and its parameter is updated after the arm is played. At each round, the learner selects an arm using a UCB-type index, observes the reward, and then updates the corresponding parameter.
 
-\textbf{Выбор модели на мета-уровне.}
-Работа \cite{foster2017parameter} вводит безпараметрическую агрегацию нескольких online learners в рамках полной информации. \textsc{CORRAL}~\cite{agarwal2017corralling} объединяет пул бандитных алгоритмов с помощью online-mirror descent (OMD) с логарифмическим барьером и importance-weighted обратной связью. Авторы выводят distribution-free гарантии в стохастических и состязательных постановках. В работе~\cite{cutkosky2021dynamic} предлагается мета-алгоритм динамической балансировки, основанный на известных выражениях скоростей регрета базовых обучающихся алгоритмов. В этой постановке регрет определяется относительно глобально оптимального действия, и за раунд обновляется только один обучающийся алгоритм. В отличие от этого, наша формулировка использует \emph{поэкспертные, prefix-hindsight} гарантии $U_k(T,\delta)$, определенные относительно локального оптимума каждого эксперта. Работа~\cite{dann2024data} устраняет необходимость в известных скоростях регрета за счет
-онлайн-оценивания коэффициентов по каждому обучающемуся алгоритму,
-получая высоковероятностные data-dependent гарантии выбора модели для стохастических бандитов (также при обновлении одного обучающегося алгоритма за раунд). Наиболее близкая к нашей постановка представлена в \cite{pacchiano2020model}.
-В ней рассматривается выбор модели с использованием \emph{smoothing wrapper}.
-Авторы показывают, что мета-алгоритм \algname{CORRAL} в сочетании с их wrapper достигает регрета
-$\tilde O(\sqrt{TK} + K^\alpha T^{1 - \alpha} +K^{1 - \alpha}T^{\alpha}c(\delta))$, когда регрет базовых обучающихся алгоритмов удовлетворяет $O(T^{\alpha}c(\delta))$.
-Подход динамической балансировки~\cite{cutkosky2021dynamic} дает сходную общую оценку
-$\tilde O\left(\sqrt{KT} + K^{1-\alpha}T^{\alpha}c(\delta)\right)$. Эти оценки регрета совпадают со скоростью, получаемой нашим методом, когда за раунд можно обучать только одного эксперта. Наш алгоритм достигает того же порядка зависимости от $T$ и $\alpha$,
-при этом дополнительно поддерживая одновременное обучение до $M$ адаптивных экспертов с доверительными интервалами, вычисляемыми непосредственно по реализованным потерям каждой руки.
+\textbf{Model selection at the meta-level.}
+The work \cite{foster2017parameter} introduces a parameter-free aggregation of multiple online learners within the full information framework. \textsc{CORRAL}~\cite{agarwal2017corralling} corrals a pool of bandit algorithms via log-barrier online-mirror descent (OMD) with importance-weighted feedback. The authors derive distribution-free guarantees in stochastic and adversarial settings. The work~\cite{cutkosky2021dynamic} proposes a dynamic balancing meta-algorithm based on known regret rate expressions for the base learners. In the setup, the regret is defined with respect to the globally optimal action, and only one learner is updated per round. In contrast, our formulation uses \emph{per-expert, prefix-hindsight} guarantees $U_k(T,\delta)$ defined with respect to each expert’s local optimum. The work~\cite{dann2024data} removes the need for known regret rates by
+estimating per-learner coefficients online,
+obtaining high-probability, data-dependent model-selection guarantees for stochastic bandits (again, with a single learner updated per round). The closest setting to ours is \cite{pacchiano2020model}.
+It considers model selection using a \emph{smoothing wrapper}.
+The authors show that the \algname{CORRAL} meta-algorithm combined with their wrapper achieves regret
+$\tilde O(\sqrt{TK} + K^\alpha T^{1 - \alpha} +K^{1 - \alpha}T^{\alpha}c(\delta))$ when the regret of base learners satisfies $O(T^{\alpha}c(\delta))$.
+The dynamic balancing approach~\cite{cutkosky2021dynamic} yields a similar general bound
+$\tilde O\left(\sqrt{KT} + K^{1-\alpha}T^{\alpha}c(\delta)\right)$. These regret bounds coincide with the rate obtained by our method when only one expert can be trained per round. Our algorithm achieves the same order of dependence on $T$ and $\alpha$,
+while additionally supporting simultaneous training of up to $M$ adaptive experts with confidence intervals computed directly from realized per-arm losses.
 
-\textbf{MAB с обновлениями нескольких рук.}
-В этой постановке мета-процедура может обновлять или наблюдать несколько рук за раунд. Несколько работ рассматривают \emph{состязательный} случай.
-\cite{seldin2014prediction} изучают предсказание с ограниченными советами (запрос не более $M$ рук).
-Авторы получают оценку регрета $\tilde{O}\Big(\sqrt{\tfrac{K T \log K}{M}}\Big)$.
-Она плавно интерполирует между случаем полной информации и бандитной постановкой.
-В \cite{yun2018multi} представлена минимаксно-оптимальная оценка регрета $\tilde O\Big(\max\{\sqrt{KT/M},\,\sqrt{T\log K}\}\Big)$. В частности, она совпадает с нижними оценками из \cite{seldin2014prediction}. Однако эти работы предполагают необучающиеся руки (экспертов). В \emph{стохастическом} случае \cite{yun2018multi} рассматривает многорукого бандита с дополнительными наблюдениями: обучающийся выбирает одну руку и может наблюдать до $M$ дополнительных рук за раунд.
-Они предлагают алгоритм \emph{KL-UCB-AO}, достигающий асимптотически оптимального \emph{логарифмического} регрета. Однако его область применимости ограничена из-за свойств правила выбора на основе Kullback-Leibler.
+\textbf{MABs with updates of multiple arms.}
+In this setting, the meta-procedure can update or observe several arms per round. Several works consider the \emph{adversarial} case.
+\cite{seldin2014prediction} study prediction with limited advice (query at most $M$ arms).
+The authors obtain the regret bound $\tilde{O}\Big(\sqrt{\tfrac{K T \log K}{M}}\Big)$.
+It smoothly bridges the full-information case and the bandit setting.
+\cite{yun2018multi} presents the minimax-optimal regret $\tilde O\Big(\max\{\sqrt{KT/M},\,\sqrt{T\log K}\}\Big)$. Specifically, it matches the lower bounds from \cite{seldin2014prediction}. However, these works assume non-learning arms (experts). In the \emph{stochastic} case, \cite{yun2018multi} considers the multi-armed bandit with additional observations: the learner plays one arm and may observe up to $M$ extra arms per round.
+They propose the \emph{KL-UCB-AO} algorithm that achieves asymptotically optimal \emph{logarithmic} regret. However, it has a limited applicability scope due to the properties of the Kullback-Leibler-based selection rule.
 
 \textbf{Partial monitoring.}
-В отличие от стандартного partial monitoring \cite{cesa2006prediction}, где потери оцениваются по сигналам, наша модель наблюдает реализованные потери выбранных экспертов. Ключевое отличие состоит в нашем Asm.~\ref{assumption:expert_regret}, которое предполагает известные скорости улучшения экспертов и позволяет использовать доверительные границы. Алгоритмы PM, удовлетворяющие этому предположению, тем не менее могут быть включены в нашу схему как базовые эксперты.
+Unlike standard partial monitoring \cite{cesa2006prediction}, where losses are estimated from signals, our model observes realized losses for selected experts. The key distinction is our Asm.~\ref{assumption:expert_regret}, which assumes known improvement rates for experts and enables the use of confidence bounds. PM algorithms satisfying this assumption can nonetheless be incorporated as base experts in our framework.
 
 % {\color{red}
 % \paragraph{Partial monitoring.}
-% Эта структура обратной связи также связана с partial monitoring, где обучающийся наблюдает сигнал, а не весь вектор потерь; см., например, главу~6.4 в \cite{cesa2006prediction}. Отличие состоит в том, что алгоритмы partial monitoring обычно строят оценки потерь по сигналам, тогда как наша модель ограниченных советов получает реализованные потери выбранного подмножества экспертов. Более важно, что наш анализ опирается на предположение обучаемости в Asm.~\ref{assumption:expert_regret}: каждый эксперт улучшается со скоростью, контролируемой известной функцией. Эта структура отсутствует в стандартной формулировке partial monitoring и именно она позволяет строить доверительные границы для оптимальных значений экспертов. И наоборот, signal-based алгоритмы могут быть включены в нашу схему как базовые эксперты, если их гарантии обучения выражаются через Asm.~\ref{assumption:expert_regret}.
+% This feedback structure is also related to partial monitoring, where the learner observes a signal rather than the entire loss vector; see, for example, Chapter~6.4 of \cite{cesa2006prediction}. The distinction is that partial-monitoring algorithms typically construct loss estimates from signals, whereas our limited-advice model receives the realized losses of a selected subset of experts. More importantly, our analysis relies on the learnability assumption in Asm.~\ref{assumption:expert_regret}: each expert improves at a rate controlled by a known function. This structure is absent from the standard partial-monitoring formulation and is what permits confidence bounds on the experts' optimal values. Conversely, signal-based algorithms can be incorporated into our framework by treating them as base experts, provided their learning guarantees can be expressed through Asm.~\ref{assumption:expert_regret}.
 % }
 
 \textbf{Multiple-play multi-armed bandits.}
-В постановке \emph{multiple-play} (см. \cite{agrawal1990multi,uchiya2010algorithms})
-мета-процедура выбирает $M$ рук за раунд и наблюдает semi-bandit обратную связь.
-UCB-based алгоритмы для комбинаторных бандитов~\cite{kveton2015tight}
-достигают регрета $\tilde O(\sqrt{KT/M})$ при стохастических наградах,
-предоставляя базовую линию для анализа качества на уровне подмножеств. Эти результаты служат ориентиром для multiple-play MAB расширения \algname{M-LCB}. Таблица~\ref{tab:comparison_existing} сравнивает постановки задач.
+In the \emph{multiple-play} setting (see \cite{agrawal1990multi,uchiya2010algorithms}),
+a meta-procedure selects $M$ arms per round and observes semi-bandit feedback.
+UCB-based algorithms for combinatorial bandits~\cite{kveton2015tight}
+achieve $\tilde O(\sqrt{KT/M})$ regret under stochastic rewards,
+providing a baseline for subset-level performance analysis. These results serve as a benchmark for multiple-play MAB extension of \algname{M-LCB}. Table~\ref{tab:comparison_existing} compares the problem setups.
 
-\paragraph{Структура статьи.}
-Раздел~\ref{sec:setup} формализует постановку.
-Раздел~\ref{sec:algorithm} представляет алгоритм \algname{M-LCB}.
-Раздел~\ref{sec:theoretical_analysis} содержит теоретический анализ, а Раздел~\ref{sec:proof} содержит доказательства. Раздел~\ref{sec:experiments} содержит эксперименты.
+\paragraph{Organization of the paper.}
+Section~\ref{sec:setup} formalizes the setup.
+Section~\ref{sec:algorithm} presents the \algname{M-LCB} algorithm.
+Section~\ref{sec:theoretical_analysis} develops the confidence-interval construction, the upper bounds, and the minimax lower bounds in one self-contained theoretical chapter, and Section~\ref{sec:experiments} concludes the main narrative with the empirical study.
 
 \begin{table*}[!h]
 \centering
 \small
 \caption{
-Предполагая $U_k(T,\delta)=O(T^{\alpha}c(\delta))$ при $\alpha \in [0,1]$ и полилогарифмической $c(\delta)$, мы сравниваем скорости регрета с точностью до логарифмических множителей ($\checkmark$ обозначает поддерживаемые свойства). Регрет следует Разделу~\ref{sec:multiple_play} для multiple-play bandits, специальным соглашениям для \cite{seldin2014prediction, yun2018multi} и Разделу~\ref{sec:global-regret} в остальных случаях.
-\textbf{Наш алгоритм \algname{M-LCB} достигает оптимальных скоростей для обоих определений регрета.}}
+Assuming $U_k(T,\delta)=O(T^{\alpha}c(\delta))$ with $\alpha \in [0,1]$ and poly-logarithmic $c(\delta)$, we compare regret rates up to logarithmic factors ($\checkmark$ indicates supported properties). Regret follows Section~\ref{sec:multiple_play} for multiple-play bandits, specific conventions for \cite{seldin2014prediction, yun2018multi}, and Section~\ref{sec:global-regret} otherwise.
+\textbf{Our \algname{M-LCB} algorithm attains optimal rates for both regret definitions.}}
 
 \label{tab:comparison_existing}
-\begin{tabular}{p{3cm}lp{1cm} p{1cm} p{5.0cm}}
+\begin{tabular}{p{4cm}lp{1.5cm} p{1.5cm} p{6.0cm}}
 \toprule
-\textbf{Алгоритм / ссылка} & \textbf{Обучаемость} & \textbf{Multi-arm} & \textbf{Multiple-play} & \textbf{Скорость регрета (с точностью до log)} \\
+\textbf{Algorithm / Reference} & \textbf{Learnable} & \textbf{Multi-arm} & \textbf{Multiple-play} & \textbf{Regret rate (up to logs)} \\
 \midrule
 \textsc{CORRAL} + smoothing wrapper~\cite{pacchiano2020model}
 & $\checkmark$ & $\times$ & $\times$ &
@@ -318,46 +297,45 @@ UCB-based multiple-play bandits~\cite{kveton2015tight}
 & $\times$ & $\times$ & $\checkmark$ &
 $\tilde O\!\left(\sqrt{KT/M}\right)$ $\alpha = \frac{1}{2}$ \\[1pt]
 
-\textbf{\algname{M-LCB} [данная работа]}
+\textbf{\algname{M-LCB} [this work]}
 & $\checkmark$ & $\checkmark$ & $\checkmark$ &
 $\tilde O\!\left(\sqrt{\tfrac{KT}{M}} + (K/M)^{1-\alpha}T^{\alpha}c(\delta)\right)$ \\
 \bottomrule
 \end{tabular}
-\vspace{-1em}
+
 \end{table*}
 
-\section{Постановка задачи}
-\vspace{-1em}
+\section{Problem Setup}
+
 \label{sec:setup}
-В этом разделе мы формализуем взаимодействие между мета-процедурой $\mathcal{P}$ и пулом обучаемых экспертов. Раздел~\ref{sec:losses} подробно описывает протокол взаимодействия. Раздел~\ref{sec:global-regret} определяет цель через кумулятивный регрет. Раздел~\ref{sec:arm-dynamics} характеризует динамику обучения экспертов, а Раздел~\ref{sec:examples} иллюстрирует нашу схему конкретными примерами в параметрическом обучении и выборе бандитов.
+In this section, we formalize the interaction between the meta-procedure $\mathcal{P}$ and the pool of trainable experts. Section~\ref{sec:losses} details the interaction protocol. Section~\ref{sec:global-regret} defines the objective in terms of cumulative regret. Section~\ref{sec:arm-dynamics} characterizes the learning dynamics of the experts, while Section~\ref{sec:examples} illustrates our framework through concrete examples in parametric learning and bandit selection.
 
 \vspace{-0.5em}
-\subsection{Протокол процедуры}
+\subsection{Procedure protocol}
 \label{sec:losses}
 \vspace{-0.75em}
 
-Мы рассматриваем стохастическую online-задачу принятия решений с $K$ экспертами и бюджетом обучения на раунд $M$. Пусть $\mathbf{U}$ — пространство решений, а $\mathbf{E}$ — пространство исходов. Среда характеризуется функцией потерь $\ell: \mathbf{U} \times \mathbf{E} \to \mathbb{R}_+$. Каждый эксперт $k \in [K]$ действует на своем подпространстве $\mathbf{U}_k \subseteq \mathbf{U}$ и генерирует предсказание $u_k^t \in \mathbf{U}_k$ на раунде $t$.
+We consider a stochastic online decision-making problem with $K$ experts and a per-round training budget $M$. Let $\mathbf{U}$ be a decision space and $\mathbf{E}$ be an outcome space. The environment is characterized by a loss function $\ell: \mathbf{U} \times \mathbf{E} \to \mathbb{R}_+$. Each expert $k \in [K]$ operates on a specific subspace $\mathbf{U}_k \subseteq \mathbf{U}$ and generates a prediction $u_k^t \in \mathbf{U}_k$ at round $t$.
 
-Мета-процедура $\mathcal{P}$ управляет этим пулом экспертов. На каждом раунде $t$ $\mathcal{P}$ распределяет бюджет обучения на подмножество $S_t \subseteq [K]$ (где $|S_t| \le M$) и выбирает глобальное решение $u^t \in \mathbf{U}$, принимая совет выбранного эксперта. Затем среда раскрывает случайный исход $\xi^t$ со значениями в $\mathbf{E}$, и $\mathcal{P}$ несет глобальную потерю $\ell(u^t, \xi^t)$.
+The meta-procedure $\mathcal{P}$ manages this pool of experts. At each round $t$, $\mathcal{P}$ allocates the training budget to a subset $S_t \subseteq [K]$ (where $|S_t| \le M$) and selects a global decision $u^t \in \mathbf{U}$ by adopting the advice of a chosen expert. The environment then reveals a random outcome $\xi^t$ taking values in $\mathbf{E}$, and $\mathcal{P}$ incurs the global loss $\ell(u^t, \xi^t)$.
 
-% Модель обратной связи является моделью ограниченных советов, а не стандартной single-play bandit обратной связью. Исход $\xi^t$ генерируется независимо от выбранного мета-процедурой эксперта, и после наблюдения $\xi^t$ потеря $\ell(u_k^t,\xi^t)$ вычислима для каждого обучаемого эксперта $k\in S_t$, который выдал предсказание. Таким образом, развернутое решение определяет потерю, понесенную $\mathcal{P}$, тогда как все эксперты в $S_t$ получают обратную связь и могут обновляться. Эта модель лежит между стандартной бандитной обратной связью, где наблюдается только развернутое решение, и полной информацией, где наблюдаются все $K$ экспертов.
-
-
-Ключевым является то, что обучение экспертов отделено от непосредственного качества мета-процедуры $\mathcal{P}$. Эксперты обновляют свои внутренние параметры исключительно на основе собственной потери предсказания, $\ell(u_k^t, \xi^t)$, и только когда выбраны в обучающем множестве $S_t$. Это создает двойную роль для $\mathcal{P}$: она исследует, распределяя бюджет обучения (выбирая $S_t$ для улучшения определенных экспертов), и эксплуатирует, агрегируя совет выбранного эксперта для формирования итогового предсказания $u^t$ (см. Раздел~\ref{sec:algorithm}). Это взаимодействие отражает схему \emph{prediction with limited advice} \cite{seldin2014prediction}. Блок ниже суммирует протокол.
+Crucially, the expert learning is decoupled from the meta-procedure $\mathcal{P}$'s immediate performance. Experts update their internal parameters based solely on their own prediction loss, $\ell(u_k^t, \xi^t)$, and only when selected in the training set $S_t$. This creates a dual role for $\mathcal{P}$: it explores by allocating the training budget (choosing $S_t$ to improve specific experts) and exploits by aggregating advice from the selected expert to form the final prediction $u^t$ (see Section~\ref{sec:algorithm}). This interaction mirrors the \emph{prediction with limited advice} framework \cite{seldin2014prediction}. The box below summarizes the protocol.
 \begin{nframed}
 \noindent
-\textbf{Протокол: принятие решений с обучаемыми экспертами}\\[0.25em]
-Для $t=1,2,\dots$:
+\textbf{Protocol: Decision making with trainable experts}\\[0.25em]
+For $t=1,2,\dots$:
 \begin{enumerate}[leftmargin=2em]
-    \item Выбрать $S_t\subseteq[K]$ с $|S_t|\le M$ и решение $u^t\in\mathbf U$.
-    \item Наблюдать $\xi^t\sim D$ и понести потерю $\ell(u^t,\xi^t)$.
-    \item Для каждого $k\in S_t$ вычислить $\ell(u_k^t,\xi^t)$ и обновить эксперта $k$.
+    \item Choose $S_t\subseteq[K]$ with $|S_t|\le M$ and decision $u^t\in\mathbf U$.
+    \item Observe $\xi^t\sim D$ and incur loss $\ell(u^t,\xi^t)$.
+    \item For each $k\in S_t$, compute $\ell(u_k^t,\xi^t)$ and update expert $k$.
 \end{enumerate}
 \end{nframed}
 
-\subsection{Регрет}
+
+
+\subsection{Regret}
 \label{sec:global-regret}
-Пусть $L(u) := \mathbb{E}_{\xi \sim \mathcal{D}}[\ell(u,\xi)]$ — ожидаемая потеря решения $u \in \mathbf{U}$. Оптимальная достижимая ожидаемая потеря $L_k^\star$ $k$-го эксперта и глобальный минимум $L^\star$ равны
+Let $L(u) := \mathbb{E}_{\xi \sim \mathcal{D}}[\ell(u,\xi)]$ be the expected loss of a decision $u \in \mathbf{U}$. The optimal achievable expected loss $L_k^\star$ of $k$-th expert, and the global minimum $L^\star$ are,
 
 \begin{equation}
 \label{def:expeted_smallest_loss}
@@ -365,106 +343,120 @@ L_k^\star := \min_{u \in \mathbf{U}_k} L(u),
 \qquad
 L^\star := \min_{k \in [K]} L_k^\star.
 \end{equation}
-Цель $\mathcal{P}$ — минимизировать кумулятивный регрет относительно лучшего эксперта в пуле:
+The goal of $\mathcal{P}$ is to minimize the cumulative regret relative to the best expert in the pool:
 \begin{equation}
 \label{eq:regret}
 \mathrm{Reg}(T) := \sum_{t=1}^T \ell(u^t, \xi^t) - T \cdot L^\star.
 \end{equation}
-% Этот регрет обобщает классический стохастический MAB-регрет на функциональную постановку и согласуется со стандартной целью в стохастическом обучении.
+% This regret generalizes the classic stochastic MAB regret to the functional setting and aligns with the standard objective in stochastic learning.
 
-Это определение следует стандартной формулировке регрета в литературе по стохастическим многоруким бандитам. Мы работаем при следующих стандартных предположениях о среде:
-\begin{assumption}[Стохастические ограниченные потери]
+This definition follows the standard regret formulation in the stochastic multi-armed bandit literature. We operate under the following standard assumptions on the environment:
+\begin{assumption}[Stochastic bounded losses]
 \label{assumption:stochastic_losses}
-На каждом раунде среда независимо генерирует $\xi^t \overset{\mathrm{iid}}{\sim} D$ из неизвестного распределения $D$ с носителем на $\mathbf{E}$.
-Потери имеют вид $\ell:\mathbf{U}\times \mathbf{E}\to [0,1].$
+At each round, the environment draws $\xi^t \overset{\mathrm{iid}}{\sim} D$ from an unknown distribution $D$ supported on $\mathbf{E}$.
+The loss is $\ell:\mathbf{U}\times \mathbf{E}\to [0,1].$
 \end{assumption}
 
-\begin{remark}[Об ограниченности потерь]
-Эта постановка рассматривает ограниченные потери. Однако ее можно расширить на неограниченный случай (например, субгауссовский или с тяжелыми хвостами). В частности, доказательства требуют другого выбора концентрационных неравенств. В этом случае гарантии регрета сохраняются с точностью до логарифмического члена.
+\begin{remark}[On the bounded loss]
+This setting considers bounded loss. However, it can be extended to the unbounded case (e.g., sub-Gaussian or heavy-tailed). Specifically, the proofs require a different choice of concentration inequalities. In this case, the regret guarantees hold up to a log-term.
 \end{remark}
 
 
 
-\subsection{Самообучающиеся эксперты}
+
+\subsection{Self-learning experts}
 \label{sec:arm-dynamics}
-Каждый эксперт $k$ является online-алгоритмом обучения, который улучшается по мере выбора для обучения. Пусть $I_k(t) := \{\tau < t : k \in S_\tau\}$ обозначает множество раундов до времени $t$, на которых эксперт $k$ был выбран для обучения. Мы определяем $n_k^t := |I_k(t)|$ как общее число таких обновлений.
-Мы характеризуем качество этих экспертов через \textit{anytime-оценку регрета}. Это гарантирует, что по мере обучения эксперта его решения $u_k^t$ сходятся к его оптимуму $L_k^\star$. Накопленная потеря и регрет равны
+Each expert $k$ is an online learning algorithm that improves as it is selected for training. Let $I_k(t) := \{\tau < t : k \in S_\tau\}$ denote the set of rounds up to time $t$ where expert $k$ was selected for training. We define $n_k^t := |I_k(t)|$ as the total number of such updates.
+We characterize the performance of these experts through an \textit{anytime regret bound}. This ensures that as an expert is trained, its decisions $u_k^t$ converge toward its optimum $L_k^\star$. The running loss and regret are
 \begin{equation}
 \label{def:experts_running_loss}
 L_{k}(t) := \frac{1}{n^t_k} \sum_{\tau \in I_{k}(t)} \ell(u_k^\tau,\xi^\tau),
 \quad
 R_k(t) := n^t_k \left( L_{k}(t) - L_k^\star\right).
 \end{equation}
-\begin{assumption}[Anytime-оценка регрета эксперта]
+\begin{assumption}[Anytime expert regret bound]
 \label{assumption:expert_regret}
-Для любого $\delta\in(0,1)$ с вероятностью не менее $1-\delta$ для всех $t\ge 1$ выполнено $R_k(t) \le U_k(n_k^t,\delta),$
-где $U_k(\cdot,\delta)$ не убывает.
+For any $\delta\in(0,1)$, with probability at least $1-\delta$, for all $t\ge 1$, $R_k(t) \le U_k(n_k^t,\delta),$
+where $U_k(\cdot,\delta)$ is non-decreasing.
 \end{assumption}
-Asm.~\ref{assumption:expert_regret} согласуется со стандартными метриками качества в многоруких бандитах. Далее мы показываем, что регрет в online-оптимизации ему удовлетворяет.
+Asm.~\ref{assumption:expert_regret} aligns with standard performance metrics in multi-armed bandits. We further show that regret in online optimization satisfies it.
 
 
-\subsection{Примеры}
+
+
+\subsection{Examples}
 \label{sec:examples}
-\paragraph{Online-параметрическое обучение.} Пусть $\xi^t=(x_t,y_t) \overset{\mathrm{i.i.d.}}{\sim} D$, где распределение $D$ имеет носитель на $\mathbf{E} :=\mathcal X \times \mathcal Y$ и неизвестно. Мета-процедура $\mathcal P$ стремится предсказать $y_t$, наблюдая $x_t$, т. е. решает задачу обучения с учителем. Пространство решений — класс предикторов, $\mathbf{U} := \{u: \mathcal X \to \mathcal Y\}$.
-$\mathcal P$ управляет пулом экспертов, являющихся алгоритмами Online Convex Optimization (OCO)~\cite{hazan2016introduction}.
+\paragraph{Online parametric learning.} Let $\xi^t=(x_t,y_t) \overset{\mathrm{i.i.d.}}{\sim} D$, where the distribution $D$ is supported on $\mathbf{E} :=\mathcal X \times \mathcal Y$ and is unkown. The meta-procedure $\mathcal P$ aims to predict $y_t$ observing $x_t$, i.e., it solves a supervised learning task. The decision space is a class of predictors, $\mathbf{U} := \{u: \mathcal X \to \mathcal Y\}$.
+$\mathcal P$ manages a pool of experts that are Online Convex Optimization (OCO) algorithms~\cite{hazan2016introduction}.
 
-Каждый эксперт $k \in [K]$ связан с пространством параметров $\mathbf W_k \subseteq \mathbb R^{d_k}$ и функцией предсказания $f_k: \mathbf W_k \times \mathcal X \to \mathcal Y$. Для любого $w \in \mathbf W_k$ отображение $f_k(w, \cdot)$ является предиктором в $\mathbf U$, поэтому пространство решений этого эксперта равно $\mathbf U_k := \{f_k(w, \cdot):\, w \in \mathbf W_k\} \subseteq \mathbf U.$
-Оптимальный риск эксперта $k$ (см.~\eqref{def:expeted_smallest_loss}) превращается в $L_k^\star = \min_{w \in \mathbf W_k} \mathbb E_{(x, y) \sim D} [\ell(f_k(w, x), y)]$.
+Each expert $k \in [K]$ is associated with a parameter space $\mathbf W_k \subseteq \mathbb R^{d_k}$, and a prediction function $f_k: \mathbf W_k \times \mathcal X \to \mathcal Y$. For any $w \in \mathbf W_k$, the mapping $f_k(w, \cdot)$ is a predictor in $\mathbf U$, so the decision space of this expert is $\mathbf U_k := \{f_k(w, \cdot):\, w \in \mathbf W_k\} \subseteq \mathbf U.$
+The optimal risk for expert $k$ (see~\eqref{def:expeted_smallest_loss}) turns into $L_k^\star = \min_{w \in \mathbf W_k} \mathbb E_{(x, y) \sim D} [\ell(f_k(w, x), y)]$.
 
-При выборе для обучения эксперт $k$ предсказывает $w^t_k \in \mathbf{W}_k$ и получает обратную связь $\ell(f_k(w^t_k, x_t), y_t)$. Например, если эксперт является оптимизатором Online Gradient Descent (OGD), предполагается, что потеря $\ell(f_k(w_k, \cdot), \cdot)$ выпукла и $G$-липшицева на $\mathbf{W}_k$. Эксперт обновляет параметры по правилу $w_k^{\tau+1} = \Pi_{\mathbf{W}_k} [w_k^{\tau} - \eta_{\tau} \nabla_{w} \ell(f_k(w_k^\tau, x_\tau), y_\tau)]$, где $\Pi_{\mathbf{W}_k}$ обозначает евклидову проекцию на $\mathbf{W}_k$, а $\eta_{\tau}$ — размер шага обучения. OCO-регрет характеризует качество таких экспертов,
+When selected for training, expert $k$ predicts $w^t_k \in \mathbf{W}_k$ and receives feedback $\ell(f_k(w^t_k, x_t), y_t)$. For example, if the expert is an Online Gradient Descent (OGD) optimizer, the loss $\ell(f_k(w_k, \cdot), \cdot)$ is assumed to be convex and $G$-Lipschitz on $\mathbf{W}_k$. The expert updates its parameters using the rule $w_k^{\tau+1} = \Pi_{\mathbf{W}_k} [w_k^{\tau} - \eta_{\tau} \nabla_{w} \ell(f_k(w_k^\tau, x_\tau), y_\tau)]$, where $\Pi_{\mathbf{W}_k}$ denotes the Euclidean projection onto $\mathbf{W}_k$, and $\eta_{\tau}$ is learning step size. The OCO regret characterizes the performance of such experts,
 \begin{equation}
 \label{eq:regret_oco}
 \overline{R}_k(t) := \sum_{\tau \in I_k(t)} \ell(u_k^\tau, \xi^\tau) - \min_{u \in \mathbf{U}_k} \sum_{\tau \in I_k(t)} \ell(u, \xi^\tau).
 \end{equation}
-Для OGD выполнено $\overline{R}_k(t) \leq O(GD_k\sqrt{n})$, где
-$D_k := \mathrm{diam}(\mathbf{W}_k)$, а $t$ таково, что $|I_{k}(t)| = n$ \cite{hazan2016introduction}.
+For OGD, it holds $\overline{R}_k(t) \leq O(GD_k\sqrt{n})$, where
+$D_k := \mathrm{diam}(\mathbf{W}_k)$ and $t$ is s.t. $|I_{k}(t)| = n$ \cite{hazan2016introduction}.
 
-Лемма~\ref{lem:prefix_to_expected} связывает этот регрет с ожидаемым регретом (см. Asm.~\ref{assumption:expert_regret}) через концентрационную оценку. Следовательно, OGD-эксперты удовлетворяют предположению с
+Lemma~\ref{lem:prefix_to_expected} relates this regret to the Assumption~\ref{assumption:expert_regret} with additional concentration term. Consequently, OGD experts satisfy the assumption with
 $U_k(n, \delta) = O\left(GD_k\sqrt{n} + \sqrt{n \log(n/\delta)}\right)$.
 
 
 
-\paragraph{Алгоритмы многоруких бандитов.} Мотивированные AutoML и распределенной маршрутизацией, мы рассматриваем мета-процедуру $\mathcal{P}$, выбирающую наиболее эффективного среди $K$ самооптимизирующихся экспертов. Как и в Bandit Model Selection \cite{pacchiano2020model}, это сложно из-за нестационарной динамики обучения экспертов и высокой стоимости выборок. Каждый эксперт $k$ является стохастическим бандитом, выдающим решения $u_k^t$ из $m_k$-мерного симплекса $\Delta_k$ над конечным пространством действий $\mathcal{A}_k$, что делает глобальное пространство решений $\mathbf{U} = \bigcup_k \Delta_k$. Латентное состояние среды $\xi^t \sim D$ определяет потерю $\tilde{\ell}(a, \xi)$ для любого действия $a \in \mathcal{A}_k$ на раунде $t$. Потеря эксперта — это математическое ожидание $\ell(u_k, \xi) := \mathbb{E}_{a \sim u_k} [\tilde{\ell}(a, \xi)]$, с оптимальным риском $L_k^\star = \min_{a \in \mathcal{A}_k} \mathbb{E}_{\xi \sim D} [\tilde{\ell}(a, \xi)]$.
+\paragraph{Multi-armed bandit algorithms.}
+Motivated by AutoML and distributed routing, we consider a meta-procedure $\mathcal{P}$ that selects the most efficient among $K$ self-optimizing experts. As in Bandit Model Selection \cite{pacchiano2020model}, this is inherently challenging due to the experts' non-stationary learning dynamics and the high sample cost required for convergence.
 
-В нашей постановке limited-advice каждый обучаемый эксперт $k \in S_t$ предлагает $u_k^t$, семплирует действие $a_k^t \sim u_k^t$ и наблюдает бандитную обратную связь $\tilde{\ell}(a_k^t, \xi^t)$. Качество измеряется псевдо-регретом $R_k(t) = \sum_{\tau \in I_k(t)} \ell(u_k^\tau, \xi^\tau) - n_k L_k^\star$. Стандартные алгоритмы, такие как \algname{UCB}, удовлетворяют Asm.~\ref{assumption:expert_regret} с $U_k(n, \delta) = O(\sqrt{m_k n \log(n/\delta)})$. Поскольку мы наблюдаем семплированные потери, а не ожидания, реализация использует эмпирическое среднее $\tilde L_k(t)=\frac{1}{n_k^t}\sum_{\tau\in I_k(t)}\tilde{\ell}(a_k^\tau,\xi^\tau)$. Добавление концентрационного члена для семплирования к $U_k$ обеспечивает корректные anytime высоковероятностные границы для работы алгоритма; подробный вывод см. в Приложении \ref{sup:bandit_application}.
+Each expert $k$ is a stochastic bandit managing a finite action space $\mathcal{A}_k := \{a_k^1, \dots, a_k^{m_k}\}$. An expert's decision at time $t$ is a probability distribution $u_k^t \in \Delta_k$ over its actions, where $\mathbf{U}_k = \Delta_k$ is the $m_k$-dimensional simplex. The global decision space $\mathbf{U}$ is the union of simplices.
 
-\section{Алгоритм \algname{M-LCB}}
+
+The environment is characterized by a latent random variable $\xi^t \sim D$ that represents the state of the system at time $t$ (e.g., a vector of current latencies or resource costs for all available methods). Although $\xi^t$ need not be observed in full by the meta-procedure, it determines the loss of each action $a \in \bigcup_k \mathcal{A}_k$ via the mapping $\tilde{\ell}(a, \xi)$.
+The expert loss for a decision $u_k \in \mathbf{U}_k$ is $\ell(u_k, \xi) := \mathbb{E}_{a \sim u_k} [\tilde{\ell}(a, \xi)]$. The optimal risk for expert $k$ is $L_k^\star = \min_{a \in \mathcal{A}_k} \mathbb{E}_{\xi \sim D} [\tilde{\ell}(a, \xi)]$.
+
+When expert $k\in S_t$ produces $u^{t}_k$, it samples a discrete action $a_k^{t} \in \mathcal{A}_k$ from $u_k^{t}$ and receives $(a^{t}_k, \tilde{\ell}(a^{t}_k, \xi^{t}))$ as bandit feedback. Thus, in this instantiation the limited-advice assumption means that the environment provides the sampled-action loss for each trained expert $k\in S_t$, including experts that are not deployed as the global advisor. If several trained experts sample the same action, the corresponding loss need only be evaluated once and can be reused for all of them. When off-policy updates are available, one may also update base algorithms from additional samples, but our analysis uses only the on-policy observations above.
+
+In this setting, the expert's performance is measured by its pseudo-regret $R_k(n)$, which evaluates the cumulative expected loss of the distributions $u_k^\tau$ relative to the best fixed action, $R_k(t) = \sum_{\tau \in I_k(t)} \mathbb{E}_{a \sim u_k^\tau} [\tilde{\ell}(a, \xi^\tau)] - n_k L_k^\star.$
+
+Standard algorithms such as \algname{UCB} satisfy Asm.~\ref{assumption:expert_regret} with $U_k(n, \delta) = O(\sqrt{m_k n \log(n/\delta)})$. The theoretical running loss $L_k(t)$ in~\eqref{def:experts_running_loss} is defined through the conditional loss $\ell(u_k^t,\xi^t)$, whereas the bandit expert observes the sampled loss $\tilde{\ell}(a_k^t,\xi^t)$. In implementation one therefore uses $\tilde L_k(t)=\frac{1}{n_k^t}\sum_{\tau\in I_k(t)}\tilde{\ell}(a_k^\tau,\xi^\tau),$
+and adds the corresponding sampling-concentration term to $U_k$. The concentration of $\sum_{\tau\in I_k(t)} \tilde{\ell}(a_k^\tau, \xi^\tau)$ around $\sum_{\tau\in I_k(t)} \ell(u_k^\tau, \xi^\tau)$ ensures that anytime high-probability bounds on pseudo-regret hold. The proof is similar to Lemma~\ref{lem:prefix_to_expected}.
+
+\section{The \algname{M-LCB} algorithm}
 \label{sec:algorithm}
-% Мы следуем оптимистическому принципу для обучения и консервативному принципу для deployment. На каждом раунде он распределяет бюджет обучения на экспертов, определенных как потенциально оптимальные с помощью нижних доверительных границ (LCB). Поскольку потери минимизируются, низкая LCB указывает, что эксперт может иметь малую оптимальную потерю $L_k^\star$ и потому заслуживает обучения. Однако среди обучаемых экспертов развертываемый советчик выбирается с помощью верхних доверительных границ (UCB): минимизация UCB контролирует потерю текущего раунда. Использование LCB для обеих ролей чрезмерно эксплуатировало бы неопределенных экспертов, текущая потеря которых может оставаться большой.
+% We follows an optimistic principle for learning and a conservative principle for deployment. At each round, it allocates the training budget to experts identified as potentially optimal using lower confidence bounds (LCBs). Since losses are minimized, a low LCB indicates that the expert may have a small optimal loss $L_k^\star$ and is therefore worth training. Among the trained experts, however, the deployed advisor is selected using upper confidence bounds (UCBs): minimizing the UCB controls the loss incurred in the current round. Using LCBs for both roles would over-exploit uncertain experts whose current loss may still be large.
 
-% Для реализации этой стратегии мы строим для каждого эксперта $k$ $\LCB_k(t, \cdot)$ и $\UCB_k(t, \cdot)$---нижнюю и верхнюю доверительные границы неизвестной оптимальной потери $L_k^\star$ (см.~\eqref{def:expeted_smallest_loss}), эффективно вычисляемые по накопленной потере $L_k(t)$ (см.~\eqref{def:experts_running_loss}).
-Мы балансируем оптимистическое обучение с консервативным deployment: распределяем бюджет обучения на потенциально оптимальных экспертов с наименьшими нижними доверительными границами ($LCB_k$), одновременно выбирая развертываемого советчика по наименьшим верхним доверительным границам ($UCB_k$), чтобы минимизировать немедленную потерю. Это предотвращает чрезмерную эксплуатацию неопределенных экспертов.
+% To implement this strategy, we construct for each expert $k$ $\LCB_k(t, \cdot)$ and $\UCB_k(t, \cdot)$---the lower and upper confidence bounds on the unknown optimal loss $L_k^\star$ (see~\eqref{def:expeted_smallest_loss}), efficiently calculated from the running loss $L_k(t)$ (see~\eqref{def:experts_running_loss}).
+We balance optimistic learning with conservative deployment: we allocate the training budget to potentially optimal experts with the lowest lower confidence bounds ($\LCB_k$), while selecting the deployed advisor using the lowest upper confidence bounds ($\UCB_k$) to minimize immediate loss. This prevents over-exploiting uncertain experts.
 
 
-\begin{definition}[UCB и LCB]
+\begin{definition}[UCB and LCB]
 \label{def:ucb_lcb}
-Зафиксируем $k\in[K]$ и положим
+Fix $k\in[K]$ and let
 \begin{align*}
 \LCB_k(t,\delta)
 := L_{k}(t)- \tfrac{U_k\left(n^t_k,\delta_{\mathrm{arm}}\right)}{n^t_k}, \quad
 \UCB_k(t,\delta)
 := L_{k}(t) + H(n^t_k,\delta_{n^t_k}),
 \end{align*}
-где $\delta_{\mathrm{arm}} = \tfrac{\delta}{2K}$,  $\delta_n = \tfrac{\delta}{3.5Kn^2}$ и $H(n,\delta) = \sqrt{\tfrac{2\log(1/\delta)}{n}}$,
-при этом $U_k(\cdot)$ — оценка регрета из Asm.~\ref{assumption:expert_regret}, а $L_k(t)$ — накопленная потеря, определенная в \eqref{def:experts_running_loss}.
+where $\delta_{\mathrm{arm}} = \tfrac{\delta}{2K}$,  $\delta_n = \tfrac{\delta}{4Kn^2}$ and $H(n,\delta) = \sqrt{\tfrac{2\log(1/\delta)}{n}}$,
+with $U_k(\cdot)$ being the regret bound from Asm.~\ref{assumption:expert_regret} and $L_k(t)$ being an accumulated loss defined in \eqref{def:experts_running_loss}.
 \end{definition}
 
-
-На раунде $t$ мы вычисляем $\LCB_k(t,\delta)$ и $\UCB_k(t,\delta)$ для каждого эксперта $k$. Затем определяем обучающее подмножество $S_t$ и советчика $i_t$ по следующим правилам:
+At round $t$, we compute $\LCB_k(t,\delta)$ and $\UCB_k(t,\delta)$ for each expert $k$. We then determine the training subset $S_t$ and the advisor $i_t$ using the following rules:
 \begin{align*}
 S_t &:= \arg\min_{\substack{S\subseteq[K]\\ |S|=M}} \sum_{k\in S}\LCB_k(t,\delta), ~~
 i_t = \arg\min_{k\in S_t}\UCB_k(t,\delta).
 \end{align*}
 
-Чтобы преодолеть отсутствие поточечной сходимости в стохастических алгоритмах \cite{cesa2006prediction, shalev2012online, pacchiano2020model}, мы используем smoothing wrappers \cite{orabona2019modern, pacchiano2020model} для устойчивого построения решения $u^t$ эксперта $i_t$, обеспечивая выполнение Asm.~\ref{assumption:wrapper} для $\mathcal{P}$. В отличие от состязательной агрегации экспертов (даже при $M=K$), наши доверительные границы оценивают оптимальные значения, напрямую используя структурные гарантии обучаемости базовых экспертов.
+To address the lack of pointwise convergence in stochastic algorithms \cite{cesa2006prediction, shalev2012online, pacchiano2020model}, we use smoothing wrappers \cite{orabona2019modern, pacchiano2020model} to robustly construct the decision $u^t$ of expert $i_t$, ensuring $\mathcal{P}$ satisfies Asm.~\ref{assumption:wrapper}. Unlike adversarial aggregation (even when $M=K$), our confidence bounds estimate optimal values by directly exploiting the base experts' structural learnability guarantees.
 
-% Ключевая идея алгоритма состоит в устойчивом построении решения $u^t$, принимаемого экспертом $i_t$ на раунде $t$. В частности, стохастические алгоритмы (например, градиентные методы, бандитные алгоритмы) часто гарантируют сходимость только в среднем или по распределению, но не поточечно по последней итерации; см. \cite{cesa2006prediction, shalev2012online, pacchiano2020model}. Вдохновленные online-to-batch conversion \cite{orabona2019modern, pacchiano2020model}, мы вводим smoothing wrappers. Поэтому решение, принимаемое $\mathcal{P}$, основано на истории обучения выбранного эксперта $i_t$ и удовлетворяет Asm.~\ref{assumption:wrapper}. Эта схема не является агрегацией состязательных экспертов даже при $M=K$: доверительные границы используют структурные гарантии обучаемости базовых экспертов для оценки их оптимальных значений.
+% A key idea of the algorithm is the robust construction of the decision $u^t$ made by an expert $i_t$ at round $t$. Specifically, stochastic algorithms (e.g., gradient methods, bandit algorithms) often guarantee convergence only in average or in distribution rather than pointwise in the last iterate; see \cite{cesa2006prediction, shalev2012online, pacchiano2020model}. Inspired by online-to-batch conversion \cite{orabona2019modern, pacchiano2020model}, we introduce smoothing wrappers. The decision taken by $\mathcal{P}$ is therefore based on the learning history of the chosen expert $i_t$ and satisfies Asm.~\ref{assumption:wrapper}. The framework is not adversarial-experts aggregation even when $M=K$: the confidence bounds exploit the structural learnability guarantees of the base experts to estimate their optimal values.
 
 \begin{assumption}[Smoothing wrapper]
 \label{assumption:wrapper}
-Smoothing wrapper — возможно рандомизированное отображение $\upsilon$, которое принимает конечную последовательность решений
-$H=\{u^\tau:\tau\in Z\}\subseteq \mathbf U$ с $|Z|\ge 1$ и возвращает решение $u=\upsilon(H)\in\mathbf U$
-такое, что
+A smoothing wrapper is a possibly randomized mapping $\upsilon$ that takes a finite sequence of decisions
+$H=\{u^\tau:\tau\in Z\}\subseteq \mathbf U$ with $|Z|\ge 1$ and returns a decision $u=\upsilon(H)\in\mathbf U$
+s.t.
 \begin{equation*}
 \mathbb E_{u\sim v(H)}\bigl[L(u)\mid H\bigr]\ \le\ \frac{1}{|Z|}\sum_{\tau\in Z} L(u^\tau),
 \qquad
@@ -474,36 +466,36 @@ L(u):=\mathbb E_{\xi\sim D}[\ell(u,\xi)].
 
 \begin{example}
 \label{example:wrapper}
-Предположим, что $\mathbf U$ выпукло и $\ell(\cdot,\xi)$ выпукла по $u$ для всех $\xi$. Естественный выбор — среднее $u = \frac{1}{|Z|}\sum_{\tau\in Z} u^\tau,$
-которое удовлетворяет Asm.~\ref{assumption:wrapper} по неравенству Йенсена. Рандомизированная форма Asm.~\ref{assumption:wrapper} также покрывает невыпуклые пространства решений: можно равномерно семплировать $u$ из истории $\{u^\tau:\tau\in Z\}$ \cite{pacchiano2020model}; в этом случае требуемое неравенство выполняется в условном математическом ожидании без требования выпуклости.
+Assume $\mathbf U$ is convex and $\ell(\cdot,\xi)$ is convex in $u$ for all $\xi$. A natural choice is the average $u = \frac{1}{|Z|}\sum_{\tau\in Z} u^\tau,$
+which satisfies Asm.~\ref{assumption:wrapper} by Jensen's inequality. The randomized form of Asm.~\ref{assumption:wrapper} also covers non-convex decision spaces: one can uniformly sample $u$ from the history $\{u^\tau:\tau\in Z\}$ \cite{pacchiano2020model}, in which case the required inequality holds in conditional expectation without requiring convexity.
 \end{example}
 
-Alg.~\ref{algorithm:M_LCB} описывает процедуру. Инициализация каждого эксперта один раз перед основным циклом обеспечивает корректно определенные доверительные границы и стоит не более $K$ обновлений, не влияя на асимптотический регрет. Шаг \textit{Update} обрабатывает как внутреннее обучение, так и учетные переменные (например, счетчики, накопленную потерю).
+Alg.~\ref{algorithm:M_LCB} outlines the procedure. Initializing each expert once before the main loop ensures well-defined confidence bounds, costing at most $K$ updates without affecting asymptotic regret. The \textit{Update} step handles both internal learning and bookkeeping (e.g., counters, accumulated loss).
 
-% Alg.~\ref{algorithm:M_LCB} подробно описывает процедуру. Перед основным циклом каждый эксперт инициализируется один раз, чтобы все доверительные границы были корректно определены; это стоит не более $K$ дополнительных обновлений и не влияет на асимптотические скорости регрета.
-% Шаг \textit{Update} для эксперта включает его внутреннее обновление обучения, а также обновление соответствующих учетных переменных (счетчиков, накопленной потери и т. д.).
+% Alg.~\ref{algorithm:M_LCB} details the procedure. Before the main loop, each expert is initialized once so that all confidence bounds are well-defined; this costs at most $K$ additional updates and does not affect the asymptotic regret rates.
+% The \textit{Update} step for an expert includes its internal learning update as well as updating the associated bookkeeping variables (counters, accumulated loss, etc.).
 
 \begin{algorithm}[ht!]
 \caption{\algname{M-LCB}}
 \label{algorithm:M_LCB}
 \begin{algorithmic}[1]
-\STATE \textbf{Вход:} эксперты $\{\mathbf{U}_k\}_{k=1}^K$, бюджет на раунд $M$, параметр доверия $\delta$, smoothing wrapper $\upsilon$ (см. Предположение \ref{assumption:wrapper}).
+\STATE \textbf{Input:} experts $\{\mathbf{U}_k\}_{k=1}^K$, per-round budget $M$, confidence parameter $\delta$, smoothing wrapper $\upsilon$ (see Assumption \ref{assumption:wrapper}).
 
-\STATE \textbf{Выход:} (i) последовательность советов $\{u^t\}_{t=1}^T$; (ii) эксперты, обучаемые на каждом раунде $\{S_t\}_{t=1}^T$
+\STATE \textbf{Output:} (i) sequence of advices $\{u^t\}_{t=1}^T$; (ii) experts trained at each round $\{S_t\}_{t=1}^T$
 
-\STATE Инициализировать каждого эксперта с $\delta_{\mathrm{arm}} = \delta/(2K)$ (см. Def.~\ref{def:ucb_lcb})
-\STATE Выполнить warm-start каждого эксперта один раз, чтобы $n_k^t\ge 1$ для всех $k$ до применения основного правила выбора.
+\STATE Initialize each expert with $\LCB_k$ and $\UCB_k$ from Def.~\ref{def:ucb_lcb}.
+\STATE Warm-start each expert once so that $n_k^t\ge 1$ for all $k$ before the main selection rule is used.
 \FOR{$t=1,2,\dots,T$}
-    \FOR{каждого $k \in [K]$}
-        \STATE Вычислить $\LCB_k(t,\delta), \UCB_k(t,\delta)$
+    \FOR{each $k \in [K]$}
+        \STATE Compute $\LCB_k(t,\delta), \UCB_k(t,\delta)$
     \ENDFOR
     \STATE $S_t \gets \arg\min_{S\subseteq[K],|S|=M}\sum_{k\in S}\LCB_k(t,\delta)$
     \STATE $i_t \gets \arg\min_{k\in S_t}\UCB_k(t,\delta)$
-    \STATE $u^t \gets \upsilon(\{u_{i_t}^\tau: \tau \in I_{i_t}(t)\})$ \hfill // сглаживание по $i_t$
-    \STATE Сыграть $u^t$, понести $\ell(u^t,\xi^t)$
-    \FOR{каждого $k \in S_t$}
-        \STATE Наблюдать $\ell(u_k^t, \xi^t)$.
-        \STATE Обновить эксперта $k$.
+    \STATE $u^t \gets \upsilon(\{u_{i_t}^\tau: \tau \in I_{i_t}(t)\})$ \hfill // smoothing over $i_t$
+    \STATE Play $u^t$, suffer $\ell(u^t,\xi^t)$
+    \FOR{each $k \in S_t$}
+        \STATE Observe $\ell(u_k^t, \xi^t)$.
+        \STATE Update expert $k$.
     \ENDFOR
 \ENDFOR
 \end{algorithmic}
@@ -511,211 +503,345 @@ Alg.~\ref{algorithm:M_LCB} описывает процедуру. Инициал
 
 
 
-\section{Оценки регрета}
+\section{Theoretical Analysis}
 \label{sec:theoretical_analysis}
-Пусть \emph{концентрационное событие $\mathcal{E}_{\delta}$} гарантирует, что все доверительные границы выполняются одновременно для каждого эксперта и каждого шага времени (подробности см. в Лемме~\ref{prop:anytime-ci-clear}). Сначала мы устанавливаем высоковероятностные оценки псевдо-регрета и реализованного регрета.
-\begin{lemma}[Оценки регрета]
-\label{lem:regret_bounds}
-Пусть псевдо-регрет равен
-\begin{equation}
-% \label{eq:regret}
-\widetilde{\mathrm{Reg}}(T)
-:= \mathbb E_{\upsilon}\left[\sum_{t=1}^T L(u^t)\right]  - T \cdot L^\star,
-\end{equation}
-где математическое ожидание берется по возможной рандомизации smoothing wrapper.
-При $L(\cdot) := \mathbb{E}_{\xi \sim \mathcal{D}}[\ell(\cdot,\xi)]$ зафиксируем $\delta \in (0,1)$ и предположим, что выполнены Предположения~\ref{assumption:stochastic_losses}-\ref{assumption:wrapper}.
-Тогда для псевдо-регрета Alg.~\ref{algorithm:M_LCB} на концентрационном событии $\mathcal{E}_{\delta}$ для всех $T\ge 1$ выполнено $\widetilde{\mathrm{Reg}}(T) \le \mathbb E_{\upsilon}[\Delta(T)]$, где
-\begin{align}
-\label{eq:bound_bound_bound}
-    \Delta(T) :=
-     \sum_{\tau \in I_{k^{\star}}(T)} \bigl[\UCB_{k^\star}(\tau, \delta)-\LCB_{k^\star}(\tau, \delta)\bigr]
-    + \frac{1}{M}\sum_{k=1}^K \sum_{{\tau \in I_{k}(T)}} \bigl[\UCB_k(\tau, \delta)-\LCB_k(\tau, \delta)\bigr],
-\end{align}
+This section consolidates the theoretical analysis of the proposed framework. First, we establish the confidence intervals for the online parametric learning models introduced in Section~\ref{sec:examples}. We then analyze the performance of the \algname{M-LCB} algorithm, deriving both the standard and multiple-play cumulative regret bounds. Finally, we present a minimax lower-bound analysis for the considered problem, demonstrating that the \algname{M-LCB} algorithm achieves order-optimal performance up to logarithmic factors.
 
-    где $k^\star$ — индекс лучшего эксперта.
-Более того, с вероятностью не менее $1-2\delta$ для всех $T\ge 1$ выполнено $\mathrm{Reg}(T) \le \mathbb E_{\upsilon}[\Delta(T)] + O(\sqrt{T}).$
+\subsection{Confidence Interval Construction}
+\label{sec:confidence-interval-construction}
+
+In Section~\ref{sec:examples}, using the case of online parametric learning as a motivating example, we introduced specific online learning algorithms to act as our base experts. Within this framework, standard online optimization guarantees must be adapted to satisfy the prefix-hindsight regret form required by Assumption~\ref{assumption:expert_regret}. Lemma~\ref{lem:prefix_to_expected} below establishes this connection, demonstrating how deterministic online regret guarantees translate into the required time-uniform confidence bounds.
+
+\begin{lemma}[Empirical loss concentration {\normalfont\cite[Lemma B.10]{shalev2014understanding}}]
+\label{lem:loss-eval}
+Let $\mathbf{W}$ be a state space and $\mathcal{D}$ a distribution on $\mathbf{E}$. Let $\ell:\mathbf{W}\times\mathbf{E}\to [0,1]$ be a bounded loss function. Fix a predictor $w\in\mathbf{W}$ and define its expected loss $L(w):=\mathbb{E}_{\xi\sim\mathcal{D}}[\ell(w,\xi)]$.
+
+Then, for any $n>0$ and $\delta\in(0,1)$, with probability at least $1-\delta$ over the draw of $\{\xi_t\}_{t=1}^n$ i.i.d.\ from $\mathcal{D}$,
+\begin{equation}
+\frac{1}{n}\sum_{t=1}^n \ell(w,\xi_t) - L(w)
+\le
+\sqrt{\tfrac{2L(w)\log(1/\delta)}{n}} + \tfrac{2\log(1/\delta)}{3n}.
+\end{equation}
 \end{lemma}
 
-Мы конкретизируем этот результат для случая, когда регреты экспертов имеют вид $\tilde O(n^\alpha)$.
+\begin{proof}
+The claim follows directly from Bernstein's inequality for bounded random variables.
+\end{proof}
 
-\begin{theorem}[Скорости сходимости]
-\label{thm:gen-rate}
-Пусть $\alpha, \delta \in (0, 1)$, и каждый эксперт $k$ удовлетворяет Asm.~\ref{assumption:expert_regret}
-с $U_k(t,\delta) =O\big(t^{\alpha}c(\delta)\big)$.
-Тогда с вероятностью не менее $1 - \delta$ регрет Alg.~\ref{algorithm:M_LCB} ограничен для всех $T\ge1$ следующим образом:
-\begin{equation*}
-\mathrm{Reg}(T)
-= O\left(\sqrt{\frac{K T}{M}\log(\frac{KT}{\delta})} + \Bigl(\tfrac{K}{M}\Bigr)^{1-\alpha} T^{\alpha} c(\delta)\right).
-\end{equation*}
-\end{theorem}
-Мы также получаем нижние оценки.
-\begin{definition}[Стохастические задачи с нижней оценкой $\alpha$–регрета]
-\label{def:alpha-class}
-Пусть $\alpha \in [0,1]$.
-Семейство $\mathcal{F}_\alpha$ стохастических online-задач обучения допускает \emph{нижнюю оценку $\alpha$–регрета},
-если для любого алгоритма обучения $\mathscr{A}$ и любого $T \ge 1$ выполнено $\sup_{f \in \mathcal{F}_\alpha}
-\mathbb{E}\bigl[R_{\mathscr{A}}(T)\bigr]
-\ge
-c\,T^{\alpha},$
-для некоторой константы $c > 0$, не зависящей от\, $T$ и $\mathscr{A}$.
-\end{definition}
 
-\begin{theorem}[Нижняя оценка]
-\label{thm:mt-alpha}
-Рассмотрим $K$ экспертов, горизонт $T$ и бюджет на раунд $M$. Зафиксируем $\alpha\in[0,1]$. Существует класс $\mathcal F_\alpha$, удовлетворяющий Def.~\ref{def:alpha-class}, такой, что если каждый
-эксперт $k \in [K]$ решает задачу $f_k \in \mathcal F_\alpha$, то при достаточно малом $\sqrt{\frac{K\log K}{MT}}$ и для любого алгоритма $\mathscr{A}_k$ и мета-процедуры $\mathcal{P}$
+\begin{lemma}[OCO Regret Implies Prefix-Hindsight Regret]
+\label{lem:prefix_to_expected}
+
+Let $k \in [K]$ be a base expert implementing an online convex
+optimization (OCO) algorithm. Suppose that for every confidence level
+$\delta \in (0,1)$, the expert admits a time-uniform high-probability
+bound $\overline U_k(t,\delta)$ on its pseudo-regret
+$\overline R_k(t)$ defined in \eqref{eq:regret_oco}, namely,
+\[
+\Pr\!\left(
+    \forall t \ge 1,\;
+    \overline R_k(t)
+    \le
+    \overline U_k(t,\delta)
+\right)
+\ge 1-\delta.
+\]
+
+Then the expert satisfies
+Assumption~\ref{assumption:expert_regret}. More precisely, with
+probability at least $1-\delta$,
+\[
+R_k(t)
+\le
+U_k(t,\delta),
+\qquad
+\forall t \ge 1,
+\]
+where
 \begin{equation}
-\label{eq:mt-alpha-internal_appendix}
-\sup_{f_{k} \in \mathcal{F}_{\alpha},\,k \in [K]} \mathbb{E}\,\mathrm{Reg}(T) \ge c_1\,\sqrt{\frac{K\,T}{M}}
-\;+\; c_2\,T^\alpha \left(\frac{K}{M} \right)^{1-\alpha},
+\label{eq:expert_regret_bound_form}
+U_k(t,\delta)
+=
+\overline U_k\!\left(t,\frac{\delta}{2}\right)
++
+t\,G\!\left(t,\frac{\delta}{4\,t^2}\right),
 \end{equation}
-где $c_1,c_2>0$ — абсолютные константы.
-\end{theorem}
-Это устанавливает фундаментальную нижнюю границу для управления обучаемыми экспертами при бюджете: исследование ($\sqrt{KT/M}$) доминирует при $\alpha<1/2$, тогда как обучение экспертов ($T^\alpha (K/M)^{1-\alpha}$) доминирует при $\alpha\ge 1/2$. Для ограниченных потерь наш алгоритм \algname{M-LCB} совпадает с этой границей с точностью до логарифмических множителей (доказательство Теоремы~\ref{thm:mt-alpha} в Приложении).
+and
+\begin{equation}
+G(t,\delta_0)
+=
+\sqrt{\frac{2\log(1/\delta_0)}{t}}
++
+\frac{2\log(1/\delta_0)}{3t}
+\end{equation}
+is the concentration penalty arising from Bernstein's inequality.
 
-% Этот результат устанавливает фундаментальный предел качества для управления несколькими обучаемыми экспертами при бюджете на раунд. Для $\alpha<1/2$ член исследования $\sqrt{KT/M}$ доминирует в нижней оценке; для $\alpha\ge 1/2$ член обучения экспертов $T^\alpha (K/M)^{1-\alpha}$ является доминирующим вкладом.
-% Мы предлагаем алгоритм \algname{M-LCB}, совпадающий с нижней оценкой с точностью до логарифмического множителя в случае ограниченной потери.
-% Доказательство Теоремы~\ref{thm:mt-alpha} находится в Приложении.
-
-\noindent
-\textbf{Идея доказательства.}
-Мы используем MAB с тяжелыми хвостами \cite{bubeck2013bandits} для построения $\mathcal{F}_{\alpha}$. Ключевые ингредиенты взяты из \cite{bubeck2010bandits, seldin2014prediction}. Члены в оценке возникают соответственно из сложности исследования и сложности обучения экспертов.
-
-
-
-
-
-\subsection{Связь с Multiple-Play Bandits}
-\label{sec:multiple_play}
-\algname{M-LCB} расширяется на постановку multiple-play bandit \cite{agrawal1990multi, uchiya2010algorithms} путем deployment всех $M$ экспертов из $S_t$ и учета их средней потери. Качество оценивается относительно оптимального подмножества из $M$ экспертов; примечательно, что в этой постановке UCB-based алгоритмы \cite{kveton2015tight} достигают скоростей сходимости $\tilde O(\sqrt{KT/M})$ при фиксированных стохастических наградах.
-
-% Наша постановка обобщает эту идею: вместо статических стохастических рук каждый выбранный элемент является самообучающимся экспертом, качество которого меняется со временем.
-% Следующее утверждение формализует эту связь, показывая, что среднее качество подмножеств, обучаемых нашим алгоритмом,
-% приближается к качеству лучших $M$ экспертов.
-
-\begin{lemma}[Регрет top-$M$ экспертов]
-\label{prop:m_mean_regret}
-Зафиксируем $\delta \in (0,1)$
-и предположим, что условия Леммы~\ref{lem:regret_bounds} выполнены.
-Пусть $\overline{L}^\star = \min_{S\subseteq[K],\,|S|=M}\frac{1}{M}\sum_{k\in S}L_k^\star$ — средняя оптимальная потеря среди $M$ лучших экспертов. Пусть $\mathrm{Reg}_M(T) := \sum_{t=1}^{T}
-\left[\frac{1}{M}\sum_{k \in S_t} L^\star_k - \overline{L}^\star \right].$ Следующая оценка выполняется с вероятностью не менее $1-\delta$: $$     \mathrm{Reg}_M(T) \le \frac{1}{M}\sum_{k=1}^K \sum_{{\tau \in I_{k}(T)}} \bigl[\UCB_k(\tau, \delta)-\LCB_k(\tau, \delta)\bigr].$$
 \end{lemma}
 
-Доказательство представлено в Приложении \ref{proof:m_mean_regret}. Это немедленно дает скорость сходимости для среднего top-$M$ регрета.
+\begin{proof}
+Let $I_k(t)$ be the set of rounds up to time $t$ in which expert $k$ was updated, and let $n = |I_k(t)|$ denote its effective sample size (local time). We reindex these training rounds as $\tau = 1, \dots, n$, and denote the corresponding decisions and observed losses by $u_k^\tau$ and $\xi^\tau$, respectively. For any fixed confidence level $\delta \in (0,1)$, we introduce the concentration penalty function:
+\[
+G(n, \delta') = \sqrt{\frac{2 \log(1/\delta')}{n}} + \frac{2 \log(1/\delta')}{3n}.
+\]
 
-\begin{theorem}[Скорость сходимости для среднего top-$M$ регрета]
-\label{thm:gen-rate-topM}
-Пусть $\alpha\in(0,1]$, $\delta\in(0,1)$. Пусть каждый эксперт $k$ удовлетворяет
-Asm.~\ref{assumption:expert_regret} с $U_k(t,\delta)=O\big(t^{\alpha}c(\delta)\big)$.
-Запустим Alg.~\ref{algorithm:M_LCB} с доверительными границами из
-Def.~\ref{def:ucb_lcb}. Тогда с вероятностью не менее $1 - \delta$ средний регрет выбранных рук $R(T)$ (см. Prop.~\ref{prop:m_mean_regret}) для всех $T\ge 1$ равен
-\begin{equation*}
-\mathrm{Reg}_M(T)= O\left(
-\sqrt{\frac{KT}{M}\log\frac{KT}{\delta}} +
-\Bigl(\frac{K}{M}\Bigr)^{1-\alpha} T^{\alpha} c(\delta)
-\right).
-\end{equation*}
-\end{theorem}
-
-Доказательство аналогично доказательству Теоремы \ref{thm:gen-rate}.
-
-% \begin{table*}[t]
-% \centering
-% \small
-% \caption{
-% Сравнение со связанными результатами.
-% Мы предполагаем, что $U_k(T,\delta)=O(T^{\alpha}c(\delta))$ при $\alpha \in [0,1]$,
-% где $c(\delta)$ обычно полилогарифмична. Для \emph{multiple-play bandits} регрет как в Разделе~\ref{sec:multiple_play}.
-% Для \cite{seldin2014prediction, yun2018multi} регрет определяется как для экспертных алгоритмов (см. статьи).
-% Для остальных методов регрет как в Разделе~\ref{sec:global-regret}.
-% Все скорости указаны с точностью до логарифмических множителей.
-% Символ $\checkmark$ отмечает поддерживаемые свойства.
-% \textbf{Наш алгоритм \algname{M-LCB} достигает оптимальных скоростей для обоих определений регрета.}}
-% \label{tab:comparison_existing}
-% \begin{tabular}{p{4.8cm}ccc p{5.5cm}}
-% \toprule
-% \textbf{Алгоритм / ссылка} & \textbf{Обучаемость} & \textbf{Multi-arm} & \textbf{Multiple-play} & \textbf{Скорость регрета (с точностью до log)} \\
-% \midrule
-% \textsc{CORRAL} + smoothing wrapper~\cite{pacchiano2020model}
-% & $\checkmark$ & $\times$ & $\times$ &
-% $\tilde O\!\left(\sqrt{KT} + K^{\alpha}T^{1-\alpha} + K^{1-\alpha}T^{\alpha}c(\delta)\right)$ \\[1pt]
-
-% \textsc{EXP3.P} + smoothing wrapper~\cite{pacchiano2020model}
-% & $\checkmark$ & $\times$ & $\times$ &
-% $\tilde O\!\left(\sqrt{KT} + K^{\frac{1-\alpha}{2-\alpha}}T^{\frac{1}{2-\alpha}}c(\delta)^{\frac{1}{2-\alpha}}\right)$ \\[1pt]
-
-% Dynamic Balancing~\cite{cutkosky2021dynamic}
-% & $\checkmark$ & $\times$ & $\times$ &
-% $\tilde O\!\left(\sqrt{KT} + K^{1-\alpha}T^{\alpha}c(\delta)\right)$ \\[1pt]
-
-% Prediction with Limited Advice~\cite{seldin2014prediction}
-% & $\times$ & $\checkmark$ & $\times$ &
-% $\tilde O\!\left(\sqrt{\tfrac{KT\log K}{M}}\right)$ \\[1pt]
-
-% H-INF~\cite{yun2018multi}
-% & $\times$ & $\checkmark$ & $\times$ &
-% $\tilde O\!\left(\max\{\sqrt{KT/M},\,\sqrt{T\log K}\}\right)$ \\[1pt]
-
-% UCB-based multiple-play bandits~\cite{kveton2015tight}
-% & $\times$ & $\times$ & $\checkmark$ &
-% $\tilde O\!\left(\sqrt{KT/M}\right)$ $\alpha = \frac{1}{2}$ \\[1pt]
-
-% \textbf{\algname{M-LCB} [данная работа]}
-% & $\checkmark$ & $\checkmark$ & $\checkmark$ &
-% $\tilde O\!\left(\sqrt{\tfrac{KT}{M}} + (K/M)^{1-\alpha}T^{\alpha}c(\delta)\right)$ \\
-% \bottomrule
-% \end{tabular}
-% \end{table*}
-
-
-\begin{remark}[О константах]
-\label{rem:beta_dependence}
-Если константы $\beta_k$ во внутренних оценках, $U_k(t,\delta)=O(\beta_k\,t^{\alpha}c(\delta))$, существенны
-(например, зависят от размерности или липшицевой константы задачи),
-то оценка регрета уточняется до
+Let $\mathcal{E}_1$ be the high-probability event on which the time-uniform OCO guarantee holds for expert $k$. By the anytime assumption, with probability at least $1-\delta/2$, the following bound holds simultaneously for all $n \ge 1$:
 \begin{equation}
-O\left(
-\sqrt{\tfrac{KT}{M}\log(\tfrac{KT}{\delta})}
-+ T^{\alpha} c(\delta) \left[ \beta_{k^\star} +
-\Bigl(\tfrac{1}{M}\sum_{k=1}^K \beta_k^{\frac{1}{1-\alpha}}\Bigr)^{1-\alpha} \right] \right).
+\label{eq:emp_reg_proof}
+\sum_{\tau=1}^n \ell(u_k^\tau, \xi^\tau) - \min_{u \in \mathbf{U}_k}\sum_{\tau=1}^n \ell(u, \xi^\tau) \le \overline{U}_k(n, \delta/2).
 \end{equation}
-что дает более точную характеристику зависимости от индивидуальных сложностей экспертов.
-.
+
+Next, we evaluate the population performance. Let $u_k^\star \in \arg \min_{u \in \mathbf{U}_k} L(u)$ be a fixed population minimizer, so that $L(u_k^\star) = L_k^\star$. Applying the concentration guarantees from Lemma~\ref{lem:loss-eval} with a localized confidence parameter $\delta_n = \delta/(4n^2)$, we have that for each fixed $n \ge 1$:
+\[
+\frac{1}{n}\sum_{\tau=1}^n \ell(u_k^\star, \xi^\tau) \le L_k^\star + G\bigl(n, \delta/(4n^2)\bigr)
+\]
+holds with probability at least $1-\delta/(4n^2)$.
+
+To ensure this property holds uniformly across all possible local time steps, we apply a union bound over $n \ge 1$. Since $\sum_{n=1}^\infty (4n^2)^{-1} < 1/2$, the total failure probability is strictly bounded by $\delta/2$. Thus, the uniform concentration event $\mathcal{E}_2$, defined as
+\begin{equation}
+\label{eq:comp_conc_proof}
+\sum_{\tau=1}^n \ell(u_k^\star, \xi^\tau) \le nL_k^\star + nG\bigl(n, \delta/(4n^2)\bigr) \qquad \forall n \ge 1,
+\end{equation}
+holds true with probability at least $1-\delta/2$.
+
+By the intersection bound, the joint event $\mathcal{E}_1 \cap \mathcal{E}_2$ holds with a total probability of at least $1-\delta$. On this joint event, the empirical minimizer cannot perform worse than the specific population optimal decision $u_k^\star$, which implies:
+\[
+\min_{u \in \mathbf{U}_k}\sum_{\tau=1}^n \ell(u, \xi^\tau) \le \sum_{\tau=1}^n \ell(u_k^\star, \xi^\tau).
+\]
+Combining this property with the empirical regret control from \eqref{eq:emp_reg_proof} and the concentration guarantee from \eqref{eq:comp_conc_proof} leads to the uniform bound:
+\[
+\sum_{\tau=1}^n \ell(u_k^\tau, \xi^\tau) \le nL_k^\star + \overline{U}_k(n, \delta/2) + nG\bigl(n, \delta/(4n^2)\bigr) \qquad \forall n \ge 1.
+\]
+Rearranging the terms directly yields the prefix-hindsight regret formulation required by Assumption~\ref{assumption:expert_regret} with the stated choice of $U_k$, completing the proof.
+\end{proof}
+
+
+\subsection{Regret Analysis for \algname{M-LCB}}
+\label{sec:upper-bounds}
+
+In this subsection, we establish the theoretical guarantees for the proposed \algname{M-LCB} algorithm by deriving upper bounds on its cumulative regret. We begin by defining a uniform high-probability concentration event in Lemma~\ref{prop:anytime-ci-clear}, under which all time-uniform confidence intervals hold simultaneously. Building upon this event, Lemma~\ref{lem:regret_bounds} provides a generic pseudo-regret bound expressed in terms of the expert-specific rate functions $U_k$. Finally, Theorem~\ref{thm:gen-rate} delivers an explicit rate of convergence under a typical polynomial learning curriculum, where the underlying experts exhibit a regret growth of $O(t^\alpha)$.
+
+\begin{lemma}[Azuma's Inequality {\normalfont\cite[Theorem D.2]{mohri2018foundations}}]
+\label{lemma:azuma_adaptive}
+Let $\{\mathcal{F}_t\}_{t \ge 0}$ be a filtration, and let $\{X_t\}_{t \ge 1}$ be a sequence of real-valued random variables adapted to $\mathcal{F}_t$ such that $\mathbb{E}[X_t \mid \mathcal{F}_{t-1}] = 0$ and $|X_t| \le 1$ almost surely for all $t \ge 1$. Then, for any fixed $n \ge 1$ and any confidence level $\delta \in (0,1)$, with probability at least $1-\delta$, the following uniform bound holds:
+\begin{equation}
+\left|\frac{1}{n}\sum_{t=1}^n X_t\right| \le \sqrt{\frac{2\log(1/\delta)}{n}}.
+\end{equation}
+\end{lemma}
+
+\begin{lemma}[Anytime Confidence Bounds]
+\label{prop:anytime-ci-clear}
+
+For any confidence level $\delta \in (0,1)$, define
+\begin{equation}
+\label{eq:conf_intervals}
+\mathcal E_\delta :=
+\left\{
+\forall k\in[K],~\forall t\ge1:
+\begin{array}{l}
+\LCB_k(t,\delta)\le L_k^\star,\\
+L_k^\star\le \UCB_k(t,\delta),\\
+\mathbb E_\upsilon
+    [L(\upsilon(H_k^t))
+    \mid \mathcal F_{t-1}]
+    \le \UCB_k(t,\delta)
+\end{array}
+\right\},
+\end{equation}
+where
+\[
+H_k^t:=\{u_k^\tau:\tau\in I_k(t)\}
+\]
+denotes the decision history used by the wrapper for expert $k$ up to time $t$.
+
+Under Assumptions~\ref{assumption:stochastic_losses}--\ref{assumption:wrapper},
+\[
+\Pr(\mathcal E_\delta)\ge 1-\delta.
+\]
+
+\end{lemma}
+
+\begin{proof}[Proof of Lemma~\ref{prop:anytime-ci-clear}]
+
+Fix an expert $k\in[K]$ and let $n=|I_k(t)|$ denote the number of times
+it has been updated. Relabel the corresponding update rounds as
+$\tau=1,\ldots,n$, with associated decisions $u_k^\tau$ and losses
+$\ell(u_k^\tau,\xi^\tau)$. We first establish the inequalities in
+\eqref{eq:conf_intervals} for a fixed pair $(k,n)$ and then apply a
+union bound over all experts and update counts.
+
+By Assumption~\ref{assumption:expert_regret}, with probability at least
+$1-\delta_{\mathrm{arm}}$, the anytime regret guarantee holds
+simultaneously for all $n\ge 1$, namely
+\begin{equation}
+\label{eq:anytime-inner}
+\frac1n\sum_{\tau=1}^{n}
+\ell(u_k^\tau,\xi^\tau)
+-
+\frac{U_k(n,\delta_{\mathrm{arm}})}{n}
+\le
+L_k^\star.
+\end{equation}
+Evaluating \eqref{eq:anytime-inner} at $n=n_k^t$ and recalling the
+definition of $\LCB_k(t,\delta)$ immediately yields
+$\LCB_k(t,\delta)\le L_k^\star$.
+
+To obtain the upper confidence bound, consider the filtration
+$\mathcal H_k^{n-1}
+=
+\{(u_k^\tau,\xi^\tau):\tau\in[n-1]\}$.
+Since $u_k^n$ is measurable with respect to $\mathcal H_k^{n-1}$ and
+$\xi^n$ is independent of the past,
+\[
+\mathbb E\!\left[
+\ell(u_k^n,\xi^n)
+\,\middle|\,
+\mathcal H_k^{n-1}
+\right]
+=
+L(u_k^n).
+\]
+Consequently,
+$\{\ell(u_k^\tau,\xi^\tau)-L(u_k^\tau)\}_{\tau=1}^n$
+forms a bounded martingale-difference sequence. Applying
+Lemma~\ref{lemma:azuma_adaptive} with confidence level $\delta_n$
+gives, with probability at least $1-\delta_n$,
+\begin{equation}
+\label{eq:azuma-adapt}
+\left|
+\frac1n\sum_{\tau=1}^{n}\ell(u_k^\tau,\xi^\tau)
+-
+\frac1n\sum_{\tau=1}^{n}L(u_k^\tau)
+\right|
+\le
+H(n,\delta_n).
+\end{equation}
+
+Let
+\[
+L_k(n)
+:=
+\frac1n
+\sum_{\tau=1}^{n}
+\ell(u_k^\tau,\xi^\tau).
+\]
+Combining \eqref{eq:azuma-adapt} with the fact that
+$L_k^\star=\min_{u\in\mathbf U_k}L(u)\le L(u_k^\tau)$ for every
+$\tau$ yields
+\begin{equation}
+L_k^\star
+\le
+\frac1n\sum_{\tau=1}^{n}L(u_k^\tau)
+\le
+L_k(n)+H(n,\delta_n).
+\end{equation}
+Evaluating this inequality at $n=n_k^t$ gives
+$L_k^\star\le \UCB_k(t,\delta)$.
+
+Next, Assumption~\ref{assumption:wrapper} implies that the wrapper does
+not increase the average expected loss. Applied to the history
+$\{u_k^\tau\}_{\tau=1}^{n}$, it yields
+\begin{equation}
+\mathbb E_{\upsilon}
+\!\left[
+L(\upsilon(H_k^t))
+\,\middle|\,
+H_k^t
+\right]
+\le
+\frac1n\sum_{\tau=1}^{n}L(u_k^\tau).
+\end{equation}
+Combining this with \eqref{eq:azuma-adapt} gives
+\begin{equation}
+\mathbb E_{\upsilon}
+\!\left[
+L(\upsilon(H_k^t))
+\,\middle|\,
+H_k^t
+\right]
+\le
+L_k(n)+H(n,\delta_n)
+=
+\UCB_k(t,\delta),
+\end{equation}
+which establishes the third inequality in
+\eqref{eq:conf_intervals}.
+
+Finally, we union bound over all experts and update counts.
+The failure probability associated with the anytime guarantees
+\eqref{eq:anytime-inner} is at most
+\[
+K\delta_{\mathrm{arm}}
+=
+\frac{\delta}{2}.
+\]
+For the martingale concentration events,
+\begin{equation}
+\sum_{k=1}^{K}\sum_{n=1}^{\infty}\delta_n
+=
+\sum_{k=1}^{K}\sum_{n=1}^{\infty}
+\frac{\delta}{4Kn^2}
+=
+\frac{\delta}{4}
+\sum_{n=1}^{\infty}\frac1{n^2}
+<
+\frac{\delta}{2}.
+\end{equation}
+Therefore, by another union bound, all inequalities in
+\eqref{eq:conf_intervals} hold simultaneously for every expert and every
+time step with probability at least $1-\delta$.
+
+\end{proof}
+
+\begin{remark}
+In the algebraic verification of Lemma~\ref{prop:anytime-ci-clear}, the concentration bounds for bounded losses can be sharpened tightly by introducing a truncated upper confidence bound $Z_k(t, \delta) := \min\{1, \UCB_k(t, \delta)\}$. Consequently, the variance-dependent concentration penalty function $G_k(t, \delta)$ can be modified as:
+\[
+G_k(t, \delta) \coloneqq \sqrt{\frac{2 Z_k(t, \delta) \log(1/\delta)}{3t}} + \frac{2 \log(1/\delta)}{t}.
+\]
 \end{remark}
 
+\subsubsection{Regret Guarantees}
+\label{sec:regret_guarantees_one}
+\begin{lemma}[Regret Bound]
+\label{lem:regret_bounds}
 
-\subsection{Сравнение с существующими результатами}
-\label{sec:comparison}
+Let the pseudo-regret be
 
-Таблица~\ref{tab:comparison_existing} перечисляет мета-алгоритмы, используемые для выбора модели и бюджетированного multi-arm обучения.
-Она показывает, поддерживает ли каждый метод \emph{обучаемых экспертов}, \emph{multi-arm обновления} и гарантии на \emph{multi-play регрет} (среднюю потерю выбранных подмножеств).
+\begin{equation}
+\widetilde{\mathrm{Reg}}(T) := \mathbb E_{\upsilon} \!\left[ \sum_{t=1}^{T} L(u^t) \right] - T L^\star ,
+\end{equation}
 
-Алгоритмы выбора модели, такие как \cite{pacchiano2020model,cutkosky2021dynamic}, достигают оптимальных по порядку скоростей по $T$ и $K$ для обновлений одной руки,
-предполагая известные или оцененные границы регрета экспертов $U_k(T,\delta)$. Однако они
-не учитывают бюджеты обучения на раунд и качество на уровне подмножеств.
-Методы multi-play bandit \cite{seldin2014prediction,yun2018multi,kveton2015tight}
-обрабатывают бюджетированные обновления, но не обучают руки.
+where the expectation is taken over the randomization of the smoothing wrapper. Fix $\delta\in(0,1)$ and suppose that Assumptions~\ref{assumption:stochastic_losses}-- \ref{assumption:wrapper} hold. Then, on the event $\mathcal E_\delta$~\eqref{eq:conf_intervals}, for all $T\ge1$,
+\[
+\widetilde{\mathrm{Reg}}(T) \le \mathbb E_\upsilon[\Delta(T)],
+\]
+where
+\begin{align}
+\label{eq:bound_bound_bound}
+\Delta(T) := {}& \sum_{\tau\in I_{k^\star}(T)} \Bigl( \UCB_{k^\star}(\tau,\delta) - \LCB_{k^\star}(\tau,\delta) \Bigr)
++ \frac1M \sum_{k=1}^{K} \sum_{\tau\in I_k(T)} \Bigl( \UCB_k(\tau,\delta) - \LCB_k(\tau,\delta) \Bigr),
+\end{align}
+and
+\[
+k^\star \in \arg\min_{k\in[K]} L_k^\star.
+\]
 
-\textbf{\algname{M-LCB}} объединяет эти задачи:
-он управляет \emph{обучаемыми экспертами} посредством \emph{нескольких обновлений экспертов за раунд}. Более того, он расширяется на постановку \emph{multi-play} и достигает той же оптимальной по порядку скорости для соответствующих регретов.
+Moreover, with probability at least $1-2\delta$, uniformly over all
+$T\ge1$, \[ \mathrm{Reg}(T) \le \mathbb E_\upsilon[\Delta(T)] + O\!\left( \sqrt{T\log(1/\delta)} \right).
+\]
 
-Дополнительные примеры применимых задач и базовых алгоритмов см. в Приложении~\ref{sup:applications}.
+\end{lemma}
 
-
-\section{Доказательства}
-\label{sec:proof}
-\setcounter{ineqnumber}{0}
-\begin{proof}[Доказательство Леммы~\ref{lem:regret_bounds}]
+\begin{proof}[Proof of Lemma~\ref{lem:regret_bounds}]
 \label{proof:regret_bound}
-\textbf{Оценка псевдо-регрета}. $S_t$ и $i_t$ обозначают соответственно обучающее подмножество и руку предсказания, выбранные на раунде $t$ алгоритмом Alg.~\ref{algorithm:M_LCB}.
-Пусть $k^\star \in \arg\min_{k\in[K]} L_k^\star$ — индекс лучшей руки по ожидаемой потере.
+\textbf{Pseudo-regret bound}. $S_t$ and $i_t$ denote, respectively, the training subset and the prediction arm selected at round $t$ by Alg.~\ref{algorithm:M_LCB}.
+Let $k^\star \in \arg\min_{k\in[K]} L_k^\star$ be the index of the best arm in terms of expected loss.
 
-Алгоритм использует доверительные границы из Prop.~\ref{prop:anytime-ci-clear}, поэтому $\mathcal{E}_\delta$ ~\eqref{eq:conf_intervals} выполняется с вероятностью не менее $1-\delta$. Далее мы условимся на $\mathcal{E}_{\delta}$ и докажем оценки регрета на этом событии. При событии $\mathcal{E}_\delta$ безопасный совет в момент $t$ имеет вид $u^t = \upsilon(\{u_{i_t}^\tau: \tau \in I_{i_t}(t)\})$. По Asm.~\ref{assumption:wrapper} и определению $\mathcal{E}_\delta$ его условная ожидаемая потеря ограничена $\UCB_{i_t}(t,\delta)$. Следовательно,
+Algorithm uses the confidence bounds from Prop.~\ref{prop:anytime-ci-clear}, so $\mathcal{E}_\delta$ ~\eqref{eq:conf_intervals} holds with probability at least $1-\delta$. In the sequel, we condition on $\mathcal{E}_{\delta}$ and prove the regret bounds under this event. Under event $\mathcal{E}_\delta$, the safe advice at time $t$ is $u^t = \upsilon(\{u_{i_t}^\tau: \tau \in I_{i_t}(t)\})$. By Asm.~\ref{assumption:wrapper} and the definition of $\mathcal{E}_\delta$, its conditional expected loss is bounded by $\UCB_{i_t}(t,\delta)$. Therefore,
 \begin{equation}\label{eq:best-reg-start}
 \widetilde{\mathrm{Reg}}(T) = \mathbb E_{\upsilon}\left[\sum_{t=1}^{T}\bigl[L(u^t) - L^\star\bigr]\right]
 \le \mathbb E_{\upsilon}\left[\sum_{t=1}^{T}\bigl[\UCB_{i_t}(t, \delta) - L^\star\bigr]\right],
 \end{equation}
-где внешнее математическое ожидание опущено, поскольку все последующие неравенства выполняются поточечно для каждой реализованной последовательности выборов wrapper. Разбивая сумму в зависимости от того, обучается ли $k^\star$ в момент $t$, получаем
+where the outer expectation is omitted because all subsequent inequalities hold pointwise for each realized sequence of wrapper choices. Splitting the sum depending on whether $k^\star$ is trained at $t$ gives
 \begin{equation}
 \overline{\mathrm{Reg}}(T)
 \le \underbrace{\sum_{t:\,k^\star\in S_t} \bigl[\UCB_{i_t}(t, \delta) - L^\star\bigr]}_{\text{A}}
@@ -723,33 +849,31 @@ O\left(
 \underbrace{\sum_{t:\,k^\star\notin S_t}\bigl[\UCB_{i_t}(t, \delta) - L^\star\bigr]}_{\text{B}}.
 \label{eq:best-A+B}
 \end{equation}
-\emph{Член A.}
-Поскольку $i_t=\arg\min_{k\in S_t}\UCB_k(t, \delta)$, для раундов с $k^\star\in S_t$ выполнено $\UCB_{i_t}(t, \delta) \le \UCB_{k^\star}(t, \delta).$
-% \begin{equation*}
-% \UCB_{i_t}(t, \delta) \le \UCB_{k^\star}(t, \delta).
-% \end{equation*}
-На $\mathcal{E}_{\delta}$ имеем $L^\star\ge \LCB_{k^\star}(t, \delta)$. Поэтому
+\emph{Term A.}
+Since $i_t=\arg\min_{k\in S_t}\UCB_k(t, \delta)$, for rounds with $k^\star\in S_t$, $\UCB_{i_t}(t, \delta) \le \UCB_{k^\star}(t, \delta).$
+
+Under $\mathcal{E}_{\delta}$, $L^\star\ge \LCB_{k^\star}(t, \delta)$. Therefore,
 \begin{equation}\label{eq:A-bound}
 \text{A} \le \sum_{t:\,k^\star\in S_t} \Bigl[\UCB_{k^\star}(t, \delta)-\LCB_{k^\star}(t, \delta)\Bigr] =
 \sum_{\tau \in I_{k^\star}(T)} \Bigl[\UCB_{k^\star}(\tau, \delta)-\LCB_{k^\star}(\tau, \delta)\Bigr]
 \end{equation}
 
-Последнее равенство следует из того, что $k^*$ обновляется ровно в таких и только таких слагаемых суммы.
+The last equality is from fact that $k^*$ is updated in such and only such terms of sum.
 
-\emph{Член B.}
-По построению $i_t$,
-$\UCB_{i_t}(t, \delta) \le \frac{1}{M}\sum_{k\in S_t}\UCB_k(t, \delta)$.  Подставляя это в член~B в~\eqref{eq:best-A+B} и применяя прием добавления–вычитания
-$\frac{1}{M}\sum_{k \in S_t} \LCB_k(t, \delta)$ для каждого $t$,
-получаем:
+\emph{Term B.}
+By construction of $i_t$,
+$\UCB_{i_t}(t, \delta) \le \frac{1}{M}\sum_{k\in S_t}\UCB_k(t, \delta)$.  Substituting this into term~B in~\eqref{eq:best-A+B}  and applying add–subtract trick with
+$\frac{1}{M}\sum_{k \in S_t} \LCB_k(t, \delta)$ for each $t$,
+we obtain:
 \begin{equation*}
     B \leq \underbrace{\sum_{t: k^\star \notin S_t} \left[ {\frac{1}{M}\sum_{k \in S_t} \LCB_k(t, \delta)} - L^\star \right] }_{\text{C}}  +
     \underbrace{\sum_{t: k^\star \notin S_t} \frac{1}{M}\sum_{k \in S_t} \bigg[\UCB_k(t, \delta) - {\LCB_k(t, \delta)} \bigg] }_{\text{D} }.
 \end{equation*}
 
-\textit{Член C.} Поскольку $S_t$ состоит из $M$ наименьших LCB и $k^\star\notin S_t$, для каждого $k\in S_t$ выполнено
-$\LCB_k(t,\delta)\le \LCB_{k^\star}(t,\delta)\le L^\star$; следовательно, $\frac{1}{M}\sum_{k\in S_t}\LCB_k(t,\delta)\le L^\star$.
-Значит этот член неположителен.
-Поэтому
+\textit{Term C.} Since $S_t$ consists of the $M$ smallest LCBs and $k^\star\notin S_t$, every $k\in S_t$ has
+$\LCB_k(t,\delta)\le \LCB_{k^\star}(t,\delta)\le L^\star$; hence $\frac{1}{M}\sum_{k\in S_t}\LCB_k(t,\delta)\le L^\star$.
+Thus that term is non-positive.
+Therefore,
 \begin{align}
 \text{B}
 &\le \sum_{t:k^\star\notin S_t}
@@ -758,195 +882,368 @@ $\LCB_k(t,\delta)\le \LCB_{k^\star}(t,\delta)\le L^\star$; следовател�
 \label{eq:B-bound}
 \end{align}
 
-Объединяя \eqref{eq:A-bound} и \eqref{eq:B-bound} с \eqref{eq:best-A+B}, получаем оценку для лучшей руки, заявленную в утверждении.
+Combining \eqref{eq:A-bound} and \eqref{eq:B-bound} with \eqref{eq:best-A+B} proves the best-arm bound stated in the proposition.
 
-\textbf{Оценка регрета.} Доказательство следует из разложения регрета на стохастический член и псевдо-регрет:
+\textbf{Regret bound.} The proof follows by decomposing regret into a stochastic term and the pseudo-regret:
     \begin{equation*}
         \mathrm{Reg}(T) = \sum_{t=1}^T \bigg(\ell(u^t,\xi^t) - \mbE_v L(u^t)\bigg) + \mbE_v \sum_{t=1}^T \bigg(L(u^t) - L^\star\bigg).
     \end{equation*}
-Поскольку данные независимы от $u^t$ условно на прошлом, первый член является суммой мартингал-разностной последовательности $Z_t =\ell(u^t,\xi^t)-\mathbb E_{\upsilon}[L(u^t)\mid\mathcal F_{t-1}]$ и лежит в $[-1,1]$, поэтому он ограничивается концентрационным неравенством (например, Леммой~\ref{lemma:azuma_adaptive}). Второй член — псевдо-регрет, ограниченный выше.
+Since the data are independent of $u^t$ conditional on the past, the first term is a sum of martingale difference sequence $Z_t =\ell(u^t,\xi^t)-\mathbb E_{\upsilon}[L(u^t)\mid\mathcal F_{t-1}]$ and lies in $[-1,1]$, so it bounded by a concentration inequality (e.g., Lemma~\ref{lemma:azuma_adaptive}). The second term is the pseudo-regret bounded above.
 \end{proof}
 
-\begin{proof} [Доказательство Теоремы~\ref{thm:gen-rate}]
-Оценка регрета в Лемме~\ref{lem:regret_bounds} рассматривает $\UCB_k(t,\delta) - \LCB_k(t,\delta)$,
-который по Def.~\ref{def:ucb_lcb} зависит только от числа обновлений $n^t_k$ и $\delta$.
-Пусть
-$\Delta_k(n,\delta)
-:= H(n,\delta_{n})
-  + \frac{U_k(n,\delta_{\mathrm{arm}})}{n}.$
-% \begin{equation*}
-% \Delta_k(n,\delta)
-% := H(n,\delta_{n})
-%   + \frac{U_k(n,\delta_{\mathrm{arm}})}{n}.
-% \end{equation*}
 
-По Def.~\ref{def:ucb_lcb}, $\Delta_k(n^t_k, \delta) = \UCB_k(t, \delta) - \LCB_k(t, \delta)$.
-Подставляя $\Delta_k$ в \eqref{eq:bound_bound_bound},
-получаем ${\Delta(T)} =\sum_{\tau=1}^{n_{k^\star}^T} \Delta_{k^\star}(\tau, \delta) + \frac{1}{M}\sum_{k=1}^K \sum_{\tau =1}^{n^T_k}\Delta_k(\tau, \delta),$ что можно оценить с помощью $H$ и $U_k$.
+\begin{theorem}[Convergence Rates]
+\label{thm:gen-rate}
+Let $\alpha,\delta\in(0,1)$ and suppose that every expert $k\in[K]$ satisfies Assumption~\ref{assumption:expert_regret} with
+\begin{equation*}
+U_k(t,\delta)=O\bigl(t^{\alpha}c(\delta)\bigr).
+\end{equation*}
 
-Далее мы ограничиваем концентрационный и внутренний обучающий члены. Логарифмические множители $\log(\delta_n)$ медленно растут, поэтому мы оцениваем их сверху через $\log(\tfrac{KT}{\delta})$.
-Это влияет только на константы в $O(\cdot)$.
-Используя оценки суммирования
-$\sum_{\tau\le n}\tau^{-1/2}=O(\sqrt{n})$ и
-$\sum_{\tau\le n}\tau^{\alpha-1}=O(n^\alpha)$,
-вместе с неравенством вогнутости
-$\sum_k (n^t_k)^\alpha \le K^{1-\alpha}(MT)^\alpha$,
-получаем результат.
+Then, with probability at least $1-\delta$, the regret of Alg.~\ref{algorithm:M_LCB} satisfies, uniformly over all $T\ge 1$
+\begin{equation*}
+\mathrm{Reg}(T) = O\left(\sqrt{\frac{KT}{M}\log\frac{KT}{\delta}} + \Bigl(\frac{K}{M}\Bigr)^{1-\alpha}T^{\alpha}c(\delta)\right).
+\end{equation*}
+\end{theorem}
 
-\end{proof}
+\begin{proof}[Proof of Theorem~\ref{thm:gen-rate}]
 
-\vspace{-1em}
-\section{Эксперименты}
-\vspace{-0.5em}
-\label{sec:experiments}
-Мы оцениваем предложенный алгоритм \algname{M-LCB} на реальных и полу-синтетических бенчмарках (подробности см. в Sec.~\ref{sup:real_data}). Ниже мы представляем синтетические результаты, где $K=10$ экспертов, каждый из которых управляет двумя Bernoulli arms. Для каждого эксперта $k \in \{0, \dots, K-1\}$ ожидаемые награды равны $\mu_{k,1} = \frac{2}{10} \left(1 - \frac{k}{K}\right)$ и $\mu_{k,2} = \frac{1}{10} \left(2 - \frac{k}{K}\right)$. По мере увеличения индекса эксперта $k$ максимальная доступная награда уменьшается, но внутренний разрыв между двумя руками ($|\mu_{k,1} - \mu_{k,2}|$) увеличивается. Поэтому эксперты более низкого качества сталкиваются с более простой задачей исследования и сходятся быстрее. Для моделирования неоднородности мы назначаем алгоритм \algname{EpsilonGreedy} базовым обучающимся алгоритмом для первых $K/2$ экспертов и \algname{UCB1} для оставшихся $K/2$. Это создает ``субоптимальную ловушку'', где мета-алгоритм может быть введен в заблуждение быстрым ранним схождением эксперта низкого качества.
-Мы сравниваем \algname{M-LCB} с \algname{LimitedAdvice} и \algname{Smooth Corral} (вариантом алгоритма \algname{Corral} \cite{agarwal2017corralling}, использующим сглаживание). Для \algname{M-LCB} и \algname{LimitedAdvice} мы тестируем ограничения обновлений $M \in \{1, 2, 3, 4\}$. Симуляция проводится для $T = 25 \cdot 10^4$ шагов, результаты усредняются по 100 независимым испытаниям.
-
-Рисунок \ref{fig:regret_bandits} суммирует качество. Все алгоритмы достигают сублинейного регрета, при этом \algname{M-LCB} и \algname{LimitedAdvice} улучшаются по мере роста бюджета $M$ (панель a). Увеличенные бюджеты ускоряют сходимость к оптимальному эксперту (панель b), потому что \algname{M-LCB} адаптивно обучает наиболее перспективных экспертов (панель c). Это выборочное обновление помогает высококачественным экспертам быстро преодолеть начальное исследование и обойти субоптимальных экспертов с вводяще сильным ранним качеством.
-% Сводка качества приведена на Рисунке \ref{fig:regret_bandits}. Панель (a) показывает, что все алгоритмы достигают сублинейного регрета, причем \algname{M-LCB} и \algname{LimitedAdvice} демонстрируют существенный выигрыш качества при увеличении бюджета обновлений $M$. Панель (b) показывает частоту выбора каждого эксперта, демонстрируя, что увеличенные бюджеты обучения позволяют нашему алгоритму быстрее концентрироваться на оптимальном эксперте. Панель (c) раскрывает underlying mechanism: \algname{M-LCB} адаптивно распределяет бюджет обучения на наиболее перспективных экспертов. Такое выборочное обновление позволяет высококачественным экспертам быстрее пройти начальную фазу исследования, тем самым позволяя мета-алгоритму отличать их от субоптимальных экспертов, демонстрирующих вводяще сильное раннее качество.
-
-\begin{figure}[!ht]
-    \centering
-    \includegraphics[width=0.75\linewidth]{figures/bandit_experiment_horizontal.pdf}
-    \caption{Сравнение качества на выборе модели MAB.
-    (a) Кумулятивная потеря.
-    (b) Финальное распределение выбора рук.
-    (c) Распределение вычислительного бюджета между руками.}
-    \label{fig:regret_bandits}
-\end{figure}
-
-
-\vspace{-0.5em}
-\section{Ограничения и будущая работа}
-\vspace{-0.5em}
-Наш анализ предполагает известную функцию доверительного масштабирования $c(\delta)$. В Теореме~\ref{thm:gen-rate} эта зависимость асимптотически доминируется при $\alpha < 1/2$, но становится линейной для больших $\alpha$. Будущая работа могла бы адаптировать \algname{M-LCB} к неизвестным или неверно заданным функциям масштабирования \cite{pacchiano2020model, dann2024data} и расширить схему \cite{seldin2014prediction, kveton2015tight}, чтобы включить multi-play регрет. Кроме того, вывод gap-dependent гарантий для изменяющихся во времени разрывов и исследование контекстных расширений \cite{foster2019model} представляют собой значимые технические вехи. Более подробное обсуждение ограничений приведено в Приложении \ref{sup:limitations}.
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-%%% Следующие две строки задают, во-первых, стиль библиографии,
-%%% и, во-вторых, используемый файл библиографии.
-
-% \bibliographystyle{ACM-Reference-Format}
-\bibliographystyle{unsrtnat}
-\bibliography{lib}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-
-\clearpage
-
-\appendix
-\tableofcontents
-
-
-
-
-\section{Обсуждение ограничений}
-\label{sup:limitations}
-Наш анализ предполагает, что функция доверительного масштабирования $c(\delta)$ известна. В оценке Теоремы~\ref{thm:gen-rate} эта функция появляется только через член обучения экспертов $(K/M)^{1-\alpha}T^\alpha c(\delta)$. Следовательно, при $\alpha<1/2$ этот вклад асимптотически доминируется членом исследования, тогда как для больших $\alpha$ зависимость от $c(\delta)$ линейна. Во многих стандартных экспертах, включая OGD, UCB и Hedge, $c(\delta)$ является полилогарифмической.
-
-Случай неизвестной $c(\delta)$ рассматривается Pacchiano et al.~\cite{pacchiano2020model}, где полученные оценки регрета демонстрируют более слабую зависимость от $c(\delta)$, тогда как Dann et al.~\cite{dann2024data} оценивают ее online, получая адаптивные, но менее интерпретируемые гарантии. Поэтому адаптация \algname{M-LCB} к неизвестным или неверно заданным функциям скоростей экспертов является важным направлением будущей работы.
-
-Другое важное направление касается алгоритмов с дополнительными наблюдениями за раунд, таких как limited-advice и multi-play bandits~\cite{seldin2014prediction,yun2018multi,kveton2015tight}.
-Расширение их анализа на постановку \emph{обучаемых экспертов} объединило бы эти схемы.
-% и прояснило бы роль динамики обучения при частичной обратной связи.
-
-Еще один открытый вопрос состоит в том, можно ли получить содержательные gap-dependent логарифмические гарантии. В классических стохастических бандитах разрыв субоптимальности фиксирован, что позволяет получать оценки типа $O(\log T/\Delta)$. В нашей постановке мгновенный регрет $L(u_k^t)-L^\star$ меняется по мере обучения экспертов, поэтому релевантный разрыв зависит от времени, и прямой аналог не является немедленным.
-
-Наконец, перспективным расширением является \emph{контекстный} режим,
-где эксперты специализируются на основе наблюдаемых признаков или доменов,
-что связывает нашу схему с контекстными бандитами~\cite{foster2019model}.
-
-
-\section{Численные эксперименты}
-
-Эксперименты в статье не требуют GPU. Они проводились на Macbook M1 pro с 16 gb RAM.
-
-\subsection{Выбор модели среди обобщенных линейных моделей}
-Мы оцениваем качество предложенного алгоритма \algname{M-LCB} на синтетических задачах, разработанных для проверки его способности управлять адаптивными руками при вычислительном бюджете.
-Мы сравниваем с двумя базовыми методами:
-\EDRB \cite{dann2024data}, алгоритмом с гарантиями для обучаемых рук,
-и \algname{LimitedAdvice} \cite{seldin2014prediction}, экспертным алгоритмом, способным обрабатывать несколько обновлений рук за раунд.
-Во всех экспериментах мы рассматриваем ограничения обновлений $M \in \{1,2,3\}$, усредняем результаты по 30 независимым запускам и показываем $\pm 0.5$ стандартных отклонений как заштрихованные области.
-
-Мы рассматриваем задачу выбора модели с $K=10$ руками.
-Каждая рука $k$ представляет обобщенную линейную модель (GLM) с отдельной фиксированной link function $f_k:\mathbb R\to\mathbb R$.
-На каждом раунде $t$ вектор признаков $x_t \in \mathbb R^d$ выбирается равномерно с единичной сферы $\mathbb S^{d-1}$,
-а метка генерируется оптимальной рукой $k^\star=9$ как
+By Lemma~\ref{lem:regret_bounds}, it suffices to bound the quantity $\Delta(T)$ appearing in \eqref{eq:bound_bound_bound}. Define
 \begin{equation}
-r_t = f_{k^\star}(w^\top x_t),
+\Delta_k(n,\delta) := H(n,\delta_n) + \frac{U_k(n,\delta_{\mathrm{arm}})}{n}.
 \end{equation}
-Как показано на Рисунке~\ref{fig::glm_functions}, link functions $f_7, f_8,$ и $f_9$ весьма похожи в областях, где данные плотны,
-что создает нетривиальную задачу исследования.
+From Definition~\ref{def:ucb_lcb}, $ \UCB_k(t,\delta)-\LCB_k(t,\delta) = \Delta_k(n_k^t,\delta)$,
+and therefore
 
-\begin{figure}
-    \centering
-    \includegraphics[width=0.5\linewidth]{figures/nonlinearities_image.pdf}
-    \caption{Нелинейные link functions, связанные с руками (сверху), и плотность сгенерированных точек данных (снизу).
-    Видно, что последние три функции весьма похожи там, где данные сконцентрированы, что затрудняет различение оптимальной руки.}
-    \label{fig::glm_functions}
-\end{figure}
+\begin{equation}
+\Delta(T)
+=
+\sum_{\tau=1}^{n_{k^\star}^T}
+\Delta_{k^\star}(\tau,\delta)
++
+\frac1M
+\sum_{k=1}^{K}
+\sum_{\tau=1}^{n_k^T}
+\Delta_k(\tau,\delta).
+\end{equation}
 
-\paragraph{Результаты.}
-Рисунок~\ref{fig:exp2} суммирует результаты.
-Панель (a) показывает, что \algname{M-LCB} достигает сублинейного регрета и конкурентоспособен с обоими базовыми методами.
-Панель (b) сообщает финальное распределение выбора рук: \algname{M-LCB} успешно идентифицирует оптимальную руку ($k=9$).
-Панель (c) представляет распределение вычислительного бюджета между руками.
-\algname{M-LCB} распределяет обновления преимущественно на лучшие по качеству руки, тогда как \algname{LimitedAdvice} распределяет обновления более равномерно, что приводит к менее эффективному использованию бюджета обучения.
+Using the definition $\delta_n=\delta/(4Kn^2)$ and the fact that
+$n\le T$, we obtain
+$ H(n,\delta_n) = O\!\left( \sqrt{\frac{\log(KT/\delta)}{n}} \right)$.
+Moreover, Assumption~\ref{assumption:expert_regret} together with $U_k(t,\delta)=O\bigl(t^{\alpha}c(\delta)\bigr)$  yields
+$ \frac{U_k(n,\delta_{\mathrm{arm}})}{n} = O\!\left( n^{\alpha-1}c(\delta) \right)$.
+Hence,
+\begin{equation*}
+\Delta_k(n,\delta) = O\!\left( \sqrt{\frac{\log(KT/\delta)}{n}} + n^{\alpha-1}c(\delta) \right).
+\end{equation*}
 
-\begin{figure}[!ht]
-    \centering
-    \includegraphics[width=0.8\linewidth]{figures/regrets_image.pdf}
-    \caption{Сравнение качества на задаче выбора GLM-модели.
-    (a) Кумулятивный регрет.
-    (b) Финальное распределение выбора рук.
-    (c) Распределение вычислительного бюджета между руками.}
-    \label{fig:exp2}
-\end{figure}
+Substituting this estimate into the expression for $\Delta(T)$, we need
+to control sums of the form
+$\sum_{\tau=1}^{n}\tau^{-1/2}$ and $\sum_{\tau=1}^{n}\tau^{\alpha-1}$. Using the standard bounds
+$\sum_{\tau=1}^{n}\tau^{-1/2}=O(\sqrt n)$ and  $\sum_{\tau=1}^{n}\tau^{\alpha-1} = O(n^\alpha)$, we obtain
+\begin{equation}
+\sum_{\tau=1}^{n_{k^\star}^T} \Delta_{k^\star}(\tau,\delta) = O\!\left( \sqrt{T\log\frac{KT}{\delta}} + T^\alpha c(\delta) \right).
+\end{equation}
 
-\subsubsection*{Гиперпараметры}
-Для \EDRB параметр исследования подбирался, причем $c=0.1$ давал лучшие результаты.
-Для \algname{M-LCB} концентрационные члены были один раз настроены в валидационной среде.
-Параметры для \algname{LimitedAdvice} задавались согласно его теоретическому анализу \cite{seldin2014prediction}. Анализ показывает, что регрет не очень чувствителен к этим параметрам.
+For the second term, using Cauchy--Schwarz together with
+$\sum_{k=1}^{K} n_k^T \le MT$, we obtain
+\begin{align}
+\frac1M \sum_{k=1}^{K}\sqrt{n_k^T} \le \frac{\sqrt{K\sum_{k=1}^{K}n_k^T}}{M}= O\!\left( \sqrt{\frac{KT}{M}} \right).
+\end{align}
+Similarly, since $x\mapsto x^\alpha$ is concave for $\alpha\in(0,1)$,
+Jensen's inequality gives
+\begin{equation}
+\frac1M\sum_{k=1}^{K}(n_k^T)^\alpha \le
+\frac1M K^{1-\alpha} \left(\sum_{k=1}^{K}n_k^T\right)^\alpha
+\le
+O\!\left( \left(\frac{K}{M}\right)^{1-\alpha} T^\alpha \right).
+\end{equation}
 
+Combining the above estimates yields
+\begin{equation}
+\Delta(T)
+=
+O\!\left(
+\sqrt{\frac{KT}{M}\log\frac{KT}{\delta}}
++
+\left(\frac{K}{M}\right)^{1-\alpha}
+T^\alpha c(\delta)
+\right).
+\end{equation}
+Applying Lemma~\ref{lem:regret_bounds}, we obtain the same bound for the pseudo-regret. Finally, the additional martingale term in
+Lemma~\ref{lem:regret_bounds} contributes at most
+$ O\!\left( \sqrt{T\log(1/\delta)} \right)$, which is dominated by $ O\!\left( \sqrt{\frac{KT}{M}\log\frac{KT}{\delta}} \right)$
+since $K\ge M$. The stated regret bound follows.
+\end{proof}
 
-\subsection{Online-выбор бандитных алгоритмов}
+\subsubsection{Multiple-Play Regret Guarantees}
 
-В этом эксперименте мы конкретизируем нашу схему для решения задачи выбора модели, где каждый эксперт $k \in [K]$ сам является независимым стохастическим алгоритмом Multi-Armed Bandit (MAB).
+\label{sec:multiple_play}
 
-\begin{figure}[!ht]
-    \centering
-    \includegraphics[width=0.8\linewidth]{figures/bandit_experiment.pdf}
-    \caption{Сравнение качества на выборе модели MAB.
-    (a) Кумулятивный регрет.
-    (b) Финальное распределение выбора рук.
-    (c) Распределение вычислительного бюджета между руками.}
-    \label{fig:regret_bandits_appendix}
-\end{figure}
+The \algname{M-LCB} framework naturally extends to the multiple-play bandit setting \cite{agrawal1990multi,uchiya2010algorithms}.
+At each round, the algorithm constructs the subset $S_t$ and deploys all experts rather than selecting a single representative expert via the UCB rule. The incurred loss is $\frac1M\sum_{k\in S_t}L_k^\star$, and all experts in $S_t$ are updated using the observed feedback. Performance is measured relative to the best subset of $M$ experts in hindsight. This setting is closely related to combinatorial and multiple-play bandits, where UCB-based methods are known to achieve $\widetilde O(\sqrt{KT/M})$ regret under fixed stochastic rewards \cite{kveton2015tight}.
+
+\begin{lemma}[Top-$M$ experts regret]
+\label{prop:m_mean_regret}
+
+Fix $\delta\in(0,1)$ and suppose the assumptions of
+Lemma~\ref{lem:regret_bounds} hold. Let
+\[
+\overline L^\star
+:=
+\min_{S\subseteq[K],\,|S|=M}
+\frac1M\sum_{k\in S}L_k^\star
+\]
+denote the average optimal loss of the best subset of $M$ experts.
+Define the Top-$M$ regret as
+\[
+\mathrm{Reg}_M(T)
+:=
+\sum_{t=1}^{T}
+\left[
+\frac1M\sum_{k\in S_t}L_k^\star
+-
+\overline L^\star
+\right].
+\]
+Then, with probability at least $1-\delta$,
+\[
+\mathrm{Reg}_M(T)
+\le
+\frac1M
+\sum_{k=1}^{K}
+\sum_{\tau\in I_k(T)}
+\bigl[
+\UCB_k(\tau,\delta)
+-
+\LCB_k(\tau,\delta)
+\bigr].
+\]
+
+\end{lemma}
+
+\begin{proof}[Proof of Lemma~\ref{prop:m_mean_regret}]
+
+Let
+\[
+S^\star
+\in
+\arg\min_{S\subseteq[K],\,|S|=M}
+\frac1M\sum_{k\in S}L_k^\star.
+\]
+On the event $\mathcal E_\delta$, Lemma~\ref{prop:anytime-ci-clear}
+ensures that
+\[
+\LCB_k(t,\delta)
+\le
+L_k^\star
+\le
+\UCB_k(t,\delta)
+\qquad
+\forall k\in[K],\ \forall t\ge 1.
+\]
+
+Since $S_t$ is chosen as the subset minimizing the sum of lower
+confidence bounds,
+\[
+\frac1M\sum_{k\in S_t}\LCB_k(t,\delta)
+\le
+\frac1M\sum_{k\in S^\star}\LCB_k(t,\delta)
+\le
+\frac1M\sum_{k\in S^\star}L_k^\star
+=
+\overline L^\star.
+\]
+Therefore,
+\begin{align}
+\frac1M\sum_{k\in S_t}L_k^\star-\overline L^\star
+&\le
+\frac1M
+\sum_{k\in S_t}
+\bigl(
+L_k^\star-\LCB_k(t,\delta)
+\bigr)
+\\
+&\le
+\frac1M
+\sum_{k\in S_t}
+\bigl(
+\UCB_k(t,\delta)-\LCB_k(t,\delta)
+\bigr).
+\end{align}
+
+Summing over $t=1,\ldots,T$ and regrouping terms according to the update
+indices of each expert yields
+\[
+\mathrm{Reg}_M(T)
+\le
+\frac1M
+\sum_{k=1}^{K}
+\sum_{\tau\in I_k(T)}
+\bigl[
+\UCB_k(\tau,\delta)
+-
+\LCB_k(\tau,\delta)
+\bigr],
+\]
+which proves the claim.
+
+\end{proof}
+
+\begin{theorem}[Convergence rate for Top-$M$ regret]
+\label{thm:gen-rate-topM}
+
+Let $\alpha,\delta\in(0,1)$ and suppose that every expert
+$k\in[K]$ satisfies Assumption~\ref{assumption:expert_regret} with
+\[
+U_k(t,\delta)
+=
+O\!\bigl(
+t^\alpha c(\delta)
+\bigr).
+\]
+Then, with probability at least $1-\delta$, the Top-$M$ regret satisfies
+uniformly over all $T\ge1$,
+\[
+\mathrm{Reg}_M(T)
+=
+O\!\left(
+\sqrt{\frac{KT}{M}\log\frac{KT}{\delta}}
++
+\left(\frac{K}{M}\right)^{1-\alpha}
+T^\alpha c(\delta)
+\right).
+\]
+
+\end{theorem}
+
+\begin{proof}[Proof of Theorem~\ref{thm:gen-rate-topM}]
+
+By Lemma~\ref{prop:m_mean_regret}, the regret is controlled by the same
+confidence-width sum that appears in Lemma~\ref{lem:regret_bounds},
+except that the contribution of the optimal expert is absent.
+Consequently, the proof of Theorem~\ref{thm:gen-rate} applies without
+modification.
+
+Indeed, each confidence width satisfies
+\[
+\UCB_k(t,\delta)-\LCB_k(t,\delta)
+=
+O\!\left(
+\sqrt{\frac{\log(KT/\delta)}{n_k^t}}
++
+(n_k^t)^{\alpha-1}c(\delta)
+\right).
+\]
+Summing the concentration term via Cauchy--Schwarz and the learning term
+via the concavity bound
+\[
+\sum_{k=1}^{K}(n_k^T)^\alpha
+\le
+K^{1-\alpha}(MT)^\alpha
+\]
+yields the stated rate.
+
+\end{proof}
+
+\begin{remark}[On constants]
+\label{rem:beta_dependence}
+
+Suppose the individual expert guarantees take the form
+\[
+U_k(t,\delta)
+=
+O\!\bigl(
+\beta_k\, t^\alpha c(\delta)
+\bigr),
+\]
+where the constants $\beta_k$ may depend on problem-specific quantities
+such as dimension, smoothness, or Lipschitz parameters. Repeating the
+proof while tracking these constants yields the refined bound
+\[
+O\!\left(
+\sqrt{\frac{KT}{M}\log\frac{KT}{\delta}}
++
+T^\alpha c(\delta)
+\left[
+\beta_{k^\star}
++
+\left(
+\frac1M
+\sum_{k=1}^{K}
+\beta_k^{\frac1{1-\alpha}}
+\right)^{1-\alpha}
+\right]
+\right),
+\]
+which more precisely captures the dependence on the complexity of the
+underlying experts.
+
+\end{remark}
+
+\subsection{Minimax Lower Bounds}
+\label{appendix:lower-bounds}
+
+We now show that the regret guarantees obtained in Theorems~\ref{thm:gen-rate} and~\ref{thm:gen-rate-topM} are essentially unimprovable. The lower bound combines two sources of difficulty. The first is the exploration problem of identifying the best expert among $K$ candidates when only $M$ experts can be updated at each round. The second is the intrinsic statistical complexity of the underlying learning tasks solved by the experts.
+
+To formalize the latter component, we introduce a family of $\alpha$-hard learning problems.
+
+\begin{definition}[$\alpha$-hard class]
+\label{def:alpha-class}
+A class of learning problems $\mathcal F_\alpha$ is called $\alpha$-hard if there exists a constant $c>0$ such that, for every
+algorithm and every horizon $n$, one can find $f\in\mathcal F_\alpha$ satisfying
+\[
+R^{\mathrm{in}}(n) \ge c\, n^\alpha,
+\]
+where $R^{\mathrm{in}}(n)$ denotes the internal regret of the learner on
+problem $f$.
+\end{definition}
+
+The construction used in the proof is based on heavy-tailed stochastic bandits introduced by \cite{bubeck2013bandits}. These problems satisfy $\alpha=\frac{1}{1+\beta}$, where $\beta$ characterizes the heaviness of the tails.
+
+\begin{theorem}[Minimax lower bound]
+\label{thm:mt-alpha}
+Let $K$ be the number of experts, $M$ the per-round update budget, and $T$ the horizon. For every $\alpha\in[0,1]$, there exists an $\alpha$-hard class $\mathcal F_\alpha$ such that, for any collection of learning algorithms $\{\mathscr A_k\}_{k=1}^{K}$ and any meta-procedure,
+\[
+\sup_{f_k\in\mathcal F_\alpha} \mathbb E\,\mathrm{Reg}(T) \ge c_1\sqrt{\frac{KT}{M}} + c_2 T^\alpha \left(\frac{K}{M}\right)^{1 \alpha},
+\]
+provided $\sqrt{\frac{K\log K}{MT}}$ is sufficiently small. The constants $c_1,c_2>0$ are universal.
+\end{theorem}
+
+\begin{proof}[Proof sketch]
+The proof is based on a family of perturbed games together with a symmetric null game. The exploration component is obtained using a standard information-theoretic argument. Pinsker's inequality relates the probability of identifying the optimal expert to the KL divergence between the null and perturbed games, yielding the term $\Omega\!\left(\sqrt{\frac{KT}{M}}\right)$.
+
+To obtain the second term, we construct each expert as an $\alpha$-hard learning problem. A concentration argument shows that, in the null game, every expert receives approximately $MT/K$ updates. The corresponding internal regret therefore contributes
+$ \Omega\!\left( T^\alpha \left(\frac{K}{M}\right)^{1-\alpha} \right)$.
+Combining the two components proves the claim.
+Full details are provided in Appendix~\ref{appendix:lower-bounds}.
+\end{proof}
+
+The lower bound matches the upper bounds of Theorems~\ref{thm:gen-rate} and~\ref{thm:gen-rate-topM} up to logarithmic factors.
+Consequently, the dependence on the horizon $T$, the number of experts $K$, the update budget $M$, and the hardness parameter $\alpha$ cannot be improved in general. In particular, the term $\sqrt{KT/M}$ is the unavoidable price of expert identification, whereas $T^\alpha(K/M)^{1-\alpha}$ captures the intrinsic complexity of learning within the experts.
 
 
 \begin{table*}[h!]
 \centering
 \caption{%
-Примеры скоростей сходимости внутренних рук $U_k(n,\delta)$ и соответствующего глобального регрета (с точностью до логарифмических множителей и аддитивного члена $O(\sqrt{(K/M)T})$).
-Для каждого эксперта $k$ внутренний алгоритм удовлетворяет $U_k(t,\delta)=O(\beta_k\,t^{\alpha}c(\delta))$,
-а соответствующий глобальный регрет масштабируется как
+Examples of inner-arm convergence rates $U_k(n,\delta)$ and resulting global regret (up to logarithmic factors and an additive term $O(\sqrt{(K/M)T})$).
+For each expert $k$, the inner algorithm satisfies $U_k(t,\delta)=O(\beta_k\,t^{\alpha}c(\delta))$,
+and the corresponding global regret scales as
 $O\!\big(T^{\alpha}c(\delta)\,\|{\boldsymbol{\beta}}\|_{M, 1-\alpha}\big)$,
-где
+where
 $\|{\boldsymbol{\beta}}\|_{M,\gamma}
 =\Bigl(\tfrac{1}{M}\sum_{k=1}^{K}\beta_k^{\frac{1}{\gamma}}\Bigr)^{\gamma}$.
-Соглашения о параметрах:
-$K$ — \# экспертов; $M$ — бюджет обучения на раунд; $T$ — горизонт;
-$N_k$ — \# базовых рук/действий; $d_k$ — размерность признаков;
-$\varepsilon$ — показатель момента для тяжелых хвостов ($\mathbb{E}|X|^{1+\varepsilon}\!\le\sigma^{1+\varepsilon}$);
-$L, R, C, G$ — липшицева константа, диаметр, диапазон и градиентные константы.
+Parameter conventions:
+$K$ — \# experts; $M$ — per-round training budget; $T$ — horizon;
+$N_k$ — \# base arms/actions; $d_k$ — feature dimension;
+$\varepsilon$ — heavy-tail moment exponent ($\mathbb{E}|X|^{1+\varepsilon}\!\le\sigma^{1+\varepsilon}$);
+$L, R, C, G$ — Lipschitz, diameter, range, and gradient constants.
 }
-\label{tab:convergence_examples}
-\begin{tabular}{p{5.0cm}p{3.7cm}p{4.0cm}}
+\label{tab:convergence_examples_appendix}
+\begin{tabular}{p{5.7cm}p{3.7cm}p{5.0cm}}
 \toprule
-\textbf{Внутренний алгоритм / задача}
-& \textbf{Внутренняя скорость $U_k(n,\delta)$}
-& \textbf{Глобальный регрет (с точностью до log)} \\
+\textbf{Inner algorithm / problem}
+& \textbf{Inner rate $U_k(n,\delta)$}
+& \textbf{Global regret (up to logs)} \\
 \midrule
 OGD / OMD (convex Lipschitz)
 & $O(G_kR_k\sqrt{n})$, $\alpha=\tfrac{1}{2}$,
@@ -986,342 +1283,250 @@ Hedge / Exponential Weights (over $N_k$ experts)
 \end{tabular}
 \end{table*}
 
-\subsection{Эксперименты на реальных данных}
-\label{sup:real_data}
+\section{Discussion and Examples}
+\label{sec:comparison}
 
-Мы дополнительно оцениваем \algname{M-LCB} на двух реальных многоклассовых клинических бенчмарках предсказания, которые нагружают разные аспекты постановки с ограниченной обратной связью. Первый бенчмарк проверяет поведение регрета на длинном горизонте через bootstrapped поток из фармакогеномного датасета среднего размера, тогда как второй использует полностью реальный, non-bootstrapped поток для оценки качества при повторных случайных порядках меньшего медицинского мониторингового датасета.
-\paragraph{Дозирование варфарина.}
-Сначала мы рассматриваем датасет дозирования варфарина IWPC \cite{international2009estimation, bastani2020mostly}, содержащий 5,528 пациентов, 93 признака и трехклассовую метку дозировки. Поскольку датасет меньше горизонта, необходимого для выявления асимптотических трендов регрета, мы генерируем поток из $T=20{,}000$ раундов с помощью bootstrap resampling. Пул экспертов состоит из $K=7$ неоднородных online softmax и perceptron классификаторов, построенных с использованием разных классов моделей и подмножеств признаков. Мы сравниваем методы при бюджетах обновлений $M\in\{1,2,4\}$.
+Theorems~\ref{thm:gen-rate} and~\ref{thm:gen-rate-topM} reveal a simple decomposition of the regret of \algname{M-LCB}. The first term, $\tilde O\!\left(\sqrt{\frac{KT}{M}}\right)$, arises from the need to identify promising experts under a limited training budget. Its dependence on $K$, $M$, and $T$ coincides, up to logarithmic factors, with the rates known for stochastic multiple-play bandits. The second term, $\tilde O\!\left( \left(\frac{K}{M}\right)^{1-\alpha} T^\alpha c(\delta) \right)$,
+reflects the learning dynamics of the underlying experts and is inherited directly from their individual convergence guarantees.
 
-Результаты подтверждают предсказанную зависимость от бюджета советов. Как показано на Рисунке~\ref{fig:warfarin_theoretical}, \algname{M-LCB} получает наименьшую кумулятивную потерю среди сравниваемых online-методов. Например, при $M=2$ \algname{M-LCB} достигает кумулятивной потери $6{,}604$, близкой к best-fixed-expert reference $6{,}589$. Этот малый разрыв указывает, что, несмотря на наблюдение и обновление только ограниченного числа экспертов за раунд, алгоритм быстро концентрирует обновления на конкурентоспособных экспертах и отслеживает лучший фиксированный компаратор. Мы также варьируем число экспертов $K\in\{7,10,15\}$ при фиксированном $M=2$. Рисунок~\ref{fig:warfarin_scaling} показывает, что регрет растет с $K$, что согласуется с зависимостью $\mathcal{O}(\sqrt{KT/M})$ в Теореме~\ref{thm:gen-rate-topM}.
+The parameter $\alpha$ characterizes the difficulty of the inner learning problem. When $\alpha$ is small, experts learn rapidly and the exploration term becomes the dominant component of the regret. In this regime, the performance of \algname{M-LCB} approaches that of classical multiple-play bandit algorithms. As $\alpha$ increases, the overall regret becomes increasingly influenced by the convergence properties of the experts themselves.
 
-\begin{figure}[t]
+A comparison with existing approaches is presented in Table~\ref{tab:comparison_existing}. Classical model-selection methods such as CORRAL~\cite{pacchiano2020model} and Dynamic Balancing~\cite{cutkosky2021dynamic} are designed for learnable experts and achieve strong regret guarantees in the single-update setting. However, they allocate resources to only one expert per round and do not address subset-level performance. On the other hand, multiple-play bandit algorithms~\cite{seldin2014prediction,yun2018multi,kveton2015tight} explicitly exploit a budget of $M$ actions per round, but assume that the arms are fixed and do not improve through training. The \algname{M-LCB} framework combines these two perspectives. It supports arbitrary learnable experts while allowing up to $M$ experts to be updated at every iteration. At the same time, it provides guarantees for both the single-action regret considered in Section~\ref{sec:regret_guarantees_one} and the Top-$M$ regret introduced in Section~\ref{sec:multiple_play}. The resulting rates preserve the optimal $\tilde O(\sqrt{KT/M})$ exploration dependence of multiple-play methods while incorporating the statistical complexity of the underlying learning procedures.
+
+Table~\ref{tab:convergence_examples_appendix} illustrates the implications of the theory for several representative expert classes. A particularly important case is online convex optimization, where many standard algorithms satisfy $U_k(T)=O(\sqrt{T})$, corresponding to $\alpha=\tfrac12$. In this setting, the exploration and learning contributions have the same order and jointly determine the final regret rate. Stronger assumptions, such as strong convexity or realizability, lead to faster convergence, whereas heavy-tailed or otherwise difficult stochastic environments result in slower rates.
+
+Another advantage of the framework is its ability to handle heterogeneous collections of experts. In practical applications, experts may differ substantially in their action spaces, model classes, dimensions, or smoothness assumptions. Such differences are captured by the constants $\beta_k$ appearing in Remark~\ref{rem:beta_dependence}. Rather than depending on the complexity of the most difficult expert, the resulting regret bound depends on an aggregate measure of expert complexity, allowing \algname{M-LCB} to adapt naturally to diverse families of learning algorithms.
+
+
+\section{Experiments}
+\label{sec:experiments}
+
+We evaluate the empirical performance of \algname{M-LCB} on heterogeneous model-selection problems with adaptive experts. The experiments are designed to assess how effectively the proposed method utilizes a limited update budget, how quickly it identifies high-performing experts, and how its behavior compares with existing approaches for learnable experts and budgeted expert advice. We consider two complementary benchmarks. The first is a heterogeneous stochastic bandit model-selection problem that highlights the interaction between expert quality and learning speed. The second is a generalized linear model (GLM) selection task in which the candidate models differ through their underlying link functions.
+
+\subsection{Model Selection among Stochastic Bandits}
+\label{sec:exp-bandits}
+We first consider a heterogeneous multi-armed bandit benchmark designed to create a ``suboptimal trap'' for meta-learning algorithms. The benchmark contains $K=10$ experts, each controlling a two-armed Bernoulli bandit.
+
+For expert $k\in\{0,\ldots,K-1\}$, the expected rewards are
+\[
+\mu_{k,1} = \frac{2}{10} \left( 1-\frac{k}{K} \right),
+\qquad
+\mu_{k,2} = \frac{1}{10} \left( 2-\frac{k}{K} \right).
+\]
+
+As $k$ increases, the maximum achievable reward decreases, while the gap between the two arms increases.
+Consequently, lower-quality experts are easier to optimize and often appear attractive during the early stages of learning.
+
+To introduce heterogeneous learning dynamics, the first $K/2$ experts use \algname{EpsilonGreedy} as the internal learner, whereas the remaining experts use \algname{UCB1}. This setup intentionally creates a situation where rapidly converging
+but ultimately suboptimal experts may initially outperform the optimal expert.
+
+We compare \algname{M-LCB} against \algname{LimitedAdvice} and Smooth Corral, a smoothed variant of
+\algname{Corral}~\cite{agarwal2017corralling}. For \algname{M-LCB} and \algname{LimitedAdvice}, we consider update budgets $M\in\{1,2,3,4\}$. Each experiment is run for $T = 2.5\times10^5$ rounds and averaged over $100$ independent repetitions.
+
+\paragraph{Results.}
+
+Figure~\ref{fig:regret_bandits} summarizes the results. Panel~(a) shows cumulative regret. All methods achieve sublinear growth, while both \algname{M-LCB} and \algname{LimitedAdvice} benefit substantially from larger update budgets. Panel~(b) reports the final expert-selection distribution. As $M$ increases, \algname{M-LCB} concentrates more rapidly on the optimal expert, indicating that additional optimization budget accelerates identification of the best learner. Panel~(c) illustrates how the computational budget is allocated. Unlike methods that distribute updates more uniformly,\algname{M-LCB} focuses training on promising experts. This allows strong experts to overcome their initial exploration phase more quickly and prevents the meta-learner from being trapped by suboptimal experts with favorable short-term performance.
+
+\begin{figure}[!ht]
     \centering
-    \includegraphics[width=0.95\linewidth]{figures/Warfarian_Dosage_theoretical.png}
-    \caption{Результаты дозирования варфарина при ограниченных бюджетах советов. \algname{M-LCB} достигает наименьшей кумулятивной потери среди сравниваемых методов и при $M=2$ получает кумулятивную потерю $6{,}604$, близкую к best-fixed-expert reference $6{,}589$.}
-    \label{fig:warfarin_theoretical}
+    \includegraphics[width=0.9\linewidth]{figures/bandit_experiment_horizontal.pdf}
+    \caption{
+    Performance comparison on the heterogeneous bandit model-selection problem.
+    (a) Cumulative regret.
+    (b) Final expert-selection distribution.
+    (c) Allocation of computational budget across experts.
+    }
+    \label{fig:regret_bandits}
 \end{figure}
 
-\begin{figure}[t]
+
+\subsection{Model Selection among Generalized Linear Models}
+\label{sec:exp-glm}
+
+We next evaluate \algname{M-LCB} on a synthetic model-selection task involving generalized linear models (GLMs).
+
+We compare against two baselines: \EDRB~\cite{dann2024data}, which provides guarantees for learnable experts, and \algname{LimitedAdvice}~\cite{seldin2014prediction}, which supports multiple updates per round. We consider update budgets $M\in\{1,2,3\}$, average over $30$ independent runs, and display $\pm0.5$ standard deviations as shaded regions.
+
+The benchmark contains $K=10$ candidate models. Each arm corresponds to a generalized linear model with its own nonlinearity $f_k:\mathbb R\to\mathbb R$.
+
+At round $t$, a feature vector $x_t\in\mathbb S^{d-1}$ is sampled uniformly from the unit sphere, and the target value is generated according to the optimal model $k^\star=9$: $r_t= f_{k^\star}(w^\top x_t)$.
+
+Figure~\ref{fig::glm_functions} visualizes the nonlinearities. The final three models are intentionally chosen to be very similar in high-density regions of the feature space, making identification of the optimal model nontrivial.
+
+\begin{figure}[!ht]
     \centering
-    \includegraphics[width=0.95\linewidth]{figures/Warfarian_Dosage_scaling.png}
-    \caption{Поведение масштабирования на бенчмарке дозирования варфарина при $K\in\{7,10,15\}$ и фиксированном бюджете $M=2$. Регрет растет с числом экспертов, что соответствует качественному предсказанию зависимости регрета $\mathcal{O}(\sqrt{KT/M})$.}
-    \label{fig:warfarin_scaling}
+    \includegraphics[width=0.3\linewidth]{figures/nonlinearities_image.pdf}
+    \caption{
+    Link functions associated with the candidate models (top)
+    and the density of generated samples (bottom).
+    The last three models are highly similar in the region where most
+    observations occur, making model selection difficult.
+    }
+    \label{fig::glm_functions}
 \end{figure}
 
-\begin{figure}[h!t]
+\paragraph{Results.}
+
+Figure~\ref{fig:exp2} reports the results. Panel~(a) shows cumulative regret and demonstrates that \algname{M-LCB} remains competitive with both baselines. Panel~(b) presents the final model-selection frequencies. The algorithm consistently identifies the optimal model ($k=9$), despite the similarity of the strongest candidates. Panel~(c) illustrates how optimization effort is distributed. \algname{M-LCB} concentrates updates on the most promising models, whereas \algname{LimitedAdvice} spreads the budget more uniformly. This targeted allocation leads to more efficient use of the available training budget.
+
+\begin{figure}[!ht]
     \centering
-    \includegraphics[width=0.8\linewidth]{figures/Cardiotocography_topM.png}
-    \caption{Top-$M$ регрет на бенчмарке Cardiotocography при $K=15$ экспертах и бюджетах $M\in\{1,2,4,8\}$ по 20 random seeds. При $M\ge4$ \algname{M-LCB} получает почти нулевой top-$M$ регрет, совпадая с лучшим фиксированным подмножеством из $M$ экспертов.}
-    \label{fig:ctg_topm}
+    \includegraphics[width=0.4\linewidth]{figures/regrets_image.pdf}
+    \caption{
+    Performance comparison on the GLM model-selection problem.
+    (a) Cumulative regret.
+    (b) Final model-selection distribution.
+    (c) Allocation of computational budget across models.
+    }
+    \label{fig:exp2}
 \end{figure}
 
-\paragraph{Cardiotocography.}
-Далее мы оцениваем на датасете Cardiotocography \cite{cardiotocography_193, bastani2020mostly}, содержащем 2,126 записей фетального мониторинга, 35 признаков и трехклассовую метку состояния плода. В отличие от эксперимента с Warfarin, этот бенчмарк использует полностью реальный, non-bootstrapped поток. Мы используем пул экспертов с $K=15$ экспертами и варьируем бюджет советов по $M\in\{1,2,4,8\}$ на 20 random seeds.
+\subsubsection*{Hyperparameters}
+For \EDRB, the exploration parameter was tuned, with $c=0.1$ giving the best results.
+For \algname{M-LCB}, concentration terms was once tuned in validation environment.
+Parameters for \algname{LimitedAdvice} were set according to its theoretical analysis \cite{seldin2014prediction}. Analysis shows that regret is not highly sensitive to this parameters.
 
 
-Экспериментальные результаты на датасете Cardiotocography показывают, что качество обученной смеси монотонно улучшается с ростом бюджета обновлений.
-При конфигурации $M=4$ \algname{M-LCB} достигает $95.0\%$ средней accuracy и $105.6$ кумулятивной потери; для сравнения, оптимальный фиксированный эксперт достигает потери $86.0$.
-Рисунок~\ref{fig:ctg_topm} показывает top-$M$ регрет, где \algname{M-LCB} стабильно превосходит \algname{LimitedAdvice}, \algname{RoundRobin} и \algname{SmoothCORRAL}.
-Это различие в качестве подчеркивает эффективность адаптивного распределения бюджета по сравнению со статическими или стохастическими политиками обновления.
-Примечательно, что наблюдение о работе \algname{M-LCB} на уровне лучшего фиксированного подмножества из $M$ экспертов дает сильное эмпирическое подтверждение теоретической гарантии на уровне подмножеств, представленной в Теореме~\ref{thm:gen-rate-topM}.
+\vspace{-0.5em}
+\section{Limitations and Future Work}
+Our analysis assumes that the confidence scaling function $c(\delta)$ is known. In the bound of Theorem~\ref{thm:gen-rate}, this function appears only through the expert-learning term $(K/M)^{1-\alpha}T^\alpha c(\delta)$. Consequently, when $\alpha<1/2$ this contribution is asymptotically dominated by the exploration term, whereas for larger $\alpha$ the dependence on $c(\delta)$ is linear. In many standard experts, including OGD, UCB, and Hedge, $c(\delta)$ is polylogarithmic. Practical tuning of the concentration bonus can be mitigated by replacing the Hoeffding-style step with self-normalized bounds when the base experts admit them, but the dependence on the base experts' confidence calibration is inherent to UCB-type methods.
+
+The case of unknown $c(\delta)$ is considered by Pacchiano et al.~\cite{pacchiano2020model}, where the resulting regret bounds exhibit a weaker dependence on $c(\delta)$, while Dann et al.~\cite{dann2024data} estimate it online, yielding adaptive but less interpretable guarantees. Adapting \algname{M-LCB} to unknown or misspecified expert-rate functions is therefore an important direction for future work.
+
+Another important direction concerns algorithms with additional observations per round,  such as limited-advice and multi-play bandits~\cite{seldin2014prediction,yun2018multi,kveton2015tight}.
+Extending their analysis to the setting of \emph{learnable experts} would unify these frameworks.
+% and clarify the role of training dynamics under partial feedback.
+
+Another open question is whether meaningful gap-dependent logarithmic guarantees can be obtained. In classical stochastic bandits, the suboptimality gap is fixed, enabling $O(\log T/\Delta)$-type bounds. In our setting the instantaneous regret $L(u_k^t)-L^\star$ changes as experts learn, so the relevant gap is time-dependent and a direct analogue is not immediate.
+
+Finally, a promising extension is the \emph{contextual} regime, where experts specialize based on observed features or domains,
+connecting our framework to contextual bandits~\cite{foster2019model}.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%% The next two lines define, first, the bibliography style to be
+%%% applied, and, second, the bibliography file to be used.
+
+\bibliographystyle{ACM-Reference-Format}
+% \bibliographystyle{unsrt}
+\bibliography{lib}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
-\section{Примеры использования}
+\clearpage
 
-\subsection{Алгоритмы многоруких бандитов как эксперты.}
-\label{sup:bandit_application}
- Мотивированные AutoML и распределенной маршрутизацией, мы рассматриваем мета-процедуру $\mathcal{P}$, выбирающую наиболее эффективного среди $K$ самооптимизирующихся экспертов. Как и в Bandit Model Selection \cite{pacchiano2020model}, это по своей природе сложно из-за нестационарной динамики обучения экспертов и высокой стоимости выборок, требуемой для сходимости.
+\appendix
+\tableofcontents
 
-Каждый эксперт $k$ является стохастическим бандитом, управляющим конечным пространством действий $\mathcal{A}_k := \{a_k^1, \dots, a_k^{m_k}\}$. Решение эксперта в момент $t$ — распределение вероятностей $u_k^t \in \Delta_k$ по его действиям, где $\mathbf{U}_k = \Delta_k$ — $m_k$-мерный симплекс. Глобальное пространство решений $\mathbf{U}$ является объединением симплексов.
-
-
-Среда характеризуется латентной случайной величиной $\xi^t \sim D$, представляющей состояние системы в момент $t$ (например, вектор текущих задержек или ресурсных затрат для всех доступных методов). Хотя $\xi^t$ не обязательно полностью наблюдается мета-процедурой, она определяет потерю каждого действия $a \in \bigcup_k \mathcal{A}_k$ через отображение $\tilde{\ell}(a, \xi)$.
-Потеря эксперта для решения $u_k \in \mathbf{U}_k$ равна $\ell(u_k, \xi) := \mathbb{E}_{a \sim u_k} [\tilde{\ell}(a, \xi)]$. Оптимальный риск эксперта $k$ равен $L_k^\star = \min_{a \in \mathcal{A}_k} \mathbb{E}_{\xi \sim D} [\tilde{\ell}(a, \xi)]$.
-
-Когда эксперт $k\in S_t$ выдает $u^{t}_k$, он семплирует дискретное действие $a_k^{t} \in \mathcal{A}_k$ из $u_k^{t}$ и получает $(a^{t}_k, \tilde{\ell}(a^{t}_k, \xi^{t}))$ как бандитную обратную связь. Таким образом, в этой конкретизации предположение limited-advice означает, что среда предоставляет потерю семплированного действия для каждого обучаемого эксперта $k\in S_t$, включая экспертов, которые не развернуты как глобальный советчик. Если несколько обучаемых экспертов семплируют одно и то же действие, соответствующую потерю достаточно вычислить один раз и можно переиспользовать для всех них. Когда доступны off-policy обновления, можно также обновлять базовые алгоритмы по дополнительным выборкам, но наш анализ использует только указанные выше on-policy наблюдения.
-
-В этой постановке качество эксперта измеряется его псевдо-регретом $R_k(n)$, который оценивает кумулятивную ожидаемую потерю распределений $u_k^\tau$ относительно лучшего фиксированного действия, $R_k(t) = \sum_{\tau \in I_k(t)} \mathbb{E}_{a \sim u_k^\tau} [\tilde{\ell}(a, \xi^\tau)] - n_k L_k^\star.$
-
-Стандартные алгоритмы, такие как \algname{UCB}, удовлетворяют Asm.~\ref{assumption:expert_regret} с $U_k(n, \delta) = O(\sqrt{m_k n \log(n/\delta)})$. Теоретическая накопленная потеря $L_k(t)$ в~\eqref{def:experts_running_loss} определяется через условную потерю $\ell(u_k^t,\xi^t)$, тогда как бандитный эксперт наблюдает семплированную потерю $\tilde{\ell}(a_k^t,\xi^t)$. Поэтому в реализации используется $\tilde L_k(t)=\frac{1}{n_k^t}\sum_{\tau\in I_k(t)}\tilde{\ell}(a_k^\tau,\xi^\tau),$
-и к $U_k$ добавляется соответствующий концентрационный член для семплирования. Концентрация $\sum_{\tau\in I_k(t)} \tilde{\ell}(a_k^\tau, \xi^\tau)$ вокруг $\sum_{\tau\in I_k(t)} \ell(u_k^\tau, \xi^\tau)$ обеспечивает anytime высоковероятностные границы на псевдо-регрет. Доказательство аналогично Лемме~\ref{lem:prefix_to_expected}.
-
-
-\subsection{Конкретные примеры}
-\label{sup:applications}
-Таблица~\ref{tab:convergence_examples} суммирует несколько репрезентативных базовых алгоритмов, их внутренние скорости сходимости и результирующий глобальный регрет при объединении с \algname{M-LCB}.
-Наряду со стандартными выпуклыми и exponentially-weighted обучающимися алгоритмами мы включаем ``трудные'' стохастические задачи с тяжелохвостыми наградами, которые демонстрируют более медленную сходимость, характеризуемую большим $\alpha$.
-
-Разные эксперты могут действовать на различных пространствах действий.
-Например, в bandit-based экспертах каждый обучающийся алгоритм может контролировать собственный набор рук, тогда как в параметрических или линейных моделях размерность пространства признаков может различаться. Такая неоднородность отражается в параметрах типа $N_k$ или $d_k$ в Таблице~\ref{tab:convergence_examples} и естественно обрабатывается в рамках \algname{M-LCB}.
-
-
-
-\section{Доказательства}
-
-
-\begin{lemma}[Связь OCO-регрета с регретом эксперта]
-\label{lem:prefix_to_expected}
-Рассмотрим эксперта $k$, описанного в Разделе~\ref{sec:examples_parametric}. Предположим, что эксперт предоставляет anytime высоковероятностную оценку $\overline{U}_k(t, \delta)$ для OCO-регрета $\overline{R}_k(t)$, определенного в \eqref{eq:regret_oco}. То есть для любого фиксированного $\delta \in (0,1)$:
-$
-    \mathbb{P}\left( \forall t \ge 1, \quad \overline{R}_k(t) \le \overline{U}_k(t, \delta) \right) \ge 1 - \delta.
-$
-Тогда эксперт удовлетворяет Asm.~\ref{assumption:expert_regret} относительно регрета $R_k(t)$ с оценкой:
-\begin{equation*}
-U_k(t, \delta) = \overline{U}_k(t, \delta/2) + t \cdot G(t, \delta/(3.5t^2)),
-\end{equation*}
-где $G(t, \delta)$ — концентрационный член:
-\begin{equation*}
-G(t, \delta) = \sqrt{\frac{2 \log(1/\delta)}{t}} + \frac{2 \log(1/\delta)}{3t}.
-\end{equation*}
-\end{lemma}
-
-\begin{proof}
-Для любого времени $t$ пусть $n = |I_k(t)|$ обозначает число раундов, на которых эксперт $k$ обновлялся. Для упрощения обозначений мы перенумеруем обучающие раунды эксперта $k$ как $\tau = 1, \dots, n$ и обозначим соответствующие решения и потери как $u_k^\tau$ и $\xi^\tau$ соответственно.
-Зафиксируем $\delta \in (0, 1)$ и определим концентрационный член $G(n, \delta') = \sqrt{\frac{2 \log(1/\delta')}{n}} + \frac{2 \log(1/\delta')}{3n}$.
-
-Мы определяем два высоковероятностных события. Сначала пусть $\mathcal{E}_1$ — событие, на котором выполняется anytime OCO-оценка регрета для эксперта $k$. По предположению Леммы с вероятностью не менее $1 - \delta/2$:
-\begin{equation}
-\label{eq:emp_reg_proof}
-    \sum_{\tau=1}^n \ell(u_k^\tau, \xi^\tau) - \min_{u \in \mathbf{U}_k} \sum_{\tau=1}^n \ell(u, \xi^\tau) \le \overline{U}_k(n, \delta/2) \quad \forall n \ge 1.
-\end{equation}
-
-Во-вторых, пусть $u_k^\star \in \arg \min_{u \in \mathbf{U}_k} L(u)$ — оптимальное фиксированное решение по ожиданию, так что $L(u_k^\star) = L_k^\star$. Применяя Asm.~\ref{assumption:stochastic_losses} и Лемму~\ref{lem:loss-eval} к последовательности i.i.d. потерь $\{\ell(u_k^\star, \xi^\tau)\}_{\tau=1}^n$, получаем, что для фиксированного $n$ с вероятностью не менее $1 - \delta/(3.5n^2)$:
-\begin{equation*}
-    \frac{1}{n} \sum_{\tau=1}^n \ell(u_k^\star, \xi^\tau) \le L_k^\star + G\bigl(n, \delta / (3.5n^2)\bigr).
-\end{equation*}
-Беря union bound по всем $n \ge 1$ и отмечая, что $\sum_{n=1}^\infty \frac{1}{3.5n^2} = \frac{1}{3.5} \frac{\pi^2}{6} < 0.5$, определим $\mathcal{E}_2$ как событие, на котором это неравенство выполняется одновременно для всех $n$. Следовательно, $\mathbb{P}(\mathcal{E}_2) \ge 1 - \delta/2$, и на $\mathcal{E}_2$ для всех $n \ge 1$ выполнено
-\begin{equation}
-\label{eq:comp_conc_proof}
-    \sum_{\tau=1}^n \ell(u_k^\star, \xi^\tau) \le n L_k^\star + n G\bigl(n, \delta / (3.5n^2)\bigr).
-\end{equation}
-
-По union bound, $\mathbb{P}(\mathcal{E}_1 \cap \mathcal{E}_2) \ge 1 - \delta$. На этом пересечении мы используем оптимальность эмпирического минимизатора и замечаем, что $\min_{u \in \mathbf{U}_k} \sum_{\tau=1}^n \ell(u, \xi^\tau) \le \sum_{\tau=1}^n \ell(u_k^\star, \xi^\tau)$. Объединяя \eqref{eq:emp_reg_proof} и \eqref{eq:comp_conc_proof}, получаем для всех $n \ge 1$:
-\begin{align*}
-    \sum_{\tau=1}^n \ell(u_k^\tau, \xi^\tau) &\le \min_{u \in \mathbf{U}_k} \sum_{\tau=1}^n \ell(u, \xi^\tau) + \overline{U}_k(n, \delta/2) \\
-    &\le \sum_{\tau=1}^n \ell(u_k^\star, \xi^\tau) + \overline{U}_k(n, \delta/2) \\
-    &\le n L_k^\star + \overline{U}_k(n, \delta/2) + n G\bigl(n, \delta / (3.5n^2)\bigr).
-\end{align*}
-
-Наконец, переставляя члены последнего неравенства, получаем неравенство как в Предположении \ref{assumption:expert_regret}. Это завершает доказательство.
-\end{proof}
-
-\begin{remark}
-    В доказательстве Леммы \ref{lem:prefix_to_expected} при применении Леммы~\ref{lem:loss-eval} для ограниченных потерь можно использовать $L_k^* \leq Z_k(t, \delta) := \min(1, \UCB_k(t, \delta))$, чтобы получить более точную оценку $G_k(t, \delta) \coloneqq \sqrt{\frac{2 Z_k(t, \delta) \log(1/\delta)}{3t}} + \frac{2 \log(1/\delta)}{t}$.
-\end{remark}
-
-
-\begin{lemma}[Anytime доверительные границы]
-\label{prop:anytime-ci-clear}
-Пусть
-\begin{equation}
-\label{eq:conf_intervals}
-    \mathcal{E}_\delta := \left\{\forall k \in [K],~ \forall t \ge 1 \quad
-    \begin{array}{l}
-        \LCB_k(t,\delta) \le L_k^\star \\
-        L_k^\star \le \UCB_k(t,\delta) \\
-        \mathbb E[L(\upsilon(H_k^t))\mid H_k^t] \le \UCB_k(t,\delta)
-    \end{array}
-    \right\},
-\end{equation}
-где $H_k^t:=\{u_k^\tau:\tau\in I_k(t)\}$ обозначает историю решений, используемую wrapper для эксперта $k$ в момент $t$.
-
-При Предположениях~\ref{assumption:stochastic_losses}-\ref{assumption:wrapper} для любого $\delta \in (0, 1)$ выполнено $\mathbb{P}(\mathcal{E}_\delta) \ge 1 - \delta$.
-\end{lemma}
-
-\begin{proof}[Доказательство Леммы~\ref{prop:anytime-ci-clear}]
-
-Для любого времени $t$ пусть $n = |I_k(t)|$ обозначает число раундов, на которых эксперт $k$ обновлялся. Для упрощения обозначений мы перенумеруем обучающие раунды эксперта $k$ как $\tau = 1, \dots, n$ и обозначим соответствующие решения и потери как $u_k^\tau$ и $\xi^\tau$ соответственно.
-Зафиксируем руку $k$ и число обновлений $n \ge1$. Мы доказываем неравенства в~\eqref{eq:conf_intervals}, а затем применяем union bound по всем $(k,n)$.
-
-\paragraph{Шаг 1: Нижняя доверительная граница.}
-По Asm.~\ref{assumption:expert_regret} (anytime $(U_k,\delta)$-ограниченность), с вероятностью не менее $1-\delta_{\mathrm{arm}}$ одновременно для всех $n$,
-\begin{equation}
-\label{eq:anytime-inner}
-\frac{1}{n}\sum_{\tau=1}^n \ell(u_k^\tau, \xi^\tau)
--\frac{U_k(n,\delta_{\mathrm{arm}})}{n} \le L_k^\star.
-\end{equation}
-
-Вычисляя это выражение при $n = n_k^t$ и используя определение $\LCB_k(t,\delta)$ (Def.~\ref{def:ucb_lcb}),
-получаем $\LCB_k(t,\delta) \le L_k^\star$.
-
-\paragraph{Шаг 2: Верхняя доверительная граница.}
-Условимся на истории $\mathcal H_k^{n-1} = \{(u_k^\tau, \xi^\tau) : \tau \in [n-1]\}$; тогда $u_k^n$ измеримо, а $\xi^n$ независимо, поэтому $\mathbb E[\ell(u_k^n, \xi^n)\mid \mathcal H_k^{n-1}] = L(u_k^n)$.
-Следовательно, $\{\ell(u_k^\tau, \xi^\tau) - L(u_k^\tau)\}_{\tau=1}^n$ является ограниченной мартингал-разностной последовательностью.
-По Лемме~\ref{lemma:azuma_adaptive}, примененной с размером выборки $n$ и уровнем доверия $\delta_n$, с вероятностью не менее $1-\delta_n$,
-\begin{equation}
-\label{eq:azuma-adapt}
-\Biggl|\frac{1}{n}\sum_{\tau=1}^n \ell(u_k^\tau, \xi^\tau) - \frac{1}{n}\sum_{\tau=1}^n L(u_k^\tau)\Biggr|
-\le H(n,\delta_n).
-\end{equation}
-По Asm.~\ref{assumption:wrapper}, для решения, построенного из истории руки $k$, т. е. $u^n = \upsilon(\{u_k^\tau: \tau \in [n]\})$, имеем $\mathbb E_{u^n}[L(u^n)\mid \{u_k^\tau: \tau \in [n]\}] \leq \frac{1}{n} \sum_{\tau = 1}^n L(u_k^\tau)$. Объединяя это с \eqref{eq:azuma-adapt}, получаем
-\begin{equation*}
-\mathbb E_{u^n}[L(u^n)\mid \{u_k^\tau: \tau \in [n]\}]\le L_{k}(n) + H(n,\delta_n).
-\end{equation*}
-
-
-Поскольку $L_k^\star=\min_{u\in\mathbf U_k}L(u)\le L(u_k^\tau)$ для каждого $\tau$, $L_k^\star \le \frac1n\sum_{\tau=1}^n L(u_k^\tau)$.
-Объединяя это неравенство с \eqref{eq:azuma-adapt}, получаем
-$L_k^\star \le L_k(n)+H(n,\delta_n)$.
-
-
-Вычисляя выражение в правой части при $n = n_k^t$ и используя определение $\UCB_k(t,\delta)$ (Def.~\ref{def:ucb_lcb}),
-получаем $\mathbb E[L(\upsilon(H_k^t))\mid H_k^t]\le \UCB_k(t,\delta)$.
-\paragraph{Шаг 3: Union Bound.}
-Наконец, ограничим вероятность концентрационного события $\mathcal{E}_{\delta}$ \eqref{eq:conf_intervals}.
-Есть два типа событий: (i) anytime-гарантии рук \eqref{eq:anytime-inner} и (ii) мартингальная концентрация \eqref{eq:azuma-adapt}.
-Для (i) каждая рука вносит не более $\delta_{\mathrm{arm}}$, поэтому по $K$ рукам общая вероятность отказа равна $\le K\delta_{\mathrm{arm}} = \delta/2$.
-Для (ii) мы выделили $\delta_n$ на каждое событие. Поскольку
-$\sum_{k=1}^K\sum_{n=1}^\infty \delta_n
-= \sum_{k=1}^K \sum_{n=1}^\infty \frac{\delta}{3.5Kn^2}
-\le \frac{\delta}{3.5}\cdot \frac{\pi^2}{6} < \delta/2,$
-
-концентрационные оценки выполняются одновременно для всех $(k,n)$ с вероятностью не менее $1-\delta/2$.
-Следовательно, общая вероятность отказа не превосходит $\delta$, и концентрационное событие $\mathcal{E}_{\delta}$ выполняется с вероятностью не менее $1-\delta$.
-\end{proof}
-
-
-
-\begin{proof}[Доказательство Леммы~\ref{prop:m_mean_regret}]
-\label{proof:m_mean_regret}
-Пусть $S^\star\in\arg\min_{|S|=M}\frac1M\sum_{k\in S}L_k^\star$.
-На $\mathcal E_\delta$ выполнено $\LCB_k(t,\delta)\le L_k^\star\le \UCB_k(t,\delta)$ для всех $k,t$.
-Поскольку $S_t$ минимизирует сумму LCB,
-\[
-\frac1M\sum_{k\in S_t}\LCB_k(t,\delta)
-\le
-\frac1M\sum_{k\in S^\star}\LCB_k(t,\delta)
-\le
-\frac1M\sum_{k\in S^\star}L_k^\star
-=\overline L^\star.
-\]
-Следовательно,
-\[
-\frac1M\sum_{k\in S_t}L_k^\star-\overline L^\star
-\le
-\frac1M\sum_{k\in S_t}(L_k^\star-\LCB_k(t,\delta))
-\le
-\frac1M\sum_{k\in S_t}(\UCB_k(t,\delta)-\LCB_k(t,\delta)).
-\]
-Суммируя по $t=1,\ldots,T$ и перегруппировывая выбранных экспертов по числу обновлений, получаем
-\[
-\mathrm{Reg}_M(T)
-\le
-\frac1M\sum_{k=1}^K\sum_{r=1}^{N_k(T)}
-[\UCB_k^r(\delta)-\LCB_k^r(\delta)].
-\]
-\end{proof}
-
-
-
-\section{Нижние оценки}
+\section{Lower Bounds}
 \label{sec:lower-bounds}
 
-Мы устанавливаем минимаксные нижние оценки для нашей постановки задачи.
-Доказательство объединяет информационно-теоретические аргументы (как в \cite{seldin2014prediction})
-с внутренней сложностью бандитов с тяжелыми хвостами \cite{bubeck2013bandits}.
-Основная идея состоит в построении семейства возмущенных игр,
-связи вероятности идентификации оптимального эксперта с KL-дивергенциями через неравенство Пинскера
-и переносе внутренних оценок регрета из нулевой игры (где все эксперты идентичны)
-на возмущенные игры.
+We establish minimax lower bounds for our problem setup.
+The proof combines information-theoretic arguments (as in \cite{seldin2014prediction})
+with the internal hardness of heavy-tailed bandits \cite{bubeck2013bandits}.
+The main idea is to construct a family of perturbed games,
+relate the probability of identifying the optimal expert to KL divergences via Pinsker’s inequality,
+and transfer internal regret bounds from the null game (where all experts are identical)
+to the perturbed games.
 
-\paragraph{Бандитная постановка и соглашения о регрете.}
-Для конкретности мы рассматриваем экспертов, представленных независимыми двухрукими стохастическими бандитными задачами.
-Каждый эксперт $h \in [K]$ имеет две руки с потерями, ожидания которых равны $\ell_{h,1}$ и $\ell_{h,2}$ соответственно. Мы обозначаем $\ell^\star_h = \min\{\mu_{h,1},\,\mu_{h,2}\}$
-На каждом раунде $t = 1,\dots, T$ эксперт $h$ выбирает руку $I_t \in \{1,2\}$ и получает соответствующую потерю $\ell_{h,I_t,t}$.
-(Ожидаемый) кумулятивный регрет эксперта $h$ внутри его собственной подзадачи определяется как
+\paragraph{Bandit setting and regret conventions.}
+For concreteness, we consider experts represented by independent two–armed stochastic bandit problems.
+Each expert $h \in [K]$ has two arms with losses with expectations are $\ell_{h,1}$ and $\ell_{h,2}$, respectively. We note $\ell^\star_h = \min\{\mu_{h,1},\,\mu_{h,2}\}$
+At each round $t = 1,\dots, T$, expert $h$ selects an arm $I_t \in \{1,2\}$ and receives the corresponding loss $\ell_{h,I_t,t}$.
+The (expected) cumulative regret of expert $h$ within its own subproblem is defined as
 \begin{equation}
 \label{eq:internal-regret-def}
 R_{h}^{\mathrm{in}}(T) =\sum_{t=1}^T \mathbb{E} [\ell_{h,I_t}] - T \cdot \ell_h^\star,
 \end{equation}
-где нижний индекс “in” подчеркивает, что этот регрет является \emph{внутренним} для мета-процедуры.
-То есть каждый эксперт $h$ действует как независимый обучающийся агент, чей собственный регрет $R_{h}^{\mathrm{in}}(T)$ вносит вклад в общий регрет мета-обучающегося.
+where the subscript “in” emphasizes that this regret is \emph{internal} to the metaprocedure.
+That is, each expert $h$ acts as an independent learning agent whose own regret $R_{h}^{\mathrm{in}}(T)$ contributes to the overall regret of the meta–learner.
 
-\subsection{Класс $\alpha$–сложных стохастических задач}
+\subsection{Class of $\alpha$–hard stochastic tasks}
 
-\begin{theorem}[Нижняя оценка]
+\begin{theorem}[Lower bound]
 \label{thm:mt-alpha_appendix}
-Рассмотрим $K$ экспертов, горизонт $T$ и бюджет на раунд $M$. Зафиксируем $\alpha\in[0,1]$. Существует класс $\mathcal F_\alpha$, удовлетворяющий Def.~\ref{def:alpha-class}, такой, что если каждый
-эксперт $k \in [K]$ решает задачу $f_k \in \mathcal F_\alpha$, то при достаточно малом $\sqrt{\frac{K\log K}{MT}}$ и для любого алгоритма обучения $\mathscr{A}_k$ и мета-процедуры $\mathcal{P}$
+Consider $K$ experts, horizon $T$, and a per-round budget $M$. Fix $\alpha\in[0,1]$. There exists a class $\mathcal F_\alpha$ satisfying Def.~\ref{def:alpha-class}, s.t. if each
+expert $k \in [K]$ solves a problem $f_k \in \mathcal F_\alpha$, then, for sufficiently small $\sqrt{\frac{K\log K}{MT}}$ and for any learning algorithm $\mathscr{A}_k$ and meta-procedure $\mathcal{P}$
 \begin{equation}
 \label{eq:mt-alpha-internal}
 \sup_{f_{k} \in \mathcal{F}_{\alpha},\,k \in [K]} \mathbb{E}\,\mathrm{Reg}(T) \ge c_1\,\sqrt{\frac{K\,T}{M}}
 \;+\; c_2\,T^\alpha \left(\frac{K}{M} \right)^{1-\alpha},
 \end{equation}
-где $c_1,c_2>0$ — абсолютные константы.
+where $c_1,c_2>0$ are absolute constants.
 \end{theorem}
 
-Мы рассматриваем heavy-tailed multi-armed bandits \cite{bubeck2013bandits} как базу для построения $\mathcal{F}_{\alpha}$.
-Каждая рука $i$ выдает награды со средним $\mu_i$ и шумом с ограниченным $(1+\beta)$-моментом:
+We consider heavy-tailed multi-armed bandits \cite{bubeck2013bandits} as base to build $\mathcal{F}_{\alpha}$.
+Each arm $i$ provides rewards with mean $\mu_i$ and $(1+\beta)$-moment bounded noise:
 \begin{equation}
 \label{eq:noise_level}
     \mathbb{E}_{X\sim \nu_i} |X - \mu_i|^{1 + \beta}\leq u,
 \end{equation}
-для некоторых $u>0$ и $\beta\in(0,1]$.
+for some $u>0$ and $\beta\in(0,1]$.
 
-В нашем доказательстве в качестве канонического класса $\mathcal{F}_\alpha$ мы рассматриваем \emph{heavy-tailed multi-armed bandits}, введенные в \cite{bubeck2013bandits}.
-Из их анализа следует следующее следствие:
+In our proof, as the canonical class $\mathcal{F}_\alpha$, we consider the \emph{heavy-tailed multi-armed bandits} introduced by \cite{bubeck2013bandits}.
+From their analysis, the following corollary holds:
 
-\begin{corollary}[из \cite{bubeck2013bandits}, Thm.~2]
+\begin{corollary}[from \cite{bubeck2013bandits}, Thm.~2]
 \label{cor:heavy-tail-lb}
-Для двухрукого heavy-tailed бандита, удовлетворяющего \eqref{eq:noise_level}, существуют распределения $\nu_1,\nu_2$ с $u=1$ и разрывом $\ell_{h, 1}-\ell_{h, 2}=\Delta$ такие, что для любого алгоритма и любого горизонта $n$
+For a two-armed heavy-tailed bandit satisfying \eqref{eq:noise_level}, there exist distributions $\nu_1,\nu_2$ with $u=1$ and gap $\ell_{h, 1}-\ell_{h, 2}=\Delta$ s.t., for any algorithm and any horizon $n$,
 \begin{equation}
 \label{eq:heavy-lb-general}
 R^{\text{in}}(n) \ge n\Delta\Bigl(1 - c_\beta \sqrt{n\Delta^{\frac{1+\beta}{\beta}}}\Bigr),
 \end{equation}
-где $c_\beta>0$ зависит только от $\beta$.
-Для фиксированного $n$ оптимизация по $\Delta$ как
+where $c_\beta>0$ depends only on $\beta$.
+For fixed $n$, optimizing $\Delta$ as
 \begin{equation}
 \label{eq:heavy-lb-opt}
 \Delta = c_0\, n^{-\frac{\beta}{1+\beta}}
 \end{equation}
-с достаточно малым $c_0>0$ дает
+with sufficiently small $c_0>0$ yields
 \begin{equation}
 \label{eq:heavy-lb-final}
 R^{\text{in}}(n) \ge c'\,n^{\frac{1}{1+\beta}},
 \end{equation}
-для некоторой абсолютной константы $c'>0$.
+for some absolute constant $c'>0$.
 \end{corollary}
 
-Для бандитов с тяжелыми хвостами это дает $\alpha=\tfrac{1}{1+\beta}\in[0.5,1)$. Аргумент нижней оценки ниже также применим к $\alpha\in[0,0.5)$: в этом режиме член исследования уже доминирует, а вклад внутреннего обучения можно оценить снизу нулем без ослабления заявленного порядка скорости.
+For heavy-tailed bandits this yields $\alpha=\tfrac{1}{1+\beta}\in[0.5,1)$. The lower-bound argument below also applies to $\alpha\in[0,0.5)$: in that regime the exploration term already dominates, and the internal-learning contribution can be lower bounded by zero without weakening the claimed rate order.
 
-\subsection{Построение составной игры}
+\subsection{Construction of the composite game}
 
-Пусть $K$ — число экспертов, $M$ — бюджет оптимизации на раунд, а $T$ — горизонт.
-Мы строим $K$ возмущенных игр вместе с одной симметричной \emph{нулевой игрой}.
-Постановка зависит от двух малых параметров: $\Delta>0$ (внутренняя сложность) и $\varepsilon>0$ (межэкспертное разделение).
-% , и мы предполагаем $\Delta\le\varepsilon$.
+Let $K$ be the number of experts, $M$ the per-round optimization budget, and $T$ the horizon.
+We construct $K$ perturbed games together with one symmetric \emph{null game}.
+The setup depends on two small parameters: $\Delta>0$ (internal hardness) and $\varepsilon>0$ (cross-expert separation).
+% , and we assume $\Delta\le\varepsilon$.
 
-\paragraph{Возмущенные игры.}
-В $h$-й возмущенной игре эксперт $h$ сталкивается с двухруким бандитом со
-средними $\ell_{h, 1} = \tfrac{1}{2} - \tfrac{\varepsilon}{2}$ и $\ell_{h, 2} = \tfrac{1}{2} - \tfrac{\varepsilon}{2}- \Delta$,
-тогда как любой эксперт $h'\neq h$ сталкивается с $\ell_{h, 1} = \tfrac{1}{2} + \tfrac{\varepsilon}{2}$ и $\ell_{h, 2} = \tfrac{1}{2} + \tfrac{\varepsilon}{2} + \Delta$.
+\paragraph{Perturbed games.}
+In the $h$-th perturbed game, expert $h$ faces a two-armed bandit with
+means $\ell_{h, 1} = \tfrac{1}{2} - \tfrac{\varepsilon}{2}$ and $\ell_{h, 2} = \tfrac{1}{2} - \tfrac{\varepsilon}{2}- \Delta$,
+while any expert $h'\neq h$ faces $\ell_{h, 1} = \tfrac{1}{2} + \tfrac{\varepsilon}{2}$ and $\ell_{h, 2} = \tfrac{1}{2} + \tfrac{\varepsilon}{2} + \Delta$.
 
-Таким образом, $h$-й эксперт единственно оптимален в игре $h$.
+Thus the $h$-th expert is uniquely optimal in game $h$.
 
-\paragraph{Нулевая игра.}
-Все эксперты сталкиваются с идентичными подзадачами с
-$\ell_{h, 1} = \tfrac{1}{2} + \tfrac{\varepsilon}{2}$ и $\ell_{h, 2} = \tfrac{1}{2} + \tfrac{\varepsilon}{2} + \Delta$.
-Каждая подзадача сложна, т. е. имеет внутренний регрет, характеризуемый Следствием~\ref{cor:heavy-tail-lb}.
+\paragraph{Null game.}
+All experts face identical subproblems with
+$\ell_{h, 1} = \tfrac{1}{2} + \tfrac{\varepsilon}{2}$ and $\ell_{h, 2} = \tfrac{1}{2} + \tfrac{\varepsilon}{2} + \Delta$.
+Each subproblem is hard, i.e. with internal regret characterized by Corollary~\ref{cor:heavy-tail-lb}.
 
-\subsection{Шаг 1: Разложение регрета}
+\subsection{Step 1: Regret decomposition}
 
-На каждом раунде $t$ обучающийся выбирает подмножество $S_t \subseteq [K]$ не более чем из $M$ экспертов для обновления, а затем выбирает одного эксперта $H_t \in S_t$ для предсказания. Затем алгоритм несет (псевдо-)потерю $\ell_t^{H_t} \in \{\ell_{H_t, 1}, \ell_{H_t, 2}\}$. Определим эмпирические частоты
+At each round $t$, the learner selects a subset $S_t \subseteq [K]$ of at most $M$ experts to update, and then chooses one expert $H_t \in S_t$ for prediction. Then algorithm suffer (pseudo) loss $\ell_t^{H_t} \in \{\ell_{H_t, 1}, \ell_{H_t, 2}\}$. Define the empirical frequencies
 \begin{equation}
 \hat q_h = \frac{1}{T}\sum_{t=1}^T \mathbf{1}\{H_t = h\},
 \qquad
 J \sim \hat q,
 \end{equation}
-где $J$ — случайная величина, представляющая индекс эксперта, семплированный согласно $\hat q$.
-Обозначим через $\mathbb{P}_h$ закон $J$ в $h$-й игре, а через $\mathbb{E}_h[\cdot]$ — математические ожидания в этой игре.
-Тогда
+where $J$ is a random variable representing the expert index sampled according to $\hat q$.
+Denote by $\mathbb{P}_h$ the law of $J$ under the $h$-th game, and let $\mathbb{E}_h[\cdot]$ denote expectations in that game.
+Then
 \begin{equation}
 \mathbb{P}_h(J = h)
 \;=\;
 \mathbb{E}_h\!\left[\frac{1}{T}\sum_{t=1}^T \mathbf{1}\{H_t = h\}\right].
 \end{equation}
 
-Тогда ожидаемый регрет в игре $h$ можно ограничить следующим образом.
+Then the expected regret in game $h$ can be bounded as follows.
 \begin{align}
     R_h(T) &:= \mathbb{E}_h \bigg[\sum_{t=1}^T(\ell_t^{H_t} - (\frac{1}{2} - \frac{\varepsilon}{2} - \Delta))\bigg] \\
     & =\mathbb{E}_h \bigg[\sum_{t=1}^T\bigg[\mathbf{1}\{H_t=h\} \bigg(\ell_t^{H_t} - (\frac{1}{2} - \frac{\varepsilon}{2} - \Delta)\bigg) +\\
@@ -1330,10 +1535,10 @@ J \sim \hat q,
     & =
     \varepsilon T(1 - \mathbb{P}_h(J=h)) + \mathbb{E}_h \bigg[\sum_{t=1}^T\bigg(\ell_t^{H_t} - \ell^\star_{H_t}\bigg)\bigg],
 \end{align}
-Неравенство получено с помощью приема добавления–вычитания с ${\varepsilon}/2$ во втором члене.
+The inequality is obtained using the add-subtract trick with ${\varepsilon}/2$ in the second term.
 
 
-Беря супремум по играм, получаем
+Taking the supremum over games gives
 \begin{multline}
 \label{eq:bandit-regret-prob}
 \text{Reg}(T) \ge \sup_h R_h(T)
@@ -1342,26 +1547,27 @@ J \sim \hat q,
 + \frac{1}{K}\sum_{h=1}^K \mathbb{E}_h\sum_{t=1}^T ( \ell_t^{H_t} - \ell_{H_t}^\star).
 \end{multline}
 
-Мы называем первый член \emph{членом идентификации},
-а второй — \emph{членом внутреннего регрета},
-поскольку группировка по рукам раскрывает его как сумму внутренних регретов экспертов по их раундам предсказания.
+We refer to the first term as the \emph{identification term},
+and to the second as the \emph{internal regret term},
+since grouping by arms reveals it as the sum of internal regrets of experts over their prediction rounds.
 
 
-\subsection{Шаг 2: Пинскер и внутренняя оценка нулевой игры}
 
-\begin{lemma}[Неравенство Пинскера]
+\subsection{Step 2: Pinsker and null-game internal bound}
+
+\begin{lemma}[Pinsker's inequality]
 \label{lem:pinsker}
-Для любого $h$ и события $A$,
+For any $h$ and event $A$,
 \begin{equation}
 |\mathbb{P}_h(A) - \mathbb{P}_\emptyset(A)| \le \sqrt{\tfrac{1}{2}\mathrm{KL}(\mathbb{P}_\emptyset\|\mathbb{P}_h)}.
 \end{equation}
-В частности:
+In particular:
 \begin{equation}
     \mathbb{P}_h[J=h] \le \mathbb{P}_\emptyset[J = h] + \sqrt{\tfrac{1}{2}\mathrm{KL}(\mathbb{P}_\emptyset\|\mathbb{P}_h)}
 \end{equation}
 \end{lemma}
 
-Чтобы ограничить \emph{член идентификации}, по вогнутости квадратного корня получаем:
+To bound the \emph{identification term}, by the concavity of the square root we get:
 \begin{equation}
 \label{eq:identification_bound}
 \frac{1}{K}\sum_{h=1}^K \mathbb{P}_h[J=h]
@@ -1370,38 +1576,37 @@ J \sim \hat q,
 \sqrt{\frac{1}{2K}\sum_{h=1}^K \mathrm{KL}(\mathbb{P}_\emptyset\Vert \mathbb{P}_h)}.
 \end{equation}
 
-Чтобы ограничить \emph{член внутреннего регрета}, сформулируем следующую лемму:
+To bound the \emph{internal regret term} we form the following Lemma:
 
-\begin{lemma}[Внутренний регрет в возмущенных играх]
+\begin{lemma}[Internal regret in perturbed games]
 \label{lem:internal-perturbed}
-Пусть $\alpha\in(0.5,1]$ и предположим, что подзадача каждого эксперта удовлетворяет~\eqref{eq:heavy-lb-general}.
-Выберем $\Delta$ как в~\eqref{eq:eps-choice}, т. е.
-
+Let $\alpha\in(0.5,1]$ and suppose each expert’s subproblem satisfies~\eqref{eq:heavy-lb-general}.
+Choose $\Delta$ as in~\eqref{eq:eps-choice}, i.e.
 
 \begin{equation}
 \label{eq:delta-choice-lb}
 \Delta = c_0\!\left(\tfrac{K}{MT}\right)^{1-\alpha},
 \end{equation}
 
-с достаточно малым $c_0$.  Если параметры $K,M,T$ таковы, что $\sqrt{\tfrac{K\log(8K)}{MT}}$ достаточно мало, и для возмущенной игры $h$ дивергенция удовлетворяет $\mathrm{KL}(P_\emptyset\|P_h) \le \tfrac{1}{2}$,
-то
+with $c_0$ sufficiently small.  If the parameters $K,M,T$ are s.t.  $\sqrt{\tfrac{K\log(8K)}{MT}}$ is sufficiently small, and for a perturbed game $h$ the divergence satisfies $\mathrm{KL}(P_\emptyset\|P_h) \le \tfrac{1}{2}$,
+then
 \begin{equation}
 \label{eq:internal-perturbed-bound}
 \mathbb E_h\!\left[\sum_{t=1}^T \bigl(\ell_t^{H_t} - \ell_{H_t}^\star\bigr)\right] \ge c''T^\alpha\!\left(\frac{K}{M}\right)^{1-\alpha},
 \end{equation}
-для некоторой константы $c''>0$, не зависящей от $M, K, T$.
+for some constant $c''>0$ independent from $M, K, T$.
 \end{lemma}
 
 
-\subsection{Шаг 3: Вычисление KL для члена идентификации}
+\subsection{Step 3: KL computation for identification term}
 
-\begin{lemma}[KL для $T$ раундов]
+\begin{lemma}[KL for $T$ rounds]
 \label{lem:kl-total}
-Для каждого $h\in[K]$,
+For each $h\in[K]$,
 \begin{equation}
 \mathrm{KL}(P_\emptyset\|P_h) \;\le\; \frac{36\,\max\{\varepsilon, \Delta\}^2}{1-9\max\{\varepsilon, \Delta\}^2}\,T.
 \end{equation}
-Более того,
+Moreover,
 \begin{equation}
 \sum_{h=1}^K \mathrm{KL}(P_\emptyset \| P_h)
 \;\le\; \frac{36\,\max\{\varepsilon, \Delta\}^2}{1-9\max\{\varepsilon, \Delta\}^2}\,MT.
@@ -1410,16 +1615,16 @@ J \sim \hat q,
 
 
 
-\subsection{Шаг 4: Объединение результатов}
-Из \eqref{eq:bandit-regret-prob} регрет оценивается снизу суммой члена идентификации и члена внутреннего регрета. Мы используем разные выборы параметров в двух режимах.
+\subsection{Step 4: Putting all together}
+From \eqref{eq:bandit-regret-prob}, the regret is lower bounded by the sum of an identification term and an internal-regret term. We use different parameter choices in the two regimes.
 
-\paragraph{Случай $\alpha\le 1/2$.}
-Положим $\Delta=\varepsilon$ и выберем
+\paragraph{Case $\alpha\le 1/2$.}
+Set $\Delta=\varepsilon$ and choose
 \begin{equation}
 \label{eq:final-eps}
 \varepsilon = \gamma\sqrt{\tfrac{K}{MT}}
 \end{equation}
-с достаточно малым $\gamma>0$. Объединяя \eqref{eq:identification_bound} с Леммой~\ref{lem:kl-total}, получаем
+with sufficiently small $\gamma>0$. Combining \eqref{eq:identification_bound} with Lemma~\ref{lem:kl-total} gives
 \begin{equation}
 \label{eq:final-ident}
 \sup_h R_h(T)
@@ -1427,123 +1632,123 @@ J \sim \hat q,
 \varepsilon T\left(1-\tfrac{1}{K}-c_{\mathrm{id}}\varepsilon\sqrt{\tfrac{MT}{K}}\right)
 \ge c_1\sqrt{\tfrac{KT}{M}},
 \end{equation}
-где последнее неравенство выполнено для достаточно малого $\gamma$.
-Поскольку
+where the last inequality holds for sufficiently small $\gamma$.
+Since
 \begin{equation*}
 \frac{T^\alpha(K/M)^{1-\alpha}}{\sqrt{KT/M}}
 =\left(\frac{K}{MT}\right)^{1/2-\alpha}\le 1
 \end{equation*}
-при указанном условии малости, та же нижняя оценка влечет
+under the stated smallness condition, the same lower bound implies
 \begin{equation}
 \label{eq:final-ident-done}
 \sup_h R_h(T)
 \ge c'_1\left(\sqrt{\tfrac{KT}{M}}+T^\alpha\left(\tfrac{K}{M}\right)^{1-\alpha}\right)
 \end{equation}
-для меньшей константы $c'_1>0$.
+for a smaller constant $c'_1>0$.
 
-\paragraph{Случай $\alpha>1/2$.}
-Выберем $\Delta$ как в~\eqref{eq:delta-choice-lb} и положим $\varepsilon=\gamma T^{-1/2}$ с достаточно малым $\gamma>0$. По Лемме~\ref{lem:kl-total} этот выбор обеспечивает $\mathrm{KL}(P_\emptyset\|P_h)\le 1/2$ для каждого $h$, поэтому применима Лемма~\ref{lem:internal-perturbed}. Следовательно, член внутреннего регрета в~\eqref{eq:bandit-regret-prob} удовлетворяет
+\paragraph{Case $\alpha>1/2$.}
+Choose $\Delta$ as in~\eqref{eq:delta-choice-lb} and set $\varepsilon=\gamma T^{-1/2}$ with $\gamma>0$ sufficiently small. By Lemma~\ref{lem:kl-total}, this choice ensures $\mathrm{KL}(P_\emptyset\|P_h)\le 1/2$ for every $h$, so Lemma~\ref{lem:internal-perturbed} applies. Hence the internal-regret term in~\eqref{eq:bandit-regret-prob} satisfies
 \begin{equation}
 \label{eq:final-internal-done}
 \frac{1}{K}\sum_{h=1}^K
 \mathbb E_h\!\left[\sum_{t=1}^T \bigl(\ell_t^{H_t} - \ell_{H_t}^\star\bigr)\right]
 \ge c_2\,T^\alpha\!\left(\tfrac{K}{M}\right)^{1-\alpha}.
 \end{equation}
-Оценивая член идентификации снизу нулем, получаем ту же нижнюю оценку для $\mathrm{Reg}(T)$. Более того,
+Lower bounding the identification term by zero yields the same lower bound for $\mathrm{Reg}(T)$. Moreover,
 \begin{equation*}
 \frac{\sqrt{KT/M}}{T^\alpha(K/M)^{1-\alpha}}
 =\left(\frac{K}{MT}\right)^{\alpha-1/2}\le 1
 \end{equation*}
-при указанном условии малости. Поэтому после уменьшения констант
+under the stated smallness condition. Therefore, after reducing constants,
 \begin{equation}
 \label{eq:final-lb}
 \mathrm{Reg}(T)
 \ge c'_2\left(\sqrt{\tfrac{KT}{M}}+T^\alpha\left(\tfrac{K}{M}\right)^{1-\alpha}\right).
 \end{equation}
 
-Объединение двух случаев доказывает Теорему~\ref{thm:mt-alpha_appendix}. Константы могут меняться между выкладками, но они остаются независимыми от $K,M,T$ и от мета-процедуры.
+Combining the two cases proves Theorem~\ref{thm:mt-alpha_appendix}. The constants may change between displays, but they remain independent of $K,M,T$ and of the meta-procedure.
 
 
 
-\subsection{Доказательства лемм для нижних оценок}
+\subsection{Proofs of Lemmas for Lower Bounds}
 
-\begin{proof}[Следствие~\ref{cor:heavy-tail-lb}]
-Построение следует доказательству Теоремы 2 в \cite{bubeck2013bandits}.
-Пусть $\nu_1,\nu_2$ — две heavy-tailed распределения, определенные там,
-которые удовлетворяют условию момента~\eqref{eq:noise_level} при $u=1$.
-По сведению к бернуллиевскому случаю (см. также~\cite[Theorem~2.6]{bubeck2010bandits})
-ожидаемый регрет удовлетворяет
+\begin{proof}[Corollary~\ref{cor:heavy-tail-lb}]
+The construction follows the proof of Theorem 2 in \cite{bubeck2013bandits}.
+Let $\nu_1,\nu_2$ be the two heavy-tailed distributions defined therein,
+which satisfy the moment condition~\eqref{eq:noise_level} with $u=1$.
+By reduction to the Bernoulli case (see also~\cite[Theorem~2.6]{bubeck2010bandits}),
+the expected regret satisfies
 \begin{equation*}
 R_n \ge n\Delta \Bigl(1 - \sqrt{n\mathrm{KL}(\nu_2\|\nu_1)}\Bigr).
 \end{equation*}
-Используя оценку
+Using the bound
 $\mathrm{KL}(\nu_2\|\nu_1)\le C_\beta \Delta^{\frac{1+\beta}{\beta}}$
-для константы $C_\beta>0$, получаем~\eqref{eq:heavy-lb-general}.
-Оптимизируя по $\Delta$ путем выбора $\Delta = c_0 n^{-\frac{\beta}{1+\beta}}$
-и беря $c_0$ достаточно малым, делаем выражение в скобках положительным,
-что дает~\eqref{eq:heavy-lb-final}.
+for a constant $C_\beta>0$ gives~\eqref{eq:heavy-lb-general}.
+Optimizing over $\Delta$ by setting $\Delta = c_0 n^{-\frac{\beta}{1+\beta}}$
+and taking $c_0$ small enough makes the parenthesis positive,
+yielding~\eqref{eq:heavy-lb-final}.
 \end{proof}
 
 
-\subsubsection{Анализ нулевой игры}
+\subsubsection{Zero Game analysis}
 
-\begin{lemma}[Концентрация чисел обновлений]
+\begin{lemma}[Concentration of update counts]
 \label{lem:conc-short}
-Рассмотрим нулевую игру. Для любого $\eta\in(0,1)$ существует абсолютная константа $C>0$ такая, что при
+Consider null game. For any $\eta\in(0,1)$ there exists an absolute constant $C>0$ s.t., with
 \begin{equation}
 \delta = C\sqrt{\frac{K\log(2K/\eta)}{MT}}\in(0,1),
 \end{equation}
-с вероятностью не менее $1-\eta$ выполнено:
+the following holds with probability at least $1-\eta$:
 \begin{equation*}
 \big|n_i(T)-\tfrac{MT}{K}\big|\ \le\ \delta\tfrac{MT}{K}\qquad\text{simultaneously for all } i\in[K].
 \end{equation*}
 
-Обозначим это событие $\mathcal E_{\text{conc}}$.
+Denote this event $\mathcal E_{\text{conc}}$.
 \end{lemma}
 
-\begin{lemma}[Нижняя оценка внутреннего регрета при концентрации]
+\begin{lemma}[Internal regret lower bound under concentration]
 \label{lem:internal-lb-conc}
-Предположим, что для каждого эксперта $i \in [K]$ внутренняя подзадача удовлетворяет Equation~\ref{eq:heavy-lb-general}
-для некоторых констант $c_\beta>0$, $\beta\in(0,1]$ и любого $\Delta>0$.
-Пусть $\alpha = \tfrac{1}{1+\beta}$ и пусть $\mathcal{E}_{\mathrm{conc}}$ обозначает концентрационное событие из Леммы~\ref{lem:conc-short}.
-Тогда на $\mathcal{E}_{\mathrm{conc}}$ при выборе
+Assume that for each expert $i \in [K]$, the internal subproblem satisfies Equation~\ref{eq:heavy-lb-general}
+for some constants $c_\beta>0$, $\beta\in(0,1]$, and any $\Delta>0$.
+Let $\alpha = \tfrac{1}{1+\beta}$ and let $\mathcal{E}_{\mathrm{conc}}$ denote the concentration event from Lemma~\ref{lem:conc-short}.
+Then, on $\mathcal{E}_{\mathrm{conc}}$, choosing
 \begin{equation}
 \label{eq:eps-choice}
 \Delta = c_0\!\left((1+\delta)\tfrac{MT}{K}\right)^{-(1-\alpha)},
 \qquad c_0 \le \tfrac{1}{4c_\beta},
 \end{equation}
-имеем
+we have
 \begin{equation}
 \label{eq:internal-lb-final}
 \sum_{t=1}^T \bigl(\ell_t^{H_t} - \ell_{H_t}^\star \bigr)
 \ge
 c'T^{\alpha}\!\left(\tfrac{K}{M}\right)^{1-\alpha},
 \end{equation}
-для некоторой константы $c'>0$, зависящей только от $c_0$ и $\alpha$.
+for some constant $c'>0$ depending only on $c_0$ and $\alpha$.
 \end{lemma}
 
-\begin{proof}[ Лемма~\ref{lem:conc-short}]
-Мы работаем при распределении вероятности $\mathbb P_\emptyset$, индуцированном рандомизацией обучающегося в нулевой игре.
-Чтобы обеспечить симметрию даже для детерминированных алгоритмов, мы предполагаем, что до начала игры индексы $K$ экспертов случайно переставляются.
-Следовательно, по симметрии для любых $t$ и $i$,
+\begin{proof}[ Lemma~\ref{lem:conc-short}]
+We work under the probability distribution $\mathbb P_\emptyset$ induced by the randomization of the learner in the null game.
+To enforce symmetry even for deterministic algorithms, we assume that before the game begins, the $K$ expert indices are randomly permuted.
+Hence, by symmetry, for every $t$ and $i$,
 \[
 p_t^{(i)} := \mathbb E_\emptyset[\mathbf 1\{i\in S_t\} \mid \mathcal F_{t-1}]
 = \Pr_\emptyset(i\in S_t \mid \mathcal F_{t-1})
 = \frac{M}{K},
 \]
-и поэтому $\sum_{t=1}^T p_t^{(i)} = MT/K$.
+and therefore $\sum_{t=1}^T p_t^{(i)} = MT/K$.
 
-Определим мартингал-разностную последовательность
+Define the martingale-difference sequence
 \[
 X_t^{(i)} := \mathbf 1\{i \in S_t\} - p_t^{(i)},
 \quad
 \mathbb E_\emptyset[X_t^{(i)} \mid \mathcal F_{t-1}] = 0,
 \]
-с $|X_t^{(i)}| \le 1$. Тогда
+with $|X_t^{(i)}| \le 1$. Then
 \[
 n_i(T) - \tfrac{MT}{K} = \sum_{t=1}^T X_t^{(i)} =: S_T^{(i)}.
 \]
-Пусть $V_T^{(i)}$ — предсказуемая квадратичная вариация:
+Let $V_T^{(i)}$ be the predictable quadratic variation:
 \begin{align*}
 &V_T^{(i)} = \sum_{t=1}^T
 \mathrm{Var}_\emptyset(\mathbf 1\{i\in S_t\}\mid\mathcal F_{t-1})
@@ -1552,50 +1757,50 @@ n_i(T) - \tfrac{MT}{K} = \sum_{t=1}^T X_t^{(i)} =: S_T^{(i)}.
 \le \sum_{t=1}^T p_t^{(i)} = \tfrac{MT}{K}.
 \end{align*}
 
-Применяя неравенство Фридмана (мартингальное неравенство Бернштейна), для любого $u>0$,
+Applying Freedman’s inequality (martingale Bernstein bound), for any $u>0$,
 \[
 \mathbb P_\emptyset\!\left(|S_T^{(i)}|\ge u\right)
 \le
 2\exp\!\left(-\frac{u^2}{2(V_T^{(i)} + u/3)}\right).
 \]
-Положим $u=\delta \tfrac{MT}{K}$ с $\delta\in(0,1)$.
-Используя $V_T^{(i)}\le (M/K)T$ и $u\le (MT/K)$, получаем
+Set $u=\delta \tfrac{MT}{K}$ with $\delta\in(0,1)$.
+Using $V_T^{(i)}\le (M/K)T$ and $u\le (MT/K)$ gives
 \[
 \mathbb P_\emptyset\!\left(\big|n_i(T)-\tfrac{MT}{K}\big|\ge \delta\tfrac{MT}{K}\right)
 \ \le\ 2\exp\!\left(-c\delta^2\tfrac{M}{K}T\right)
 \]
-для некоторой абсолютной константы $c\in(0,1)$.
+for some absolute constant $c\in(0,1)$.
 
-Наконец, применяя union bound по всем $i\in[K]$, получаем
+Finally, applying a union bound over all $i\in[K]$ yields
 \[
 \mathbb P_\emptyset\!\left(\max_i |n_i(T)-\tfrac{MT}{K}|\ge \delta\tfrac{MT}{K}\right)
 \ \le\ 2K\exp\!\left(-c\delta^2\tfrac{M}{K}T\right).
 \]
-Выбор
+Choosing
 \[
 \delta = C\sqrt{ \tfrac{K\log(2K/\eta)}{M T} }
 \]
-с достаточно большим $C$ обеспечивает, что правая часть не превосходит $\eta$.
-Значит, заявленное событие $\mathcal E_{\mathrm{conc}}$ выполняется с вероятностью не менее $1-\eta$.
+with sufficiently large $C$ ensures that the right-hand side is at most $\eta$.
+Hence the stated event $\mathcal E_{\mathrm{conc}}$ holds with probability at least $1-\eta$.
 \end{proof}
 
-\begin{proof}[ Лемма~\ref{lem:internal-lb-conc}]
-Суммируя внутренний регрет по экспертам и подставляя это в \eqref{eq:heavy-lb-general},
+\begin{proof}[ Lemma~\ref{lem:internal-lb-conc}]
+Summing internal regret across experts and substituting this into \eqref{eq:heavy-lb-general},
 \begin{equation*}
 \sum_{t=1}^T \sum_{h\in S_t} (\ell_t^h - \ell_h^\star) =\sum_{h=1}^K R_h^{\mathrm{in}}\!\bigl(n_h(T)\bigr) \ge
 \Delta \!\sum_{h=1}^K n_h(T)\Bigl(1 -\sqrt{n_h(T)\Delta^{\frac{1+\beta}{\beta}}}\Bigr).
 \end{equation*}
 
-Поскольку сыгранный эксперт равномерен в $S_t$ в нулевой игре,
+Since the played expert is uniform in $S_t$ in the null game,
 \begin{equation*}
 \sum_{t=1}^T (\ell_t^{H_t} - \ell_{H_t}^\star)
 =\frac{1}{M}\sum_{h=1}^K R_h^{\mathrm{in}}\!\bigl(n_h(T)\bigr) \ge
 \frac{1}{M}\Delta \!\sum_{h=1}^K n_h(T)\Bigl(1 -\sqrt{n_h(T)\Delta^{\frac{1+\beta}{\beta}}}\Bigr).
 \end{equation*}
 
-На $\mathcal E_{\mathrm{conc}}$ все счетчики удовлетворяют
+Under $\mathcal E_{\mathrm{conc}}$, all counts satisfy
 $n_h(T)\in[(1-\delta)\tfrac{MT}{K},(1+\delta)\tfrac{MT}{K}]$
-и $\sum_h n_h(T)=MT$, откуда
+and $\sum_h n_h(T)=MT$, hence
 \begin{equation*}
 \sum_{t=1}^T (\ell_t^{H_t} - \ell_{H_t}^\star)
 \ge
@@ -1604,35 +1809,35 @@ $n_h(T)\in[(1-\delta)\tfrac{MT}{K},(1+\delta)\tfrac{MT}{K}]$
 T\Delta\!\left(1 - c_\beta\sqrt{(1+\delta)\tfrac{MT}{K}\Delta^{\frac{1+\beta}{\beta}}}\right).
 \end{equation*}
 
-Выбор $\Delta$ как в~\eqref{eq:eps-choice} обеспечивает
+Choosing $\Delta$ as in~\eqref{eq:eps-choice} ensures that
 $c_\beta\sqrt{(1+\delta)\tfrac{MT}{K}\Delta^{\frac{1+\beta}{\beta}}} \le \tfrac{1}{2}$,
-следовательно
+hence
 \begin{equation*}
 \sum_{t=1}^T (\ell_t^{H_t} - \ell_{H_t}^\star)\ge
 \tfrac{1}{2}T\Delta
 =
 c'T^{\alpha}\!\left(\tfrac{K}{M}\right)^{1-\alpha},
 \end{equation*}
-что дает \eqref{eq:internal-lb-final}.
+which yields \eqref{eq:internal-lb-final}.
 \end{proof}
 
 
-\begin{proof}[Лемма~\ref{lem:internal-perturbed}]
-Уточним параметры для Леммы~\ref{lem:conc-short}.
-Возьмем $\eta = \frac{1}{4}$ и пусть $K,M, T$ таковы, что $\delta = C\sqrt{\frac{K\log(2K/\eta)}{MT}}\le 1/2$. Тогда в нулевой игре $\mathcal E_{\mathrm{conc}} = \{\forall~h \in[K]: |n_h(T) - \frac{MT}{K}|\le \frac{1}{2} \frac{MT}{K}\}$ выполняется с вероятностью $\ge \frac{3}{4}$.
+\begin{proof}[Lemma~\ref{lem:internal-perturbed}]
+Specify parameters for Lemma~\ref{lem:conc-short}.
+Take $\eta = \frac{1}{4}$ and let $K,M, T$ s.t. $\delta = C\sqrt{\frac{K\log(2K/\eta)}{MT}}\le 1/2$. Then in zero game $\mathcal E_{\mathrm{conc}} = \{\forall~h \in[K]: |n_h(T) - \frac{MT}{K}|\le \frac{1}{2} \frac{MT}{K}\}$ is satisfied with probability $\ge \frac{3}{4}$.
 
-Поскольку $\mathrm{KL}(P_\emptyset\|P_h) \le 1/2$, по неравенству Пинскера
+Since $\mathrm{KL}(P_\emptyset\|P_h) \le 1/2$, By Pinsker’s inequality,
 \begin{equation}
 \bigl|\mathbb P_h(\mathcal E_{\mathrm{conc}})-\mathbb P_\emptyset(\mathcal E_{\mathrm{conc}})\bigr|
 \le \sqrt{\tfrac12\mathrm{KL}(P_\emptyset\|P_h)}
 \le \sqrt{\kappa/2} = 1/2,
 \end{equation}
-следовательно, $\mathbb P_h(\mathcal E_{\mathrm{conc}})\ge 1-1/4-1/2$ = 1/4. На $\mathcal E_{\mathrm{conc}}$ Лемма~\ref{lem:internal-lb-conc} дает реализованную оценку регрета
+hence $\mathbb P_h(\mathcal E_{\mathrm{conc}})\ge 1-1/4-1/2$ = 1/4. On $\mathcal E_{\mathrm{conc}}$, Lemma~\ref{lem:internal-lb-conc} yields the realized regret bound
 \begin{equation*}
 \sum_{t=1}^T (\ell_t^{H_t} - \ell_{H_t}^\star )
 \ \ge\ c'T^{\alpha}\!\left(\tfrac{K}{M}\right)^{1-\alpha}.
 \end{equation*}
-Беря ожидания относительно $\mathbb P_h$, получаем
+Taking expectations under $\mathbb P_h$ gives
 \begin{multline*}
 \mathbb E_h\!\left[\sum_{t=1}^T (\ell_t^{H_t} - \ell_{H_t}^\star)\right] \ge\\
 \ \ge\ c'T^{\alpha}\!\left(\tfrac{K}{M}\right)^{1-\alpha}
@@ -1640,17 +1845,17 @@ c'T^{\alpha}\!\left(\tfrac{K}{M}\right)^{1-\alpha},
 \ge (1/4)c'T^{\alpha}\!\left(\tfrac{K}{M}\right)^{1-\alpha}.
 \end{multline*}
 
-И константы поглощаются в $c''$.
+And constants adsorm into $c''$
 \end{proof}
 
 
-\subsubsection{Вычисление KL}
-\begin{proof}[Лемма~\ref{lem:kl-total}]
+\subsubsection{KL computation}
+\begin{proof}[Lemma~\ref{lem:kl-total}]
 \label{lem:kl-total-proof}
-Доказательство следует \cite{seldin2014prediction} и приведено здесь для полноты. Единственное изменение состоит в ограничении KL, поскольку в нашей постановке на каждой руке задана не фиксированная бернуллиевская распределение, а смесь распределений.
-По неравенству обработки данных $ \mathrm{KL}(P_\emptyset\|P_h)\le \mathrm{KL}(\tilde{P}_\emptyset^T\|\tilde{P}_h^T)$,
-поэтому достаточно ограничить последнее.
-Используя цепное правило для KL-дивергенции,
+The proof follows \cite{seldin2014prediction}, and provided here for completeness. The only change is the KL bounding, since in our setup on each arm the not a fixed Bernoulli distribution is specified, but a mixture of distributions.
+By the data-processing inequality, $ \mathrm{KL}(P_\emptyset\|P_h)\le \mathrm{KL}(\tilde{P}_\emptyset^T\|\tilde{P}_h^T)$,
+so it suffices to bound the latter.
+Using the chain rule for KL divergence,
 \begin{align}
 &\mathrm{KL}(\tilde{\mathbb P}_\emptyset^T \| \tilde{\mathbb P}_h^T)
  \\
@@ -1676,134 +1881,30 @@ c'T^{\alpha}\!\left(\tfrac{K}{M}\right)^{1-\alpha},
 \label{eq:kl-chainrule}
 \end{align}
 
-Неравенство следует из того факта, что каждая рука в момент $t$ имеет бернуллиевское распределение. Обозначим $\varepsilon' = \max\{\varepsilon, \Delta\}$; $h$ в $h$-игре имеет параметр $p_1 \in \Big[\tfrac{1}{2} + \frac{\varepsilon'}{2},\ \tfrac{1}{2}+\tfrac{3\varepsilon'}{2}\Big]$. А $h$ в нулевой игре имеет параметр $p \in \Big[\tfrac{1}{2}-\frac{3\varepsilon'}{2},\ \tfrac{1}{2}-\tfrac{\varepsilon'}{2}\Big]$.
-Тогда по стандартной квадратичной верхней оценке бернуллиевской KL-дивергенции
+The Inequality is from fact, that each arm at moment $t$ has a bernoulli distribution. Denote $\varepsilon' = \max\{\varepsilon, \Delta\}$ $h$ in $h$ game is with parameter $p_1 \in \Big[\tfrac{1}{2} + \frac{\varepsilon'}{2},\ \tfrac{1}{2}+\tfrac{3\varepsilon'}{2}\Big]$. And $h$ in zero game with parameter $p \in \Big[\tfrac{1}{2}-\frac{3\varepsilon'}{2},\ \tfrac{1}{2}-\tfrac{\varepsilon'}{2}\Big]$.
+Then, by the standard quadratic upper bound on Bernoulli KL divergence,
 \begin{equation}
 \mathrm{KL}(\mathrm{Ber}(p)\|\mathrm{Ber}(p_1))
 \le \frac{(p-p_1)^2}{p_1(1-p_1)}
 \le \frac{36\varepsilon'^2}{1-9\varepsilon'^2}.
 \end{equation}
 
-Чтобы получить общую оценку, суммируем по $h\in[K]$:
+To obtain the total bound, we sum over $h\in[K]$:
 \begin{equation*}
 \sum_{h=1}^K \mathrm{KL}(P_\emptyset \| P_h)
 \le
 \frac{36\varepsilon'^2}{1-9\varepsilon'^2}
 \mathbb E_\emptyset\!\left[\sum_{t=1}^T \sum_{h=1}^K \mathbf{1}\{h \in O_t\}\right].
 \end{equation*}
-Первое неравенство затем следует из того факта, что каждая из рук выбирается не более $T$ раз. На каждом раунде $t$ наблюдается не более $M$ экспертов, т. е. \(\sum_{h=1}^K \mathbf{1}\{h\in O_t\}\le M\).
-Следовательно,
+The first inequality then follows from the fact, that each of the arm is selected no more than $T$ times. At each round $t$, at most $M$ experts are observed, i.e. \(\sum_{h=1}^K \mathbf{1}\{h\in O_t\}\le M\).
+Hence
 \begin{equation*}
 \sum_{h=1}^K \mathrm{KL}(P_\emptyset \| P_h)
 \le
 \frac{36\varepsilon'^2}{1-9\varepsilon'^2} M T,
 \end{equation*}
 
-что завершает доказательство.
-\end{proof}
-
-
-
-\section{Вспомогательные результаты}
-\begin{lemma}[Неравенство Азумы (из Theorem D.2 \cite{mohri2018foundations})]\label{lemma:azuma_adaptive}
-Пусть $\{\mathcal F_t\}$ — фильтрация, и пусть $X_t$ — последовательность случайных величин, адаптированных к $\mathcal F_t$, с $\mbE[X_t\mid \mathcal F_{t-1}]=0$ и $|X_t|\le 1$.
-Тогда для любого фиксированного $n \ge 1$ и любого $\delta \in (0,1)$ с вероятностью не менее $1-\delta$
-\begin{equation}
-\left|\frac{1}{n}\sum_{t=1}^n X_t\right| \le \sqrt{\frac{2\log(1/\delta)}{n}}.
-\end{equation}
-\end{lemma}
-
-
-
-\begin{lemma}
-\label{lemma:aux2}
-При условиях Леммы~\ref{lemma:aux}
-выполняется следующее неравенство
-\begin{align}
-&U_t \le S_t
-+ \frac{9\x}{2}\Bigl(6+\log \x+\log(1+4S_t)\Bigr)\\
-&+ \sqrt{\,2\x(1+4S_t)\Bigl(1+\tfrac12\log(1+4S_t)\Bigr)}
-\end{align}
-\end{lemma}
-\begin{proof}
-Рассмотрим
- \[
-U_t \le S_t
-+ \sqrt{\,2\x\,\bigl(1+S_t+3U_t\bigr)\Bigl(1+\tfrac12\log\bigl(1+S_t+2U_t\bigr)\Bigr)} .
-\]
-Положим $\Delta := U_t - S_t$. Если $\Delta \le 0$, оценка выполнена.\\
-\textbf{Случай $\Delta \ge 0.$} Заметим, что
-\[
-\Delta^2 \le 2\x\,\bigl(1+4S_t+3\Delta\bigr)\Bigl(1+\tfrac12\log\bigl(1+4S_t+2\Delta\bigr)\Bigr).
-\]
-
-\text{Обозначим }  $a:=2\x\ge 2$, $b:=1+4S_t\ge 1$. Тогда
-\[
-c:=\log(b+3\Delta)\le \log b+\frac{3\Delta}{b}\qquad\text{(by concavity).}
-\]
-Следовательно,
-\[
-\begin{aligned}
-\Delta^2
-&\le a(b+3\Delta)\Bigl(1+\frac{c}{2}\Bigr) \\
-&\le 3a\Bigl(1+\frac{c}{2}\Bigr)\Delta
-   + ab + ab\,\frac{\log b}{2} + \frac{3a}{2}\Delta \\
-&= \frac{3a}{2}(3+c)\,\Delta
-   + ab\Bigl(1+\frac{\log b}{2}\Bigr).
-\end{aligned}
-\]
-По квадратичному неравенству получаем
-\[
-\Delta \le \frac{3a}{2}(3+c)
-          + \sqrt{ab\Bigl(1+\frac{\log b}{2}\Bigr)}.
-\]
-Таким образом,
-\[
-\begin{aligned}
-b+3\Delta
-&\le b+\frac{9a}{2}(3+c)
-   + 3\sqrt{ab\Bigl(1+\frac{\log b}{2}\Bigr)} \\[1mm]
-&\le b+\frac{27a}{2}\Bigl(1+\frac{c}{3}\Bigr)
-   + 3\sqrt{ab\Bigl(1+\frac{c}{2}\Bigr)} \\[1mm]
-&\le \Biggl(\sqrt{b}
-          + \sqrt{\frac{27}{2}\,a\Bigl(1+\frac{c}{3}\Bigr)}\Biggr)^2 .
-\end{aligned}
-\]
-
-\[
-\begin{aligned}
-c=\log(b+3\Delta)
-&\le 2\log\!\left(\sqrt{b}
-          + \sqrt{\frac{27}{2}\,a\Bigl(1+\frac{c}{3}\Bigr)}\right) \\[1mm]
-&\le 2\log\sqrt{b}
-   + 2\log\!\left(1+\sqrt{\frac{27}{2}\,\frac{a}{b}\Bigl(1+\frac{c}{3}\Bigr)}\right) \\[1mm]
-&\le \log b + \log(20a) + \frac{c}{3}.
-\end{aligned}
-\]
-Следовательно, $c \le \frac{3}{2}\,\bigl(\log b+\log(20a)\bigr)$. Поэтому
-\[
-\Delta \le \frac{9a}{4}\Bigl(2+\log(20a)+\log b\Bigr)
-          + \sqrt{ab\Bigl(1+\frac{\log b}{2}\Bigr)}.
-\]
-Утверждение следует.
-
-\end{proof}
-
-\begin{lemma}[Концентрация эмпирической потери (Lemma B.10 в \cite{shalev2014understanding})]
-\label{lem:loss-eval}
-Пусть $\mathbf{W}$ — пространство состояний, а $\mathcal{D}$ — распределение на $\mathbf{E}$.  Пусть $\ell:\mathbf{W}\times\mathbf{E}\to [0,1]$ — ограниченная функция потерь. Зафиксируем предиктор $w\in\mathbf{W}$ и определим его ожидаемую потерю $L(w):=\mathbb{E}_{\xi\sim\mathcal{D}}[\ell(w,\xi)]$.
-
-Тогда для любого $n> 0$ и $\delta\in(0,1)$ с вероятностью не менее $1-\delta$ по выборке $\{\xi_t\}_{t=1}^n$ i.i.d.\ из $\mathcal{D}$ выполнено
-\begin{equation}
-\frac{1}{n}\sum_{t=1}^n \ell(w,\xi_t) - L(w)
-\le
-\sqrt{\tfrac{2L(w)\log(1/\delta)}{n}} + \tfrac{2\log(1/\delta)}{3n}.
-\end{equation}
-\end{lemma}
-
-
-\begin{proof}
-Непосредственно следует из неравенства Бернштейна.
+which completes the proof.
 \end{proof}
 
 \end{document}

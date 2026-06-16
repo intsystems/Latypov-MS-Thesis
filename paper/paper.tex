@@ -1,17 +1,51 @@
-\documentclass{article}
+% \documentclass[14pt]{extarticle}
 
-\usepackage{arxiv}
+% \usepackage{arxiv}
 
 
-\usepackage[utf8]{inputenc} % allow utf-8 input
-\usepackage[T1,T2A]{fontenc}    % use 8-bit T1 fonts
-\usepackage{hyperref}       % hyperlinks
-\usepackage{url}            % simple URL typesetting
-\usepackage{booktabs}       % professional-quality tables
-\usepackage{amsfonts}       % blackboard math symbols
-\usepackage{nicefrac}       % compact symbols for 1/2, etc.
-\usepackage{microtype}      % microtypography
-\usepackage{xcolor}         % colors
+% \usepackage[utf8]{inputenc} % allow utf-8 input
+% \usepackage[T1,T2A]{fontenc}    % use 8-bit T1 fonts
+% \usepackage{hyperref}       % hyperlinks
+% \usepackage{url}            % simple URL typesetting
+% \usepackage{booktabs}       % professional-quality tables
+% \usepackage{amsfonts}       % blackboard math symbols
+% \usepackage{nicefrac}       % compact symbols for 1/2, etc.
+% \usepackage{microtype}      % microtypography
+% \usepackage{xcolor}         % colors
+
+\documentclass[a4paper,14pt]{extarticle}
+% \documentclass[a4paper]{article}
+
+\usepackage[T2A]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[russian,english]{babel}
+
+% \usepackage{amsthm}
+% \usepackage{amssymb}
+% \usepackage{amsmath}
+% \usepackage{bm}
+\usepackage{booktabs}
+% \usepackage{caption}
+% \usepackage{graphicx}
+% \usepackage{float}
+% \usepackage{indentfirst}
+% \usepackage{longtable}
+% \usepackage{mathtools}
+% \usepackage{multirow}
+% \usepackage{rotating}
+% \usepackage{subfig}
+% \usepackage{tabularx}
+% \usepackage{url}
+% \usepackage{xcolor}
+
+\usepackage{geometry}
+\geometry{
+    left=3.0cm,
+    right=1.5cm,
+    top=2.0cm,
+    bottom=2.0cm
+}
+\emergencystretch=3em
 
 
 % \setdefaultlanguage{english}
@@ -20,7 +54,7 @@
 
 % \usepackage[T1,T2A]{fontenc}
 % \usepackage[utf8]{inputenc}
-% % \usepackage[numbers]{natbib}
+\usepackage[numbers]{natbib}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -128,75 +162,44 @@
     linewidth=1pt
 ]{nframed}
 
-
+\begin{document}
 % титульник
 %
-\begin{titlepage}
-    \begin{center}
-        \textsc{Московский физико-технический институт}\\
-        (национальный исследовательский университет)\\
-        \textsc{Физтех-школа прикладной математики и информатики}\\
-        \textsc{Кафедра интеллектуального анализа данных ВЦ РАН}
-    \end{center}
-    \vspace{2.5cm}
-    \begin{center}
-        {Латыпов Ильгам Магданович}
-        \par
-        \vspace{2cm}
-        {\Large \textsc{\textbf{Алгоритм типа UCB для обучения экспертов при ограниченном бюджете}}}
-        \par
-        \vspace{2cm}
-        {09.04.01~--- Информатика и вычислительная техника}
-        \par
-        \vspace{2cm}
-        \textsc{Выпускная квалификационная работа магистранта}
-    \end{center}
-    \vspace{2cm}
-    \hfill\parbox{8.4cm}{\textbf{Научный руководитель:}
-    \\к.т.н. Ю.\,В.\,Дорн}
-    \par
-    \vspace{2.5cm}
-    \begin{center}
-        {Москва~--- 2026}
-    \end{center}
-\end{titlepage}
+% \begin{titlepage}
+%     \begin{center}
+%         \textsc{Московский физико-технический институт}\\
+%         (национальный исследовательский университет)\\
+%         \textsc{Физтех-школа прикладной математики и информатики}\\
+%         \textsc{Кафедра интеллектуального анализа данных ВЦ РАН}
+%     \end{center}
+%     \vspace{2.5cm}
+%     \begin{center}
+%         {Латыпов Ильгам Магданович}
+%         \par
+%         \vspace{2cm}
+%         {\Large \textsc{\textbf{Алгоритм типа UCB для обучения экспертов при ограниченном бюджете}}}
+%         \par
+%         \vspace{2cm}
+%         {09.04.01~--- Информатика и вычислительная техника}
+%         \par
+%         \vspace{2cm}
+%         \textsc{Выпускная квалификационная работа магистранта}
+%     \end{center}
+%     \vspace{2cm}
+%     \hfill\parbox{8.4cm}{\textbf{Научный руководитель:}
+%     \\к.т.н. Ю.\,В.\,Дорн}
+%     \par
+%     \vspace{2.5cm}
+%     \begin{center}
+%         {Москва~--- 2026}
+%     \end{center}
+% \end{titlepage}
 % \mathtoolsset{showonlyrefs}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \title{A UCB-Type Algorithm for Learning Experts under a Limited Budget}
 
-% \author{%
-%   Ilgam Latypov
-%   % \thanks{Use footnote for providing further information about author (webpage, alternative address)---\emph{not} for acknowledging funding agencies.} \\
-%   MIPT\\
-%   \texttt{latypov.im@phystech.edu} \\
-%   % examples of more authors
-%   % \And
-%   % Coauthor \\
-%   % Affiliation \\
-%   % Address \\
-%   % \texttt{email} \\
-%   % \AND
-%   % Coauthor \\
-%   % Affiliation \\
-%   % Address \\
-%   % \texttt{email} \\
-%   % \And
-%   % Coauthor \\
-%   % Affiliation \\
-%   % Address \\
-%   % \texttt{email} \\
-%   % \And
-%   % Coauthor \\
-%   % Affiliation \\
-%   % Address \\
-%   % \texttt{email} \\
-% }
-
-
-\begin{document}
-
-\setcounter{page}{2}
+\setcounter{page}{1}
 \begin{abstract}
         This paper addresses the problem of sequential decision-making under learning budget constraints. Such settings naturally arise in applications like managing a portfolio of bandit or reinforcement learning (RL) algorithms. We propose a novel UCB-type algorithm, M-LCB, designed to manage a pool of $K$ self-learning experts in a stochastic environment while accounting for a limited per-round learning budget $M$. At each round, M-LCB selects one expert to make a decision and at most $M \le K$ experts to learn. For selection, M-LCB uses confidence bounds constructed from limited prior knowledge about the experts (i.e., mild assumptions) and their observed training losses. We derive anytime regret bounds for M-LCB that scale with the individual regrets of the experts. In particular, if each expert has regret $\tilde O(T^\alpha)$ by round $T$, then M-LCB guarantees an overall regret of $\tilde O\left(\sqrt{KT/M} + (K/M)^{1-\alpha}T^\alpha\right)$ relative to the best expert in hindsight. Finally, we demonstrate the applicability of M-LCB using self-learning experts instantiated as (i) parametric models and (ii) bandit algorithms.
 \end{abstract}
@@ -269,40 +272,43 @@ Assuming $U_k(T,\delta)=O(T^{\alpha}c(\delta))$ with $\alpha \in [0,1]$ and poly
 \textbf{Our \algname{M-LCB} algorithm attains optimal rates for both regret definitions.}}
 
 \label{tab:comparison_existing}
-\begin{tabular}{p{4cm}lp{1.5cm} p{1.5cm} p{6.0cm}}
+{
+\small
+\begin{tabular}{p{3.5cm} p{1.5cm} p{1.3cm} p{1.6cm} p{6.0cm}}
 \toprule
-\textbf{Algorithm / Reference} & \textbf{Learnable} & \textbf{Multi-arm} & \textbf{Multiple-play} & \textbf{Regret rate (up to logs)} \\
+\textbf{Algorithm} & \textbf{Learning} & {\textbf{Multi-arm}} & {\textbf{Multiple-play}} & \textbf{Regret rate (up to logs)} \\
 \midrule
-\textsc{CORRAL} + smoothing wrapper~\cite{pacchiano2020model}
-& $\checkmark$ & $\times$ & $\times$ &
-$\tilde O\!\left(\sqrt{KT} + K^{\alpha}T^{1-\alpha} + K^{1-\alpha}T^{\alpha}c(\delta)\right)$ \\[1pt]
 
-\textsc{EXP3.P} + smoothing wrapper~\cite{pacchiano2020model}
+\textsc{CORRAL}\newline + wrapper~\cite{pacchiano2020model}
 & $\checkmark$ & $\times$ & $\times$ &
-$\tilde O\!\left(\sqrt{KT} + K^{\frac{1-\alpha}{2-\alpha}}T^{\frac{1}{2-\alpha}}c(\delta)^{\frac{1}{2-\alpha}}\right)$ \\[1pt]
+$\tilde O\!\left(\sqrt{KT} + K^{\alpha}T^{1-\alpha} + K^{1-\alpha}T^{\alpha}c(\delta)\right)$ \\[10pt] % Увеличил отступ между строками для красоты
 
-Dynamic Balancing~\cite{cutkosky2021dynamic}
+\textsc{EXP3.P}\newline + wrapper~\cite{pacchiano2020model}
 & $\checkmark$ & $\times$ & $\times$ &
-$\tilde O\!\left(\sqrt{KT} + K^{1-\alpha}T^{\alpha}c(\delta)\right)$ \\[1pt]
+$\tilde O\!\left(\sqrt{KT} + K^{\frac{1-\alpha}{2-\alpha}}T^{\frac{1}{2-\alpha}}c(\delta)^{\frac{1}{2-\alpha}}\right)$ \\[10pt]
+
+Dynamic\newline Balancing~\cite{cutkosky2021dynamic}
+& $\checkmark$ & $\times$ & $\times$ &
+$\tilde O\!\left(\sqrt{KT} + K^{1-\alpha}T^{\alpha}c(\delta)\right)$ \\[10pt]
 
 Prediction with Limited Advice~\cite{seldin2014prediction}
 & $\times$ & $\checkmark$ & $\times$ &
-$\tilde O\!\left(\sqrt{\tfrac{KT\log K}{M}}\right)$ \\[1pt]
+$\tilde O\!\left(\sqrt{\tfrac{KT\log K}{M}}\right)$ \\[10pt]
 
 H-INF~\cite{yun2018multi}
 & $\times$ & $\checkmark$ & $\times$ &
-$\tilde O\!\left(\max\{\sqrt{KT/M},\,\sqrt{T\log K}\}\right)$ \\[1pt]
+$\tilde O\!\left(\max\{\sqrt{KT/M},\,\sqrt{T\log K}\}\right)$ \\[10pt]
 
 UCB-based multiple-play bandits~\cite{kveton2015tight}
 & $\times$ & $\times$ & $\checkmark$ &
-$\tilde O\!\left(\sqrt{KT/M}\right)$ $\alpha = \frac{1}{2}$ \\[1pt]
+$\tilde O\!\left(\sqrt{KT/M}\right)$ $\alpha = \frac{1}{2}$ \\[10pt]
 
-\textbf{\algname{M-LCB} [this work]}
+\textbf{\algname{M-LCB}}\newline \textbf{[this work]}
 & $\checkmark$ & $\checkmark$ & $\checkmark$ &
 $\tilde O\!\left(\sqrt{\tfrac{KT}{M}} + (K/M)^{1-\alpha}T^{\alpha}c(\delta)\right)$ \\
 \bottomrule
 \end{tabular}
-
+}
 \end{table*}
 
 \section{Problem Setup}
@@ -507,6 +513,7 @@ Alg.~\ref{algorithm:M_LCB} outlines the procedure. Initializing each expert once
 \label{sec:theoretical_analysis}
 This section consolidates the theoretical analysis of the proposed framework. First, we establish the confidence intervals for the online parametric learning models introduced in Section~\ref{sec:examples}. We then analyze the performance of the \algname{M-LCB} algorithm, deriving both the standard and multiple-play cumulative regret bounds. Finally, we present a minimax lower-bound analysis for the considered problem, demonstrating that the \algname{M-LCB} algorithm achieves order-optimal performance up to logarithmic factors.
 
+\vspace{-8pt}
 \subsection{Confidence Interval Construction}
 \label{sec:confidence-interval-construction}
 
@@ -514,9 +521,7 @@ In Section~\ref{sec:examples}, using the case of online parametric learning as a
 
 \begin{lemma}[Empirical loss concentration {\normalfont\cite[Lemma B.10]{shalev2014understanding}}]
 \label{lem:loss-eval}
-Let $\mathbf{W}$ be a state space and $\mathcal{D}$ a distribution on $\mathbf{E}$. Let $\ell:\mathbf{W}\times\mathbf{E}\to [0,1]$ be a bounded loss function. Fix a predictor $w\in\mathbf{W}$ and define its expected loss $L(w):=\mathbb{E}_{\xi\sim\mathcal{D}}[\ell(w,\xi)]$.
-
-Then, for any $n>0$ and $\delta\in(0,1)$, with probability at least $1-\delta$ over the draw of $\{\xi_t\}_{t=1}^n$ i.i.d.\ from $\mathcal{D}$,
+Let $\mathbf{W}$ be a state space and $\mathcal{D}$ a distribution on $\mathbf{E}$. Let $\ell:\mathbf{W}\times\mathbf{E}\to [0,1]$ be a bounded loss function. Fix a predictor $w\in\mathbf{W}$ and define its expected loss $L(w):=\mathbb{E}_{\xi\sim\mathcal{D}}[\ell(w,\xi)]$. Then, for any $n>0$ and $\delta\in(0,1)$, with probability at least $1-\delta$ over the draw of $\{\xi_t\}_{t=1}^n$ i.i.d.\ from $\mathcal{D}$,
 \begin{equation}
 \frac{1}{n}\sum_{t=1}^n \ell(w,\xi_t) - L(w)
 \le
@@ -817,13 +822,12 @@ where the expectation is taken over the randomization of the smoothing wrapper. 
 where
 \begin{align}
 \label{eq:bound_bound_bound}
-\Delta(T) := {}& \sum_{\tau\in I_{k^\star}(T)} \Bigl( \UCB_{k^\star}(\tau,\delta) - \LCB_{k^\star}(\tau,\delta) \Bigr)
-+ \frac1M \sum_{k=1}^{K} \sum_{\tau\in I_k(T)} \Bigl( \UCB_k(\tau,\delta) - \LCB_k(\tau,\delta) \Bigr),
+\Delta(T) := {}& \sum_{\tau\in I_{k^\star}(T)} \Bigl( \UCB_{k^\star}(\tau,\delta) - \LCB_{k^\star}(\tau,\delta) \Bigr) \\
+ & + \frac1M \sum_{k=1}^{K} \sum_{\tau\in I_k(T)} \Bigl( \UCB_k(\tau,\delta) - \LCB_k(\tau,\delta) \Bigr),
 \end{align}
 and
-\[
-k^\star \in \arg\min_{k\in[K]} L_k^\star.
-\]
+$k^\star \in \arg\min_{k\in[K]} L_k^\star$.
+
 
 Moreover, with probability at least $1-2\delta$, uniformly over all
 $T\ge1$, \[ \mathrm{Reg}(T) \le \mathbb E_\upsilon[\Delta(T)] + O\!\left( \sqrt{T\log(1/\delta)} \right).
@@ -872,13 +876,12 @@ we obtain:
 
 \textit{Term C.} Since $S_t$ consists of the $M$ smallest LCBs and $k^\star\notin S_t$, every $k\in S_t$ has
 $\LCB_k(t,\delta)\le \LCB_{k^\star}(t,\delta)\le L^\star$; hence $\frac{1}{M}\sum_{k\in S_t}\LCB_k(t,\delta)\le L^\star$.
-Thus that term is non-positive.
-Therefore,
+Thus that term is non-positive. Therefore,
 \begin{align}
 \text{B}
 &\le \sum_{t:k^\star\notin S_t}
-\frac{1}{M}\sum_{k\in S_t}\Bigl[\UCB_k(t, \delta)-\LCB_k(t, \delta)\Bigr] \le  \frac{1}{M}\sum_{k=1}^{K}\sum_{\tau\in I_k(T)}
-\Bigl[\UCB_k(\tau, \delta)-\LCB_k(\tau, \delta)\Bigr].
+\frac{1}{M}\sum_{k\in S_t}\Bigl[\UCB_k(t, \delta)-\LCB_k(t, \delta)\Bigr] \\
+&\le  \frac{1}{M}\sum_{k=1}^{K}\sum_{\tau\in I_k(T)} \Bigl[\UCB_k(\tau, \delta)-\LCB_k(\tau, \delta)\Bigr].
 \label{eq:B-bound}
 \end{align}
 
@@ -1224,7 +1227,7 @@ Consequently, the dependence on the horizon $T$, the number of experts $K$, the 
 
 \begin{table*}[h!]
 \centering
-\caption{%
+\caption{
 Examples of inner-arm convergence rates $U_k(n,\delta)$ and resulting global regret (up to logarithmic factors and an additive term $O(\sqrt{(K/M)T})$).
 For each expert $k$, the inner algorithm satisfies $U_k(t,\delta)=O(\beta_k\,t^{\alpha}c(\delta))$,
 and the corresponding global regret scales as
@@ -1239,48 +1242,45 @@ $\varepsilon$ — heavy-tail moment exponent ($\mathbb{E}|X|^{1+\varepsilon}\!\l
 $L, R, C, G$ — Lipschitz, diameter, range, and gradient constants.
 }
 \label{tab:convergence_examples_appendix}
-\begin{tabular}{p{5.7cm}p{3.7cm}p{5.0cm}}
+{
+\small
+\begin{tabular}{p{6cm} p{4.9cm} p{4cm}}
 \toprule
 \textbf{Inner algorithm / problem}
 & \textbf{Inner rate $U_k(n,\delta)$}
-& \textbf{Global regret (up to logs)} \\
+& \textbf{Global regret} \\
 \midrule
-OGD / OMD (convex Lipschitz)
+
+OGD / OMD\newline (convex Lipschitz)
 & $O(G_kR_k\sqrt{n})$, $\alpha=\tfrac{1}{2}$,
-& $O\!\big(T^{1/2}\,\|GD\|_{M,1/2}\big)$ \\
+& $O\!\big(T^{1/2}\,\|GD\|_{M,1/2}\big)$ \\[10pt]
 
-\midrule
-Bandit Convex Optimization (bounded $f_t$)~\cite{flaxman2004online}
+Bandit Convex Optimization\newline (bounded $f_t$)~\cite{flaxman2004online}
 & $O(C_kd_kn^{5/6})$, $\alpha=\tfrac{5}{6}$
-& $O\!\big(T^{5/6}\,\|Cd\|_{M,1/6}\big)$ \\
+& $O\!\big(T^{5/6}\,\|Cd\|_{M,1/6}\big)$ \\[10pt]
 
-\midrule
-Bandit Convex Optimization ($L$–Lipschitz $f_t$)~\cite{flaxman2004online}
+Bandit Convex Optimization\newline ($L$–Lipschitz $f_t$)~\cite{flaxman2004online}
 & $O(\sqrt{C_kL_kR_k}d_kn^{3/4})$, $\alpha=\tfrac{3}{4}$
-& $O\!\big(T^{3/4}\,\|\sqrt{CLR}d\|_{M,1/4}\big)$ \\
+& $O\!\big(T^{3/4}\,\|\sqrt{CLR}d\|_{M,1/4}\big)$ \\[10pt]
 
-\midrule
-Heavy–tailed stochastic bandits~\cite{bubeck2013bandits}
+Heavy–tailed stochastic\newline bandits~\cite{bubeck2013bandits}
 & $\tilde O(n^{\alpha}N_k^{1-\alpha})$, $\alpha=\tfrac{1}{1+\varepsilon}$
-& $O\!\big(T^{\alpha}\, [\frac{1}{M}\sum_{k=1}N_k]^{1 - \alpha})$ \\
-% $\|N^{1-\alpha}\|_{M,1 -\alpha}\big)$ \\
+& $O\!\big(T^{\alpha}\, [\frac{1}{M}\sum_{k=1}N_k]^{1 - \alpha})$ \\[10pt]
 
-\midrule
-Heavy–tailed stochastic bandits (Symmetric noise)~\cite{dorn2024fast}
+Heavy–tailed stochastic\newline bandits (Symmetric noise)~\cite{dorn2024fast}
 & $O(\sqrt{N_k n} {\log n}^{\frac{3}{2}})$, $\alpha=\tfrac{1}{2}$
-& $O\!\big(T^{1/2}\,[\frac{1}{M}\sum_{k=1}N_k]^\frac{1}{2}\big)$ \\
+& $O\!\big(T^{1/2}\,[\frac{1}{M}\sum_{k=1}N_k]^\frac{1}{2}\big)$ \\[10pt]
 
-\midrule
-Heavy–tailed linear bandits~\cite{tajdini2025improved}
+Heavy–tailed linear\newline bandits~\cite{tajdini2025improved}
 & $O(d_k^{\frac{3}{2} - \alpha} n^{\alpha})$, $\alpha=\tfrac{1}{1 + \varepsilon}$
-& $O\big(T^{\alpha}\,\|d^{\frac{3}{2} - \alpha}\|_{M,1 - \alpha}\big)$ \\
+& $O\big(T^{\alpha}\,\|d^{\frac{3}{2} - \alpha}\|_{M,1 - \alpha}\big)$ \\[10pt]
 
-\midrule
-Hedge / Exponential Weights (over $N_k$ experts)
+Hedge / Exponential Weights\newline (over $N_k$ experts)
 & $O(\sqrt{n\log N_k})$, $\alpha=\tfrac{1}{2}$,
 & $O\!\big(T^{1/2}\,\|\sqrt{\log N}\|_{M,1/2}\big)$ \\
 \bottomrule
 \end{tabular}
+}
 \end{table*}
 
 \section{Discussion and Examples}
@@ -1301,7 +1301,7 @@ Another advantage of the framework is its ability to handle heterogeneous collec
 \section{Experiments}
 \label{sec:experiments}
 
-We evaluate the empirical performance of \algname{M-LCB} on heterogeneous model-selection problems with adaptive experts. The experiments are designed to assess how effectively the proposed method utilizes a limited update budget, how quickly it identifies high-performing experts, and how its behavior compares with existing approaches for learnable experts and budgeted expert advice. We consider two complementary benchmarks. The first is a heterogeneous stochastic bandit model-selection problem that highlights the interaction between expert quality and learning speed. The second is a generalized linear model (GLM) selection task in which the candidate models differ through their underlying link functions.
+We evaluate the empirical performance of \algname{M-LCB} on heterogeneous model-selection problems with adaptive experts. The experiments are designed to assess how effectively the proposed method utilizes a limited update budget, how quickly it identifies high-performing experts, and how its behavior compares with existing approaches for learnable experts and budgeted expert advice. We consider two complementary benchmarks. The first is a heterogeneous stochastic bandit model-selection problem that highlights the interaction between expert quality and learning speed. The second is a generalized linear model (GLM) selection task in which the candidate models differ through their underlying link functions. The code is provided at \url{https://github.com/intsystems/Latypov-MS-Thesis/tree/main}.
 
 \subsection{Model Selection among Stochastic Bandits}
 \label{sec:exp-bandits}
@@ -1329,7 +1329,7 @@ Figure~\ref{fig:regret_bandits} summarizes the results. Panel~(a) shows cumulati
 
 \begin{figure}[!ht]
     \centering
-    \includegraphics[width=0.9\linewidth]{figures/bandit_experiment_horizontal.pdf}
+    \includegraphics[width=1\linewidth]{figures/bandit_experiment_horizontal.pdf}
     \caption{
     Performance comparison on the heterogeneous bandit model-selection problem.
     (a) Cumulative regret.
@@ -1355,7 +1355,7 @@ Figure~\ref{fig::glm_functions} visualizes the nonlinearities. The final three m
 
 \begin{figure}[!ht]
     \centering
-    \includegraphics[width=0.3\linewidth]{figures/nonlinearities_image.pdf}
+    \includegraphics[width=0.6\linewidth]{figures/nonlinearities_image.pdf}
     \caption{
     Link functions associated with the candidate models (top)
     and the density of generated samples (bottom).
@@ -1371,7 +1371,7 @@ Figure~\ref{fig:exp2} reports the results. Panel~(a) shows cumulative regret and
 
 \begin{figure}[!ht]
     \centering
-    \includegraphics[width=0.4\linewidth]{figures/regrets_image.pdf}
+    \includegraphics[width=0.7\linewidth]{figures/regrets_image.pdf}
     \caption{
     Performance comparison on the GLM model-selection problem.
     (a) Cumulative regret.
@@ -1407,8 +1407,8 @@ connecting our framework to contextual bandits~\cite{foster2019model}.
 %%% The next two lines define, first, the bibliography style to be
 %%% applied, and, second, the bibliography file to be used.
 
-\bibliographystyle{ACM-Reference-Format}
-% \bibliographystyle{unsrt}
+% \bibliographystyle{ACM-Reference-Format}
+\bibliographystyle{unsrt}
 \bibliography{lib}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

@@ -1,10 +1,16 @@
 \documentclass[aspectratio=169]{beamer}
 
+
 \usepackage[T1,T2A]{fontenc}
-\usepackage[english,russian]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[russian]{babel}
+
+
 
 \usepackage{cmap}
 \usepackage{tikz}
+\usetikzlibrary{tikzmark,fit,calc}
+
 \usepackage{array}
 \usepackage{multicol}
 \usepackage{booktabs}
@@ -14,6 +20,16 @@
 \usepackage{algpseudocode}
 \usepackage{mdframed}
 
+
+% Настройка цветов (от светлого к темному)
+\definecolor{blockColor1}{RGB}{230, 242, 255} % Светло-голубой
+\definecolor{blockColor2}{RGB}{180, 255, 180} % Салатовый
+\definecolor{blockColor3}{RGB}{255, 200, 150} % Темно-бежевый/оранжевый
+
+
+\newtheorem{ru_lemma}{Лемма}
+\newtheorem{ru_theorem}{Теорема}
+\newtheorem{ru_definition}{Определение}
 % Настройки стиля из предоставленного шаблона
 \usecolortheme{beaver}
 \usefonttheme[onlymath]{serif}
@@ -69,7 +85,7 @@
 \textbf{Задача:} Предложить алгоритм выбора экспертов, который одновременно учитывает динамику обучения и наличие бюджета, и провести его теоретический и экспериментальный анализ.
 \end{frame}
 
-\begin{frame}{Эксперты, потери и протокол}
+\begin{frame}{Среда и протокол взаимодействия}
 \small
 \begin{block}{Среда и функция потерь}
 Пространство решений: $\mathbf{U}$, пространство исходов: $\mathbf{E}$.
@@ -151,19 +167,19 @@ R_k(t)\le U_k(n_k^t,\delta).
 \mathrm{UCB}_k(t,\delta)=L_k(t)+\underbrace{c_2\sqrt{\frac{\log(4K(n_k^t)^2/\delta)}{n_k^t}}}_{\text{слагаемое концентрации}}.
 \]
 
-\begin{lemma}[Корректность доверительных интервалов (Латыпов, 2026)]
+\begin{ru_lemma}[Корректность доверительных интервалов (Латыпов, 2026)]
 Пусть $\delta \in (0,1)$ и выполнены Предположения 1,2. Тогда с вероятностью не менее $1-\delta$ для любого $k$ и любого $t\ge1$ выполняется
 \[
 \mathrm{LCB}_k(t,\delta)\le L_k^\star\le\mathrm{UCB}_k(t,\delta).
 \]
-\end{lemma}
+\end{ru_lemma}
 \end{frame}
 
 \begin{frame}{Процедура сглаживания}
 \footnotesize
-\begin{definition}[Сглаживание]
+\begin{ru_definition}[Сглаживание]
 Процедурой сглаживания называется рандомизированное отображение $\upsilon:\{H\subseteq \mathbf{U}: |H|\ge 1\}\to \mathbf{U}$,
-которое каждому конечному набору решений $ H=\{u^\tau:\tau\in Z\}\subseteq\mathbf{U}, \qquad |Z|\ge1$,
+которое конечному набору решений $ H=\{u^\tau:\tau\in Z\}\subseteq\mathbf{U}, |Z|\ge1$,
 ставит в соответствие решение $u=\upsilon(H)\in\mathbf{U}$ так, что
 \[
 \mathbb{E}_{u\sim\upsilon(H)}[L(u)\mid H]
@@ -172,7 +188,7 @@ R_k(t)\le U_k(n_k^t,\delta).
 \qquad
 L(u)=\mathbb{E}_{\xi\sim D}[\ell(u,\xi)].
 \]
-\end{definition}
+\end{ru_definition}
 
 \begin{exampleblock}{Примеры}
 \begin{enumerate}
@@ -185,26 +201,80 @@ u=\frac{1}{|Z|}\sum_{\tau\in Z}u^\tau.
 \end{exampleblock}
 \end{frame}
 
-\begin{frame}{Алгоритм M-LCB}
-\footnotesize
+% \begin{frame}{Алгоритм M-LCB}
+
+% \large
+% \begin{algorithmic}[1]
+% \State \textbf{Input:} эксперты $\{\mathbf{U}_k\}_{k=1}^K$, бюджет $M$, процедура сглаживания $\upsilon$
+% \State \textbf{Output:} советы $\{u^t\}_{t=1}^T$, обучаемые множества $\{S_t\}_{t=1}^T$
+% \State Инициализировать каждого эксперта одним обновлением.
+% \For{$t=1,2,\dots,T$}
+%     \State $S_t\gets\arg\min_{S\subseteq[K],|S|=M}\sum_{k\in S}\mathrm{LCB}_k(t,\delta)$ \Comment{Топ М наименьших LCB}
+%     \State $i_t\gets\arg\min_{k\in S_t}\mathrm{UCB}_k(t,\delta)$
+%     \State $u^t\gets\upsilon(\{u_{i_t}^{\tau}:\tau\in I_{i_t}(t)\})$ \Comment{сглаживание эксперта $i_t$}
+%     \State Сыграть $u^t$, получить $\ell(u^t,\xi^t)$
+%     \For{$k\in S_t$}
+%         \State Наблюдать $\ell(u_k^t,\xi^t)$ и обновить эксперта $k$
+%     \EndFor
+% \EndFor
+% \end{algorithmic}
+% \end{frame}
+%
+
+\begin{frame}[t]{Алгоритм M-LCB}
+\large
 \begin{algorithmic}[1]
-\State \textbf{Input:} эксперты $\{\mathbf{U}_k\}_{k=1}^K$, бюджет $M$, параметр уверенности $\delta$, процедура сглаживания $\upsilon$
-\State \textbf{Output:} советы $\{u^t\}_{t=1}^T$, обучаемые множества $\{S_t\}_{t=1}^T$
+\State \textbf{Input:} эксперты $\{\mathbf{U}_k\}_{k=1}^K$, бюджет $M$, процедура сглаживания $\upsilon$
+\State \textbf{Output:} решения $\{u^t\}_{t=1}^T$, обучаемые множества $\{S_t\}_{t=1}^T$
 \State Инициализировать каждого эксперта одним обновлением.
 \For{$t=1,2,\dots,T$}
-    \For{$k\in[K]$}
-        \State Вычислить $\mathrm{LCB}_k(t,\delta),\mathrm{UCB}_k(t,\delta)$
-    \EndFor
-    \State $S_t\gets\arg\min_{S\subseteq[K],|S|=M}\sum_{k\in S}\mathrm{LCB}_k(t,\delta)$
-    \State $i_t\gets\arg\min_{k\in S_t}\mathrm{UCB}_k(t,\delta)$
+    % Метки для 1-го блока
+    \State \tikzmark{start1}$S_t\gets\arg\min_{S\subseteq[K],|S|=M}\sum_{k\in S}\mathrm{LCB}_k(t,\delta)$ \Comment{Топ М наименьших LCB}
+    \tikzmark{end1}
+    \State \tikzmark{start2} $i_t\gets\arg\min_{k\in S_t}\mathrm{UCB}_k(t,\delta)$
+
+    % Метки для 2-го блока
     \State $u^t\gets\upsilon(\{u_{i_t}^{\tau}:\tau\in I_{i_t}(t)\})$ \Comment{сглаживание эксперта $i_t$}
-    \State Сыграть $u^t$, получить $\ell(u^t,\xi^t)$
-    \For{$k\in S_t$}
-        \State Наблюдать $\ell(u_k^t,\xi^t)$ и обновить эксперта $k$
-    \EndFor
+    \State Сыграть $u^t$, получить $\ell(u^t,\xi^t)$\tikzmark{end2}
+
+    % Метки для 3-го блока
+    \State \tikzmark{start3}\textbf{for} $k\in S_t$ \textbf{do}
+        \State \hspace{\algorithmicindent} Наблюдать $\ell(u_k^t,\xi^t)$ и обновить эксперта $k$
+    \State \textbf{end for}\tikzmark{end3}
 \EndFor
 \end{algorithmic}
+
+% Отрисовка блоков заданной ширины
+\begin{tikzpicture}[remember picture,overlay]
+    % Базовые границы по бокам слайда
+    \coordinate (LeftBound) at ($(current page.west)+(0.7cm,0)$);
+    \coordinate (RightBound) at ($(current page.east)+(-0.7cm,0)$);
+
+    % Извлекаем чистые координаты из tikzmark
+    \coordinate (S1) at (pic cs:start1); \coordinate (E1) at (pic cs:end1);
+    \coordinate (S2) at (pic cs:start2); \coordinate (E2) at (pic cs:end2);
+    \coordinate (S3) at (pic cs:start3); \coordinate (E3) at (pic cs:end3);
+
+    % Блок 1 (слайд 2+)
+    \onslide<2->{
+        \filldraw[fill=blockColor1, fill opacity=0.4, draw=blue!30, thick, rounded corners=2pt]
+            ($(LeftBound |- S1)+(0.5,2.0ex)$) rectangle ($(RightBound |- E1)+(0.2,-0.8ex)$);
+    }
+
+    % Блок 2 (слайд 3+)
+    \onslide<3->{
+        \filldraw[fill=blockColor2, fill opacity=0.4, draw=green!40, thick, rounded corners=2pt]
+            ($(LeftBound |- S2)+(0.5,1.7ex)$) rectangle ($(RightBound |- E2)+(0.2,-0.7ex)$);
+    }
+
+    % Блок 3 (слайд 4+)
+    \onslide<4->{
+        \filldraw[fill=blockColor3, fill opacity=0.4, draw=orange!50, thick, rounded corners=2pt]
+            ($(LeftBound |- S3)+(0.5,2.0ex)$) rectangle ($(RightBound |- E3)+(0.2,-0.7ex)$);
+    }
+\end{tikzpicture}
 \end{frame}
+
 
 \begin{frame}{Гарантии на глобальный регрет}
 \footnotesize
@@ -212,7 +282,7 @@ u=\frac{1}{|Z|}\sum_{\tau\in Z}u^\tau.
 $\mathrm{Reg}(T):=\sum_{t=1}^T\ell(u^t,\xi^t)-T\cdot L^\star$
 получены следующие оценки.
 
-\begin{lemma}[Ограниченный рост регрета (Латыпов, 2026)]
+\begin{ru_lemma}[Ограниченный рост регрета (Латыпов, 2026)]
 Пусть $\delta \in (0,1)$ и выполнены Предположения 1, 2. Тогда с вероятностью не менее $1-\delta$,
 \begin{align*}
 \mathrm{Reg}(T) \le&
@@ -221,22 +291,22 @@ $\mathrm{Reg}(T):=\sum_{t=1}^T\ell(u^t,\xi^t)-T\cdot L^\star$
 + \frac{1}{M}\sum_{k=1}^K \sum_{\tau \in I_k(T)}
 \bigl[\mathrm{UCB}_k(\tau,\delta)-\mathrm{LCB}_k(\tau,\delta)\bigr].
 \end{align*}
-\end{lemma}
+\end{ru_lemma}
 
-\begin{theorem}[Ограниченный рост регрета (Латыпов, 2026)]
+\begin{ru_theorem}[Ограниченный рост регрета (Латыпов, 2026)]
 Пусть $\alpha,\delta\in(0,1)$, выполнены Предположения 1,2. Каждый эксперт $k$ удовлетворяет предположению 2 с
 $$
-U_k(t,\delta)=O\big(t^\alpha c(\delta)\big).
+U_k(t,\delta)=O\big(t^\alpha c(\delta)\big),
 $$
 \vspace{-0.3cm}
 Тогда с вероятностью не менее $1-\delta$ регрет алгоритма M-LCB ограничено для всех $T\ge1$:
 \[
 \mathrm{Reg}(T)=O\!\left(\sqrt{\frac{KT}{M}\log\!\frac{KT}{\delta}}+\Bigl(\frac{K}{M}\Bigr)^{1-\alpha}T^{\alpha}c(\delta)\right).
 \]
-\end{theorem}
+\end{ru_theorem}
 \end{frame}
 
-\begin{frame}{Гарантия на усредненный регрет Top-$M$}
+\begin{frame}{Гарантия на усредненный регрет}
 \small
 \textbf{Средний регрет выбранного множества:}
 \[
@@ -245,30 +315,31 @@ $$
 \overline{L}^\star=\min_{|S|=M}\frac{1}{M}\sum_{k\in S}L_k^\star.
 \]
 
-\begin{theorem}[Ограниченный рост усредненного регрета (Латыпов, 2026)]
+\begin{ru_theorem}[Ограниченный рост усредненного регрета (Латыпов, 2026)]
 Пусть $\alpha,\delta\in(0,1)$, выполнены Предположения 1,2. Каждый эксперт $k$ удовлетворяет предположению 2 с
+\vspace{-0.1cm}
 $$
 U_k(t,\delta)=O\big(t^\alpha c(\delta)\big).
 $$
-\vspace{-0.3cm}
+\vspace{-0.05cm}
 Тогда с вероятностью не менее $1-\delta$ усредненный регрет алгоритма M-LCB ограничено для всех $T\ge1$:
 \[
 \mathrm{Reg}_M(T)=O\!\left(\sqrt{\frac{KT}{M}\log\!\frac{KT}{\delta}}+\Bigl(\frac{K}{M}\Bigr)^{1-\alpha}T^{\alpha}c(\delta)\right).
 \]
-\end{theorem}
+\end{ru_theorem}
 
 Гарантия означает, что алгоритм системно дообучает \textbf{топ $M$ лучших} экспертов.
 \end{frame}
 
 \begin{frame}{Нижние границы на регрет}
 \small
-\begin{theorem}[Нижние границы (Латыпов, 2026)]
+\begin{ru_theorem}[Нижние границы (Латыпов, 2026)]
 Для класса задач $\mathcal{F}_\alpha$ -- где ,
 \[
 \sup_{f_k\in\mathcal{F}_{\alpha},\,k\in[K]}\mathbb{E}\,\mathrm{Reg}(T)
 \ge c_1\sqrt{\frac{KT}{M}} + c_2T^\alpha\left(\frac{K}{M}\right)^{1-\alpha}.
 \]
-\end{theorem}
+\end{ru_theorem}
 
 Следствие:
 \begin{enumerate}
@@ -322,10 +393,10 @@ $M\in\{1,2,3,4\}$.
 \begin{frame}{Выносится на защиту}
 \small
 \begin{enumerate}
-    \item \textbf{Основной результат:} алгоритм M-LCB для оркестрации обучаемых экспертов при бюджете $M$ с теоретической гарантией на $\mathrm{Reg}(T)$.
-    \item \textbf{Доверительные интервалы эксперта} (LCB/UCB) и лемма об их корректности при учете внутренней обучаемости экспертов.
-    \item \textbf{Гарантия на усредненное сожаление:} обучение устойчиво выделяет и поддерживает множество лучших экспертов.
-    \item \textbf{Нижняя граница задачи:} доказана нижняя граница $\sqrt{KT/M}+T^\alpha(K/M)^{1-\alpha}$ и показана порядковая оптимальность M-LCB.
+    \item Разработан алгоритм многоруких бандитов M-LCB, который учитывает скорость обучения экспертов и позволяет обновлять несколько моделей за рах.
+    % \item \textbf{Доверительные интервалы эксперта} (LCB/UCB) и лемма об их корректности при учете внутренней обучаемости экспертов.
+    \item \textbf{Теоретические гарантии:} Для предложенного алгоритма получены теоремы об обраничении регрета и теорема об ограничении усредненного регрета. Последняя означает, что M-LCB концентрирует обновления на $M$ лучших экспертах.
+    \item \textbf{Нижняя граница задачи:} доказана нижняя граница $\sqrt{KT/M}+T^\alpha(K/M)^{1-\alpha}$ для рассматриваемой задачи, которой M-LCB соответствует с точностью до логарифмов.
 \end{enumerate}
 
 \vspace{0.2cm}
